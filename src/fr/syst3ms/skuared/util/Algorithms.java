@@ -44,14 +44,9 @@ public class Algorithms {
 
     public static List<String> shuntingYard(String orig) throws ArithmeticException {
         orig = orig.replace(" ", "").toLowerCase();
-        List<String> tokens = StringUtils.getAllMatches(orig, "\\w++|[^\\w ]"),
+        List<String> tokens = StringUtils.getAllMatches(orig, "\\w+|[()]|[^\\w ()]+"),
                 output = new ArrayList<>();
-        Stack<String> stack = new Stack<String>() {
-            @Override
-            public synchronized String toString() {
-                return Arrays.toString(toArray());
-            }
-        };
+        Stack<String> stack = new Stack<>();
         Pattern funcNamePattern = Pattern.compile("[A-Za-z][A-Za-z\\d]+");
         for (String token : tokens) {
             if (operators.containsKey(token)) {
