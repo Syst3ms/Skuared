@@ -1,0 +1,46 @@
+group 'fr.syst3ms'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://raw.githubusercontent.com/bensku/mvn-repo/master"
+    }
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        url 'http://maven.sk89q.com/repo'
+    }
+    maven {
+        url 'https://mvn.yawk.at'
+    }
+    maven {
+        url 'https://repo.destroystokyo.com/repository/maven-public/'
+    }
+    maven {
+        url 'http://ci.emc.gs/nexus/content/groups/aikar/'
+    }
+    maven {
+        url 'http://nexus.hc.to/content/repositories/pub_releases'
+    }
+    maven {
+        url 'http://maven.elmakers.com/repository/'
+    }
+}
+
+dependencies {
+    compile 'org.jetbrains:annotations:15.0'
+    compile 'com.destroystokyo.paper:paper-api:1.12-R0.1-SNAPSHOT'
+    compile 'ch.njol:skript:2.2-dev28b'
+    compile 'org.eclipse.jdt:org.eclipse.jdt.annotation:1.1.0'
+    compile 'com.sk89q:worldguard:6.1.1-SNAPSHOT'
+    compile 'net.milkbowl.vault:Vault:1.6.6'
+    compile 'net.sacredlabyrinth.Phaed:PreciousStones:10.0.5'
+    testCompile 'junit:junit:4.11'
+}

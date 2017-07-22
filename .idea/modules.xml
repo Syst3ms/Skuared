@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Skuared.iml" filepath="$PROJECT_DIR$/Skuared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Skuared.iml" filepath="$PROJECT_DIR$/.idea/modules/Skuared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/skuared_main.iml" filepath="$PROJECT_DIR$/.idea/modules/skuared_main.iml" group="skuared" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/skuared_test.iml" filepath="$PROJECT_DIR$/.idea/modules/skuared_test.iml" group="skuared" />
     </modules>
   </component>
 </project>

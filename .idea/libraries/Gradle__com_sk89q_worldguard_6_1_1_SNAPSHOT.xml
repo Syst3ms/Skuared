@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sk89q:worldguard:6.1.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sk89q/worldguard/6.1.1-SNAPSHOT/a8147cb4322e914e43f5b8c5ccc3d4face8872b9/worldguard-6.1.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sk89q/worldguard/6.1.1-SNAPSHOT/ddc9dc4946b0f27d9d4c01d68db0e6d18eca6470/worldguard-6.1.1-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
