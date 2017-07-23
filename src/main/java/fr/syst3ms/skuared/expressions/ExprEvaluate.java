@@ -12,11 +12,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-/**
- * Created by ARTHUR on 10/06/2017.
- */
 public class ExprEvaluate extends SimpleExpression<Number> {
     private Expression<String> expr;
 

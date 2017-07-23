@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="util.AlgorithmsTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-07-22T16:19:05" hostname="SYST3MS-PC" time="0.034">
-  <properties/>
-  <testcase name="shuntingYard" classname="util.AlgorithmsTest" time="0.029"/>
-  <testcase name="evaluate" classname="util.AlgorithmsTest" time="0.005"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

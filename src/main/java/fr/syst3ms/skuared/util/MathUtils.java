@@ -7,9 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-/**
- * Created by ARTHUR on 10/06/2017.
- */
 public class MathUtils {
     public static Number plus(@NotNull Number a, @NotNull Number b) {
         if (a.doubleValue() == Double.POSITIVE_INFINITY || b.doubleValue() == Double.POSITIVE_INFINITY) {
