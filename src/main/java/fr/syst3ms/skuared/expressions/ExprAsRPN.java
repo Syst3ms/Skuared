@@ -14,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ * What are you doing here ? You most likely don't need this anyway
+ */
 @SuppressWarnings("unchecked")
 public class ExprAsRPN extends SimpleExpression<String> {
     private Expression<String> e;

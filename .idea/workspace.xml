@@ -88,55 +88,11 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/syst3ms/skuared/util/ReflectionUtils.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/fr/syst3ms/skuared/util/StringUtils.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/plugin.yml" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/Skuared.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/effects/EffRegisterConstant.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/expressions/ExprAsRPN.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/expressions/ExprEvaluate.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/expressions/ExprLevenshteinDistance.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/util/Algorithms.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/util/Associativity.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/util/MathUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/util/Operator.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/util/ReflectionUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/main/fr/syst3ms/skuared/util/StringUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/classes/test/util/AlgorithmsTest.class" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/reports/tests/test/classes/util.AlgorithmsTest.html" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/reports/tests/test/css/base-style.css" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/reports/tests/test/css/style.css" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/reports/tests/test/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/reports/tests/test/js/report.js" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/reports/tests/test/packages/util.html" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/resources/main/plugin.yml" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/test-results/test/TEST-util.AlgorithmsTest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/test-results/test/binary/output.bin" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/test-results/test/binary/output.bin.idx" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build/test-results/test/binary/results.bin" afterPath="" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/cache.properties.lock" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/fileHashes.bin" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/fileSnapshots.bin" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/taskArtifacts.bin" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.gradle/3.1/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/spigot_api_1_11_2_R0_1_SNAPSHOT_shaded.xml" afterPath="$PROJECT_DIR$/.idea/libraries/spigot_api_1_11_2_R0_1_SNAPSHOT_shaded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules.xml" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules/skuared.iml" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules/skuared.iml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules/skuared_main.iml" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules/skuared_main.iml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules/skuared_test.iml" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.idea/modules/skuared_test.iml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/.idea/workspace.xml" afterPath="$USER_HOME$/Documents/GitHub/Skuared/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/build.gradle" afterPath="$USER_HOME$/Documents/GitHub/Skuared/build.gradle" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/src/main/java/fr/syst3ms/skuared/expressions/ExprEvaluate.java" afterPath="$USER_HOME$/Documents/GitHub/Skuared/src/main/java/fr/syst3ms/skuared/expressions/ExprEvaluate.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/src/main/java/fr/syst3ms/skuared/util/MathUtils.java" afterPath="$USER_HOME$/Documents/GitHub/Skuared/src/main/java/fr/syst3ms/skuared/util/MathUtils.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/src/main/java/fr/syst3ms/skuared/util/ReflectionUtils.java" afterPath="$USER_HOME$/Documents/GitHub/Skuared/src/main/java/fr/syst3ms/skuared/util/ReflectionUtils.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/src/main/resources/plugin.yml" afterPath="$USER_HOME$/Documents/GitHub/Skuared/src/main/resources/plugin.yml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Documents/GitHub/Skuared/src/test/java/util/AlgorithmsTest.java" afterPath="$USER_HOME$/Documents/GitHub/Skuared/src/test/java/util/AlgorithmsTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -237,9 +193,21 @@
       <file leaf-file-name="ExprLevenshteinDistance.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprLevenshteinDistance.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="43" lean-forward="false" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+            <state relative-caret-position="374">
+              <caret line="22" column="100" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="100" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExprAsRPN.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprAsRPN.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="67" lean-forward="false" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
+              <folding>
+                <element signature="e#577#607#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -257,14 +225,24 @@
       <file leaf-file-name="Skuared.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/Skuared.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="47" column="32" lean-forward="false" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+            <state relative-caret-position="74">
+              <caret line="91" column="11" lean-forward="true" selection-start-line="91" selection-start-column="11" selection-end-line="91" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MathUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/MathUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="649">
+              <caret line="125" column="4" lean-forward="false" selection-start-line="125" selection-start-column="4" selection-end-line="125" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
@@ -287,8 +265,18 @@
       <file leaf-file-name="ExprEvaluate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprEvaluate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="66" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EffRegisterConstant.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/effects/EffRegisterConstant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="33" column="184" lean-forward="false" selection-start-line="33" selection-start-column="69" selection-end-line="33" selection-end-column="184" />
               <folding />
             </state>
           </provider>
@@ -308,10 +296,12 @@
     <findStrings>
       <find>Collections.singletonList(&quot;NaN&quot;)</find>
       <find>\n\/\*\*\n \* Created by ARTHUR on 10\/06\/2017\.\n \*\/</find>
+      <find>(a instanceof Double || a instanceof Float) &amp;&amp; (b instanceof Double || b instanceof Float)</find>
     </findStrings>
     <replaceStrings>
       <replace>null</replace>
       <replace />
+      <replace>(a instanceof Double || a instanceof Float) || (b instanceof Double || b instanceof Float)</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -975,19 +965,19 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$USER_HOME$/Documents/GitHub/Skuared/src/fr/syst3ms/skuared/util/Algorithms.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/MathUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/effects/EffRegisterConstant.java" />
         <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/Operator.java" />
         <option value="/RegExp Fragment (Algorithms.java:606).regexp" />
         <option value="$PROJECT_DIR$/src/test/java/util/AlgorithmsTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/Algorithms.java" />
-        <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprAsRPN.java" />
         <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/Skuared.java" />
         <option value="$USER_HOME$/Documents/GitHub/Skuared/src/main/resources/plugin.yml" />
         <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprEvaluate.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/MathUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprAsRPN.java" />
       </list>
     </option>
   </component>
@@ -1083,6 +1073,104 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="expressions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skuared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="effects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1578,13 +1666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/MathUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1023">
-          <caret line="116" column="24" lean-forward="false" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.njol/Skript/2.2-dev28b/20701d5ff2d274fdc654dab7ce4064613514a530/skript-2.2-dev28b-sources.jar!/ch/njol/skript/lang/Literal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1635,22 +1716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprAsRPN.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="24" lean-forward="false" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprLevenshteinDistance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="43" lean-forward="false" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.11/28e0ad201304e4a4abf999ca0570b7cffc352c3c/junit-4.11-sources.jar!/org/junit/Assert.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
@@ -1690,34 +1755,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/effects/EffRegisterConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="22" lean-forward="false" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="28" lean-forward="false" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/Skuared.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="47" column="32" lean-forward="false" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprEvaluate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1735,6 +1776,56 @@
         <state relative-caret-position="17">
           <caret line="1" column="12" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/effects/EffRegisterConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="184" lean-forward="false" selection-start-line="33" selection-start-column="69" selection-end-line="33" selection-end-column="184" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprLevenshteinDistance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="100" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprEvaluate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/Skuared.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="91" column="11" lean-forward="true" selection-start-line="91" selection-start-column="11" selection-end-line="91" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/util/MathUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="649">
+          <caret line="125" column="4" lean-forward="false" selection-start-line="125" selection-start-column="4" selection-end-line="125" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/fr/syst3ms/skuared/expressions/ExprAsRPN.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="67" lean-forward="false" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
+          <folding>
+            <element signature="e#577#607#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

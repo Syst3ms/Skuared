@@ -15,7 +15,7 @@ public class MathUtils {
             return Double.NEGATIVE_INFINITY;
         } else if (Double.isNaN(a.doubleValue()) || Double.isNaN(b.doubleValue())) {
             return Double.NaN;
-        } else if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float)) {
+        } else if ((a instanceof Double || a instanceof Float) || (b instanceof Double || b instanceof Float)) {
             return a.doubleValue() + b.doubleValue();
         } else {
             return a.longValue() + b.longValue();
@@ -29,7 +29,7 @@ public class MathUtils {
             return Double.NEGATIVE_INFINITY;
         } else if (Double.isNaN(a.doubleValue()) || Double.isNaN(b.doubleValue())) {
             return Double.NaN;
-        } else if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float)) {
+        } else if ((a instanceof Double || a instanceof Float) || (b instanceof Double || b instanceof Float)) {
             return a.doubleValue() - b.doubleValue();
         } else {
             return a.longValue() - b.longValue();
@@ -43,7 +43,7 @@ public class MathUtils {
             return Double.NEGATIVE_INFINITY;
         } else if (Double.isNaN(a.doubleValue()) || Double.isNaN(b.doubleValue())) {
             return Double.NaN;
-        } else if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float)) {
+        } else if ((a instanceof Double || a instanceof Float) || (b instanceof Double || b instanceof Float)) {
             return a.doubleValue() * b.doubleValue();
         } else {
             return b.longValue() * a.longValue();
@@ -57,7 +57,7 @@ public class MathUtils {
             return Double.NEGATIVE_INFINITY;
         } else if (Double.isNaN(a.doubleValue()) || Double.isNaN(b.doubleValue())) {
             return Double.NaN;
-        } else if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float)) {
+        } else if ((a instanceof Double || a instanceof Float) || (b instanceof Double || b instanceof Float)) {
             return a.doubleValue() / b.doubleValue();
         } else {
             return a.longValue() / b.longValue();
@@ -71,7 +71,7 @@ public class MathUtils {
             return Double.NEGATIVE_INFINITY;
         } else if (Double.isNaN(a.doubleValue()) || Double.isNaN(b.doubleValue())) {
             return Double.NaN;
-        } else if ((a instanceof Double || a instanceof Float) && (b instanceof Double || b instanceof Float)) {
+        } else if ((a instanceof Double || a instanceof Float) || (b instanceof Double || b instanceof Float)) {
             return a.doubleValue() % b.doubleValue();
         } else {
             return a.longValue() % b.longValue();
@@ -123,7 +123,7 @@ public class MathUtils {
     }
 
     @Contract("null -> false")
-    public static boolean checkFunction(@Nullable Function<?> func) {
+    static boolean checkFunction(@Nullable Function<?> func) {
         return func != null && (func.getMaxParameters() == 1 && !ReflectionUtils.isSingle(func.getParameter(0)) ||
                                 Stream.of(func.getParameters())
                                       .allMatch(p -> Number.class.isAssignableFrom(p.getType().getC()) &&
