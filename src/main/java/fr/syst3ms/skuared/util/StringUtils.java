@@ -2,9 +2,10 @@ package fr.syst3ms.skuared.util;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -33,26 +34,41 @@ public class StringUtils {
             return true;
         } catch (NumberFormatException e) {
             try {
-                Double.parseDouble(n);
+                new BigInteger(n);
                 return true;
-            } catch (NumberFormatException e1) {
-                return false;
+            } catch (NumberFormatException e2) {
+                try {
+                    Double.parseDouble(n);
+                    return true;
+                } catch (NumberFormatException e1) {
+                    try {
+                        new BigDecimal(n);
+                        return true;
+                    } catch (NumberFormatException e3) {
+                        return false;
+                    }
+                }
             }
         }
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
     public static Number parseNumber(@NotNull String n) {
         assert isNumeric(n);
         try {
-            long l = Long.parseLong(n);
-            return l;
+            return Long.parseLong(n);
         } catch (NumberFormatException e) {
             try {
-                double d = Double.parseDouble(n);
-                return d;
+                return Double.parseDouble(n);
             } catch (NumberFormatException e1) {
-                return Double.NaN;
+                try {
+                    return new BigInteger(n);
+                } catch (NumberFormatException e2) {
+                    try {
+                        return new BigDecimal(n);
+                    } catch (NumberFormatException e3) {
+                        return Double.NaN;
+                    }
+                }
             }
         }
     }
@@ -60,6 +76,10 @@ public class StringUtils {
     public static String toString(Number n) {
         if (n instanceof Float || n instanceof Double) {
             return Double.toString(n.doubleValue());
+        } else if (n instanceof BigInteger) {
+            return ((BigInteger) n).toString(10);
+        } else if (n instanceof BigDecimal) {
+            return ((BigDecimal) n).toPlainString();
         } else {
             return Long.toString(n.longValue());
         }
@@ -69,7 +89,11 @@ public class StringUtils {
         try {
             return Long.parseLong(hex, 16);
         } catch (NumberFormatException e) {
-            return Double.NaN;
+            try {
+                return new BigInteger(hex, 16);
+            } catch (NumberFormatException e1) {
+                return Double.NaN;
+            }
         }
     }
 
@@ -77,7 +101,11 @@ public class StringUtils {
         try {
             return Long.parseLong(bin, 2);
         } catch (NumberFormatException e) {
-            return Double.NaN;
+            try {
+                return new BigInteger(bin, 2);
+            } catch (NumberFormatException e1) {
+                return Double.NaN;
+            }
         }
     }
 
@@ -85,32 +113,12 @@ public class StringUtils {
         try {
             return Long.parseLong(oct, 8);
         } catch (NumberFormatException e) {
-            return Double.NaN;
+            try {
+                return new BigInteger(oct, 8);
+            } catch (NumberFormatException e1) {
+                return Double.NaN;
+            }
         }
     }
 
-    public static String toString(@NotNull Map<?, ?> map) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<?, ?> e : map.entrySet()) {
-            sb.append(e.getKey()).append(" -> ").append(e.getValue()).append("\n");
-        }
-        return sb.toString();
-    }
-
-    public static int findClosing(@NotNull String text, char open, char close, int openPos) {
-        int closePos = openPos;
-        int counter = 1;
-        while (counter > 0) {
-            if (closePos + 1 == text.length())
-                return -1;
-            char c = text.charAt(++closePos);
-            if (c == open) {
-                counter++;
-            }
-            else if (c == close) {
-                counter--;
-            }
-        }
-        return closePos;
-    }
 }

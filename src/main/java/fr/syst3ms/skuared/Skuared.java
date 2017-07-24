@@ -49,7 +49,7 @@ public class Skuared extends JavaPlugin {
         addon = Skript.registerAddon(this);
         getLogger().log(Level.INFO, "Registering Skuared's syntax !");
         try {
-            getAddon().loadClasses("fr.syst3ms.skuared", "expressions", "effects");
+            getAddon().loadClasses("fr.syst3ms.skuared", "expressions", "effects", "util");
             mathRegister();
             getLogger().log(Level.INFO, "Successfully registered Skuared's syntaxes !");
         } catch (Exception e) {
@@ -58,7 +58,8 @@ public class Skuared extends JavaPlugin {
     }
 
     private void mathRegister() {
-        Functions.registerFunction(new JavaFunction<Number>("or", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("or", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes
+                .getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
             @NotNull
             @Override
             public Number[] execute(FunctionEvent functionEvent, Object[][] objects) {
@@ -66,7 +67,8 @@ public class Skuared extends JavaPlugin {
                 return new Number[]{a.longValue() | b.longValue()};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("and", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("and", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes
+                .getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
             @NotNull
             @Override
             public Number[] execute(FunctionEvent functionEvent, Object[][] objects) {
@@ -74,7 +76,8 @@ public class Skuared extends JavaPlugin {
                 return new Number[]{a.longValue() & b.longValue()};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("xor", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("xor", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes
+                .getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
             @NotNull
             @Override
             public Number[] execute(FunctionEvent functionEvent, Object[][] objects) {
@@ -82,7 +85,8 @@ public class Skuared extends JavaPlugin {
                 return new Number[]{a.longValue() ^ b.longValue()};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("nor", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("nor", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes
+                .getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
             @NotNull
             @Override
             public Number[] execute(FunctionEvent functionEvent, Object[][] objects) {
@@ -90,7 +94,8 @@ public class Skuared extends JavaPlugin {
                 return new Number[]{~(a.longValue() | b.longValue())};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("nand", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("nand", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes
+                .getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
             @NotNull
             @Override
             public Number[] execute(FunctionEvent functionEvent, Object[][] objects) {
@@ -98,7 +103,8 @@ public class Skuared extends JavaPlugin {
                 return new Number[]{~(a.longValue() & b.longValue())};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("nxor", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("nxor", new Parameter[]{new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null), new Parameter<>("b", Classes
+                .getExactClassInfo(Number.class), true, null)}, Classes.getExactClassInfo(Number.class), true) {
             @NotNull
             @Override
             public Number[] execute(FunctionEvent functionEvent, Object[][] objects) {

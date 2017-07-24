@@ -37,7 +37,7 @@ public class ExprLevenshteinDistance extends SimpleExpression<Number> {
     @Override
     protected Number[] get(Event event) {
         String f = Strings.nullToEmpty(first.getSingle(event)),
-               s = Strings.nullToEmpty(second.getSingle(event));
+                s = Strings.nullToEmpty(second.getSingle(event));
         return new Number[]{Algorithms.levenshtein(f, s, ignoreCase)};
     }
 
@@ -55,6 +55,7 @@ public class ExprLevenshteinDistance extends SimpleExpression<Number> {
     @NotNull
     @Override
     public String toString(Event event, boolean b) {
-        return "levenshtein distance between " + first.toString(event, b) + " and " + second.toString(event, b) + (ignoreCase ? " ignoring case" : "");
+        return "levenshtein distance between " + first.toString(event, b) + " and " + second.toString(event, b) +
+               (ignoreCase ? " ignoring case" : "");
     }
 }

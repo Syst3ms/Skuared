@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiFunction;
 
+@SuppressWarnings("unused")
 public class Operator<T, U, R> {
     @NotNull
     private final String symbol;
@@ -20,17 +21,17 @@ public class Operator<T, U, R> {
         this.operation = operation;
     }
 
-    public int getPrecedence() {
+    int getPrecedence() {
         return precedence;
     }
 
     @NotNull
-    public Associativity getAssociativity() {
+    Associativity getAssociativity() {
         return associativity;
     }
 
     @NotNull
-    public BiFunction<T, U, R> getOperation() {
+    BiFunction<T, U, R> getOperation() {
         return operation;
     }
 
