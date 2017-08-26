@@ -1,9 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: net.sacredlabyrinth.Phaed:PreciousStones:10.0.5">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sacredlabyrinth.Phaed/PreciousStones/10.0.5/2e75c0e2424714ec374f51f7319da7be2adf91b8/PreciousStones-10.0.5.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sacredlabyrinth.Phaed/PreciousStones/10.0.5/35d6966bbc1eefbd004b91c6121edf87f7ddcfca/PreciousStones-10.0.5.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sacredlabyrinth.Phaed/PreciousStones/10.0.5/8bce5f3cb0980f4e44719b7e7e89b992247294be/PreciousStones-10.0.5-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

@@ -12,41 +12,46 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ExprEvaluate extends SimpleExpression<Number> {
-    private Expression<String> expr;
+import java.util.List;
+
+/**
+ * What are you doing here ? You most likely don't need this anyway
+ */
+@SuppressWarnings("unchecked")
+public class ExprAsRPN extends SimpleExpression<String> {
+    private Expression<String> e;
 
     static {
         Skript.registerExpression(
-                ExprEvaluate.class,
-                Number.class,
+                ExprAsRPN.class,
+                String.class,
                 ExpressionType.COMBINED,
-                "eval[uate] [[math[ematic]] expr[ession]] %string%"
-        );
+                "r[[everse] ]p[[olish] ]n[otation] of %string%",
+                "%string% (as|converted to) r[[everse] ]p[[olish] ]n[otation]");
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        expr = (Expression<String>) expressions[0];
+        e = (Expression<String>) expressions[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Number[] get(Event event) {
-        String e = expr.getSingle(event);
-        if (e == null)
+    protected String[] get(Event event) {
+        String expr = e.getSingle(event);
+        if (expr == null)
             return null;
-        Number res = Algorithms.evaluate(e);
-        if (res == null)
+        List<String> rpn = Algorithms.shuntingYard(expr);
+        if (rpn == null)
             return null;
-        return new Number[]{res};
+        return new String[]{Algorithms.tokensToString(rpn)};
     }
 
-    @Nullable
+    @NotNull
     @Override
-    public Class<? extends Number> getReturnType() {
-        return Number.class;
+    public Class<? extends String> getReturnType() {
+        return String.class;
     }
 
     @Override
@@ -58,6 +63,6 @@ public class ExprEvaluate extends SimpleExpression<Number> {
     @NotNull
     @Override
     public String toString(Event event, boolean b) {
-        return "evaluate expr " + expr.toString(event, b);
+        return "RPN of " + e.toString(event, b);
     }
 }
