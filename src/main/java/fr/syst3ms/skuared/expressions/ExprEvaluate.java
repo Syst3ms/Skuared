@@ -1,63 +1,53 @@
 package fr.syst3ms.skuared.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.expressions.ExprParse;
+import ch.njol.skript.expressions.ExprParseError;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import fr.syst3ms.skuared.util.Algorithms;
+import fr.syst3ms.skuared.util.ReflectionUtils;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unchecked")
 public class ExprEvaluate extends SimpleExpression<Number> {
-    private Expression<String> expr;
+	private Expression<String> expr;
 
-    static {
-        Skript.registerExpression(
-                ExprEvaluate.class,
-                Number.class,
-                ExpressionType.COMBINED,
-                "eval[uate] [[math[ematic]] expr[ession]] %string%"
-        );
-    }
+	@Override
+	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+		expr = (Expression<String>) exprs[0];
+		return true;
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        expr = (Expression<String>) expressions[0];
-        return true;
-    }
+	@Nullable
+	@Override
+	protected Number[] get(Event e) {
+		String ex = expr.getSingle(e);
+		if (ex == null) {
+			ReflectionUtils.setStaticField(ExprParse.class, "lastError","The evaluated expression is undefined");
+			return null;
+		}
+		return new Number[]{Algorithms.evaluateRpn(ex)};
+	}
 
-    @Nullable
-    @Override
-    protected Number[] get(Event event) {
-        String e = expr.getSingle(event);
-        if (e == null)
-            return null;
-        Number res = Algorithms.evaluate(e);
-        if (res == null)
-            return null;
-        return new Number[]{res};
-    }
+	@NotNull
+	@Override
+	public Class<? extends Number> getReturnType() {
+		return Number.class;
+	}
 
-    @Nullable
-    @Override
-    public Class<? extends Number> getReturnType() {
-        return Number.class;
-    }
+	@Override
+	public boolean isSingle() {
+		return true;
+	}
 
-    @Override
-    @Contract("-> true")
-    public boolean isSingle() {
-        return true;
-    }
-
-    @NotNull
-    @Override
-    public String toString(Event event, boolean b) {
-        return "evaluate expr " + expr.toString(event, b);
-    }
+	@NotNull
+	@Override
+	public String toString(@Nullable Event e, boolean debug) {
+		return "evaluate " + expr.toString(e, debug);
+	}
 }
