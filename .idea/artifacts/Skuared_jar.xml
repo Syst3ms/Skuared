@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Skuared:jar">
-    <output-path>$USER_HOME$/Desktop/BuildTools/Spigot/Spigot-Server/target/test-server/plugins</output-path>
-    <root id="archive" name="Skuared.jar">
-      <element id="module-output" name="Skuared" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/Skript (3).jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>

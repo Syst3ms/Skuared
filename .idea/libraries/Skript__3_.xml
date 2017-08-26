@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Skript (3)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../BuildTools/Spigot/Spigot-API/target/spigot-api-1.12-R0.1-SNAPSHOT-shaded.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/Skript (4).jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
