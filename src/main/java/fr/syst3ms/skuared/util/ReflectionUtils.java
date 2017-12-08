@@ -20,13 +20,4 @@ public class ReflectionUtils {
 		}
 	}
 
-	public static void setStaticField(Class<?> c, String field, Object newValue) {
-		try {
-			Field f = c.getDeclaredField(field);
-			f.setAccessible(true);
-			f.set(null, newValue);
-		} catch (NoSuchFieldException | IllegalAccessException ignored) {
-		}
-	}
-
 }

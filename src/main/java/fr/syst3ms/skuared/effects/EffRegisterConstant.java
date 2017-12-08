@@ -43,7 +43,7 @@ public class EffRegisterConstant extends Effect {
 		Number v = value.getSingle(e);
 		if (v == null || s == null)
 			return;
-		if (Algorithms.NAME_PATTERN.matcher(s).matches()) {
+		if (!Algorithms.NAME_PATTERN.matcher(s).matches()) {
 			Skript.warning("'" + s +
 						   "' is not a valid constant symbol. A constant symbol must consist of either one letter or underscore optionally followed by multiple letters or digits");
 			return;

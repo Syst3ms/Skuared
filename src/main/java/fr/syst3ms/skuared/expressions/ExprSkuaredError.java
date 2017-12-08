@@ -17,7 +17,7 @@ public class ExprSkuaredError extends SimpleExpression<String> {
 
 	@Override
 	protected String[] get(Event e) {
-		return lastError == null ? new String[0] : new String[]{lastError};
+		return lastError == null ? null : new String[]{lastError};
 	}
 
 	@Override

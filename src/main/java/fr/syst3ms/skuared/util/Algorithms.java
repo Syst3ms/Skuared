@@ -4,6 +4,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
 import com.google.common.collect.Lists;
+import fr.syst3ms.skuared.expressions.ExprSkuaredError;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -109,7 +110,7 @@ public class Algorithms {
             } else if (NAME_PATTERN.matcher(token).matches() && !"(".equals(nextToken)) {
                 Number c = constants.get(token.toLowerCase());
                 if (c == null) {
-                    parseError("Unknown constant : " + token);
+                   parseError("Unknown constant : " + token);
                     return null;
                 }
                 output.add(StringUtils.toString(c));
@@ -175,15 +176,16 @@ public class Algorithms {
             }
             output.add(s);
         }
+        parseError(null);
         return output;
     }
 
-    private static void parseError(String error) {
-        Skript.error("[Skuared parsing] " + error);
+    private static void parseError(@Nullable String error) {
+        ExprSkuaredError.lastError = error != null ? "[Skuared parsing] " + error : null;
     }
 
-    private static void evalError(String error) {
-        Skript.error("[Skuared evaluation] " + error);
+    private static void evalError(@Nullable String error) {
+        ExprSkuaredError.lastError = error != null ? "[Skuared evaluation] " + error : null;
     }
 
     @Nullable
@@ -193,7 +195,7 @@ public class Algorithms {
 
     @Nullable
     @Contract("null -> null")
-    public static Number evaluateRpn(@Nullable List<String> rpn) {
+    static Number evaluateRpn(@Nullable List<String> rpn) {
         if (rpn == null)
             return null;
         Stack<Number> stack = new Stack<>();
@@ -207,6 +209,7 @@ public class Algorithms {
                 stack.push(op.getOperation().apply(b, a));
             } else if (NAME_PATTERN.matcher(s).matches()) {
                 Function<Number> func = (Function<Number>) Functions.getFunction(s);
+                assert func != null;
                 if (func.getMaxParameters() > 1 && !ReflectionUtils.isSingle(func.getParameter(0)) &&
                     func.getMaxParameters() != stack.size()) {
                     evalError("Wrong number of parameters for the '" + func.getName() + "' function");
@@ -230,6 +233,7 @@ public class Algorithms {
                 stack.push(func.execute(params)[0]);
             }
         }
+        evalError(null);
         return stack.pop();
     }
 
