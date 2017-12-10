@@ -1,6 +1,7 @@
 package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
+import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprSkuaredError;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class MathUtils {
@@ -216,16 +218,20 @@ public class MathUtils {
     }
 
     public static Number sigma(String expression, long start, long end) {
+        Skuared.getInstance().getLogger().log(Level.INFO, "Starting sigma");
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
+            Skuared.getInstance().getLogger().log(Level.INFO, "i :" + i);
             Algorithms.registerConstant("x", i);
             Number n = Algorithms.evaluate(expression);
+            Skuared.getInstance().getLogger().log(Level.INFO, expression + " evaluated to " + (n == null ? "null" : n.toString()));
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
             }
             result = result.add(new BigDecimal(n.toString()));
         }
+        Skuared.getInstance().getLogger().log(Level.INFO, "Result : " + result.toString());
         Algorithms.getConstants().remove("x");
         return result;
     }

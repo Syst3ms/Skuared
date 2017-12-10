@@ -1,6 +1,8 @@
 package fr.syst3ms.skuared.expressions;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -9,6 +11,15 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class ExprSkuaredError extends SimpleExpression<String> {
 	public static String lastError = null;
+
+	static {
+		Skript.registerExpression(
+				ExprSkuaredError.class,
+				String.class,
+				ExpressionType.SIMPLE,
+				"[the] last skuared error"
+		);
+	}
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {

@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
+import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprLastResult;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.MathUtils;
@@ -18,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
 
 /**
  * Async effect concept, with courtesy of Lubbock/w00tmaster
@@ -40,7 +42,8 @@ public class EffSigma extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffSigma.class, "(sum|sigma) %string% to (0¦%number%|1¦infinity) starting at [x=]%number%"); // Would've been so cool to put Σ, wouldn't it ?
+        Skuared.getInstance().getLogger().log(Level.INFO, "Registered sigma syntax");
+        Skript.registerEffect(EffSigma.class, "(sum|sigma) %string% to %number% starting at [x=]%number%", "(sum|sigma) %string% to infinity starting at [x=]%number%"); // Would've been so cool to put Σ, wouldn't it ?
     }
 
     private Expression<String> mathExpression;
@@ -51,9 +54,13 @@ public class EffSigma extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         mathExpression = (Expression<String>) exprs[0];
-        lastNumber = (Expression<Number>) exprs[1];
-        start = (Expression<Number>) exprs[2];
-        isInfinite = parseResult.mark == 1;
+        isInfinite = matchedPattern == 1;
+        if (isInfinite)
+            start = (Expression<Number>) exprs[1];
+        else {
+            lastNumber = (Expression<Number>) exprs[1];
+            start = (Expression<Number>) exprs[2];
+        }
         return true;
     }
 
