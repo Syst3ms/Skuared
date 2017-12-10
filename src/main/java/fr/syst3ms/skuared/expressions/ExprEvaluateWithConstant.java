@@ -16,14 +16,16 @@ public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
     private Expression<String> expr;
     private Expression<Number> constant;
 
+    /*
     static {
         Skript.registerExpression(
                 ExprEvaluateWithConstant.class,
                 Number.class,
                 ExpressionType.COMBINED,
-                "eval[uate] [[math[ematic]] expr[ession]] %string% with x=%number%"
+                "eval[uate] [[math[ematic]] expr[ession]] %string% with %number%"
         );
     }
+    */
 
     @SuppressWarnings("unchecked")
     @Override
