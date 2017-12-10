@@ -12,47 +12,46 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-/**
- * What are you doing here ? You most likely don't need this anyway
- */
-@SuppressWarnings("unchecked")
-public class ExprAsRPN extends SimpleExpression<String> {
-    private Expression<String> e;
+public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
+    private Expression<String> expr;
+    private Expression<Number> constant;
 
     static {
         Skript.registerExpression(
-                ExprAsRPN.class,
-                String.class,
+                ExprEvaluate.class,
+                Number.class,
                 ExpressionType.COMBINED,
-                "r[[everse] ]p[[olish] ]n[otation] of %string%",
-                "%string% (as|converted to) r[[everse] ]p[[olish] ]n[otation]"
+                "eval[uate] [[math[ematic]] expr[ession]] %string% with x=%number%"
         );
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        e = (Expression<String>) expressions[0];
+        expr = (Expression<String>) expressions[0];
+        constant = (Expression<Number>) expressions[1];
         return true;
     }
 
     @Nullable
     @Override
-    protected String[] get(Event event) {
-        String expr = e.getSingle(event);
-        if (expr == null)
+    protected Number[] get(Event event) {
+        String e = expr.getSingle(event);
+        Number x = constant.getSingle(event);
+        if (e == null || x == null)
             return null;
-        List<String> rpn = Algorithms.shuntingYard(expr);
-        if (rpn == null)
+        Algorithms.registerConstant("x", x);
+        Number res = Algorithms.evaluate(e);
+        Algorithms.getConstants().remove("x");
+        if (res == null)
             return null;
-        return new String[]{Algorithms.tokensToString(rpn)};
+        return new Number[]{res};
     }
 
-    @NotNull
+    @Nullable
     @Override
-    public Class<? extends String> getReturnType() {
-        return String.class;
+    public Class<? extends Number> getReturnType() {
+        return Number.class;
     }
 
     @Override
@@ -64,6 +63,6 @@ public class ExprAsRPN extends SimpleExpression<String> {
     @NotNull
     @Override
     public String toString(Event event, boolean b) {
-        return "RPN of " + e.toString(event, b);
+        return "evaluate expr " + expr.toString(event, b) + " with x=" + constant.toString(event, b);
     }
 }

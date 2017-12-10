@@ -5,6 +5,8 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import fr.syst3ms.skuared.util.Algorithms;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class ExprRpn extends SimplePropertyExpression<String, String> {
 
 	static {
@@ -22,10 +24,10 @@ public class ExprRpn extends SimplePropertyExpression<String, String> {
 		return "rpn";
 	}
 
-	@NotNull
 	@Override
 	public String convert(@NotNull String s) {
-		return Algorithms.tokensToString(s);
+		List<String> tokens = Algorithms.shuntingYard(s);
+		return tokens == null ? null : Algorithms.tokensToString(tokens);
 	}
 
 	@NotNull

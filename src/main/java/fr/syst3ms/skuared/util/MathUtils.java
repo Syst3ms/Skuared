@@ -1,6 +1,7 @@
 package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
+import fr.syst3ms.skuared.expressions.ExprSkuaredError;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,6 +12,8 @@ import java.math.RoundingMode;
 import java.util.stream.Stream;
 
 public class MathUtils {
+    public static final Double PHI = (1.0d + Math.sqrt(5.0d)) / 2.0d;
+
     public static Number plus(@NotNull Number a, @NotNull Number b) {
         if (a.doubleValue() == Double.POSITIVE_INFINITY || b.doubleValue() == Double.POSITIVE_INFINITY) {
             return Double.POSITIVE_INFINITY;
@@ -210,5 +213,44 @@ public class MathUtils {
             exponent = exponent.shiftRight(1);
         }
         return result;
+    }
+
+    public static Number sigma(String expression, long start, long end) {
+        BigDecimal result = BigDecimal.ZERO;
+        for (long i = start; i <= end; i++) {
+            Algorithms.registerConstant("x", i);
+            Number n = Algorithms.evaluate(expression);
+            if (n == null) {
+                ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
+                return Double.NaN;
+            }
+            result = result.add(new BigDecimal(n.toString()));
+        }
+        Algorithms.getConstants().remove("x");
+        return result;
+    }
+
+    public static Number chainedProduct(String expression, long start, long end) {
+        BigDecimal result = BigDecimal.ONE;
+        for (long i = start; i <= end; i++) {
+            Algorithms.registerConstant("x", i);
+            Number n = Algorithms.evaluate(expression);
+            if (n == null) {
+                ExprSkuaredError.lastError = "Invalid product expression (Error : " + ExprSkuaredError.lastError + ")";
+                return Double.NaN;
+            }
+            result = result.multiply(new BigDecimal(n.toString()));
+        }
+        Algorithms.getConstants().remove("x");
+        return result;
+    }
+
+    public static double gamma(double x) {
+        double tmp = (x - 0.5) * Math.log(x + 4.5) - (x + 4.5);
+        double ser = 1.0 + 76.18009173    / (x + 0)   - 86.50532033    / (x + 1)
+                     + 24.01409822    / (x + 2)   -  1.231739516   / (x + 3)
+                     +  0.00120858003 / (x + 4)   -  0.00000536382 / (x + 5);
+        double log = tmp + Math.log(ser * Math.sqrt(2 * Math.PI));
+        return Math.exp(log);
     }
 }
