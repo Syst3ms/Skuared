@@ -68,7 +68,7 @@ public class EffProduct extends Effect {
         CompletableFuture<String> request = CompletableFuture.supplyAsync(() ->
                 useWolfram
                         ? Algorithms.sendWolframApiRequest(String.format("product %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end))
-                        : MathUtils.chainedProduct(expr, end.longValue(), s.longValue()).toString(), threadPool
+                        : MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString(), threadPool
         );
         request.whenComplete((res, err) -> {
             if (err != null) {

@@ -218,20 +218,16 @@ public class MathUtils {
     }
 
     public static Number sigma(String expression, long start, long end) {
-        Skuared.getInstance().getLogger().log(Level.INFO, "Starting sigma");
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
-            Skuared.getInstance().getLogger().log(Level.INFO, "i :" + i);
             Algorithms.registerConstant("x", i);
             Number n = Algorithms.evaluate(expression);
-            Skuared.getInstance().getLogger().log(Level.INFO, expression + " evaluated to " + (n == null ? "null" : n.toString()));
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
             }
             result = result.add(new BigDecimal(n.toString()));
         }
-        Skuared.getInstance().getLogger().log(Level.INFO, "Result : " + result.toString());
         Algorithms.getConstants().remove("x");
         return result;
     }

@@ -74,7 +74,7 @@ public class EffSigma extends Effect {
         CompletableFuture<String> request = CompletableFuture.supplyAsync(() ->
                 useWolfram
                     ? Algorithms.sendWolframApiRequest(String.format("sum %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end))
-                    : MathUtils.sigma(expr, end.longValue(), s.longValue()).toString(),
+                    : MathUtils.sigma(expr, s.longValue(), end.longValue()).toString(),
                 threadPool
         );
         request.whenComplete((res, err) -> {
