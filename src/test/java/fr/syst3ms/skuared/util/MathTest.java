@@ -8,9 +8,6 @@ import static fr.syst3ms.skuared.util.Algorithms.registerConstant;
 import static fr.syst3ms.skuared.util.Algorithms.registerOperator;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by ARTHUR on 09/12/2017.
- */
 public class MathTest {
 
     static {
@@ -32,8 +29,8 @@ public class MathTest {
 
     @Test
     public void sigma() throws Exception {
-        assertEquals(BigDecimal.valueOf(55L), MathUtils.sigma("x", 1L, 10L));
-        assertEquals(BigDecimal.valueOf(1023.0D), MathUtils.sigma("2^x/2", 1L, 10L));
+        assertEquals(55, MathUtils.sigma("x", 1L, 10L).intValue());
+        assertEquals(1023.0d, MathUtils.sigma("2^x/2", 1L, 10L).doubleValue(), 0.001);
         assertEquals(24, MathUtils.sigma("(1+1/x)^x", 1L, 10L).intValue());
     }
 
@@ -41,7 +38,7 @@ public class MathTest {
     public void chainedProduct() throws Exception {
         assertEquals(Math.round(MathUtils.gamma(11)), MathUtils.chainedProduct("x", 1L, 10L).intValue());
         assertEquals(1.0d / 3628800.0d, MathUtils.chainedProduct("1/x", 1L, 10L).doubleValue(), 1e-5d);
-        assertEquals((Math.exp(55.0d) / 3628800.0d) / 1e17d, MathUtils.chainedProduct("e^x/x", 1L, 10L).doubleValue() / 1e17d, 0.0001);
+        assertEquals((Math.exp(55.0d) / 3628800.0d) / 1e17d, (MathUtils.chainedProduct("e^x/x", 1L, 10L).doubleValue() / 1e17d), 0.0001);
     }
 
     @Test

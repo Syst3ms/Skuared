@@ -32,11 +32,7 @@ public class Skuared extends JavaPlugin {
         startupChecks();
         getLogger().log(Level.INFO, "Starting up Skuared...");
         setupSyntax();
-        if (config != null && config.contains("wolfram-id")) {
-            String s = config.getString("wolfram-id");
-            if (s.matches("[A-Z0-9]+-[A-Z0-9]+"))
-                wolframId = s;
-        }
+        setupConfig();
         getLogger().log(Level.INFO, "Successfully started up Skuared !");
     }
 
@@ -58,9 +54,19 @@ public class Skuared extends JavaPlugin {
         config = getConfig();
     }
 
+    private void setupConfig() {
+        if (!getDataFolder().exists()) {
+            config.addDefault("wolfram-id", "");
+            saveDefaultConfig();
+        }
+        if (config.contains("wolfram-id")) {
+            String s = config.getString("wolfram-id");
+            if (s.matches("[A-Z0-9]+-[A-Z0-9]+"))
+                wolframId = s;
+        }
+    }
+
     private void setupSyntax() {
-        int i = 0;
-        i /= 2;
         addon = Skript.registerAddon(this);
         getLogger().log(Level.INFO, "Registering Skuared's syntax !");
         try {
