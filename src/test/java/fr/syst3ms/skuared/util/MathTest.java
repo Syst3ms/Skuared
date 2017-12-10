@@ -2,8 +2,6 @@ package fr.syst3ms.skuared.util;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
-
 import static fr.syst3ms.skuared.util.Algorithms.registerConstant;
 import static fr.syst3ms.skuared.util.Algorithms.registerOperator;
 import static org.junit.Assert.assertEquals;

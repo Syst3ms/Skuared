@@ -218,7 +218,6 @@ public class MathUtils {
     }
 
     public static Number sigma(String expression, long start, long end) {
-        Skuared.getInstance().getLogger().log(Level.INFO, "Starting sigma");
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
             Algorithms.registerConstant("x", i);
@@ -234,7 +233,6 @@ public class MathUtils {
     }
 
     public static Number chainedProduct(String expression, long start, long end) {
-        Skuared.getInstance().getLogger().log(Level.INFO, "Starting chain product");
         BigDecimal result = BigDecimal.ONE;
         for (long i = start; i <= end; i++) {
             Algorithms.registerConstant("x", i);

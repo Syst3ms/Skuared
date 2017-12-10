@@ -43,7 +43,7 @@ public class EffProduct extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffProduct.class, "(product|pi) %string% to %number% starting at [x=]%number%", "(product|pi) %string% to infinity starting at [x=]%number%"); // Would've been so cool to put Π, wouldn't it ?
+        Skript.registerEffect(EffProduct.class, "(product|pi) %string% from %number% to %number%", "(product|pi) %string% from %number% to infinity"); // Would've been so cool to put Π, wouldn't it ?
     }
 
     private Expression<String> mathExpression;
@@ -55,11 +55,9 @@ public class EffProduct extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         mathExpression = (Expression<String>) exprs[0];
         isInfinite = matchedPattern == 1;
-        if (isInfinite) {
-            start = (Expression<Number>) exprs[1];
-        } else {
-            lastNumber = (Expression<Number>) exprs[1];
-            start = (Expression<Number>) exprs[2];
+        start = (Expression<Number>) exprs[1];
+        if (!isInfinite) {
+            lastNumber = (Expression<Number>) exprs[2];
         }
         return true;
     }
@@ -71,17 +69,12 @@ public class EffProduct extends Effect {
         if (expr == null || end == null || s == null)
             return;
         boolean useWolfram = isInfinite || end.intValue() > Short.MAX_VALUE;
-        CompletableFuture<String> request = CompletableFuture.supplyAsync(() -> {
-                    if (useWolfram) {
-                        return Algorithms.sendWolframApiRequest(String.format("product %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end));
-                    } else {
-                        Skuared.getInstance().getLogger().log(Level.INFO, "Calling chainProduct()");
-                        return MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString();
-                    }
-                }, threadPool
+        CompletableFuture<String> request = CompletableFuture.supplyAsync(() ->
+                useWolfram
+                        ? Algorithms.sendWolframApiRequest(String.format("product %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end))
+                        : MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString(), threadPool
         );
         request.whenComplete((res, err) -> {
-            Skuared.getInstance().getLogger().log(Level.INFO, "Product request complete");
             if (err != null) {
                 err.printStackTrace();
             }

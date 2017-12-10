@@ -36,7 +36,13 @@ public class EffLimit extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffLimit.class, "limit %string% as x->%number% [from (0¦below|1¦above)]", "limit %string% as x->[(0¦-)]infinity");
+        Skript.registerEffect(
+                EffLimit.class,
+                "limit %string% as x approaches %number%",
+                "limit %string% as x approaches %number% from above",
+                "limit %string% as x approaches infinity",
+                "limit %string% as x approaches -infinity"
+        );
     }
 
     private Expression<String> expression;
@@ -47,7 +53,7 @@ public class EffLimit extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         expression = (Expression<String>) exprs[0];
-        args = (byte) ((matchedPattern * 2) ^ parseResult.mark);
+        args = (byte) matchedPattern;
         if ((args & 2) == 0)
             approach = (Expression<Number>) exprs[1];
         return true;

@@ -8,9 +8,11 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
 import fr.syst3ms.skuared.expressions.ExprLastResult;
+import fr.syst3ms.skuared.util.Algorithms;
 import org.bukkit.event.Event;
 
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -60,7 +62,7 @@ public class EffIntegrate extends Effect {
         Number u = upperBound == null ? null : upperBound.getSingle(e), l = lowerBound == null ? null : lowerBound.getSingle(e);
         if (expr == null || isDefinite && (u == null || l == null))
             return;
-        CompletableFuture<String> request = CompletableFuture.supplyAsync(() -> isDefinite ? String.format("integrate %s from %s to %s", expr, u, l) : String.format("integrate %s", expr), threadPool);
+        CompletableFuture<String> request = CompletableFuture.supplyAsync(() -> Algorithms.sendWolframApiRequest(isDefinite ? String.format("integrate %s from %s to %s", expr, u, l) : String.format("integrate %s", expr)), threadPool);
         request.whenComplete((res, err) -> {
             if (err != null) {
                 err.printStackTrace();
