@@ -55,9 +55,9 @@ public class EffSigma extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         mathExpression = (Expression<String>) exprs[0];
         isInfinite = matchedPattern == 1;
-        if (isInfinite)
+        if (isInfinite) {
             start = (Expression<Number>) exprs[1];
-        else {
+        } else {
             lastNumber = (Expression<Number>) exprs[1];
             start = (Expression<Number>) exprs[2];
         }

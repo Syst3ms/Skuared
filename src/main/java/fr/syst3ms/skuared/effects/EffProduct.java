@@ -41,7 +41,7 @@ public class EffProduct extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffProduct.class, "(product|pi) %string% to (0¦%number%|1¦infinity) starting at [x=]%number%"); // Would've been so cool to put Π, wouldn't it ?
+        Skript.registerEffect(EffSigma.class, "(product|pi) %string% to %number% starting at [x=]%number%", "(product|pi) %string% to infinity starting at [x=]%number%"); // Would've been so cool to put Π, wouldn't it ?
     }
 
     private Expression<String> mathExpression;
@@ -52,9 +52,13 @@ public class EffProduct extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         mathExpression = (Expression<String>) exprs[0];
-        lastNumber = (Expression<Number>) exprs[1];
-        start = (Expression<Number>) exprs[2];
-        isInfinite = parseResult.mark == 1;
+        isInfinite = matchedPattern == 1;
+        if (isInfinite) {
+            start = (Expression<Number>) exprs[1];
+        } else {
+            lastNumber = (Expression<Number>) exprs[1];
+            start = (Expression<Number>) exprs[2];
+        }
         return true;
     }
 
