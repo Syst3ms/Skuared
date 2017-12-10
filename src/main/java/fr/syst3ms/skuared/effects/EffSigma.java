@@ -42,7 +42,6 @@ public class EffSigma extends Effect {
     }
 
     static {
-        Skuared.getInstance().getLogger().log(Level.INFO, "Registered sigma syntax");
         Skript.registerEffect(EffSigma.class, "(sum|sigma) %string% to %number% starting at [x=]%number%", "(sum|sigma) %string% to infinity starting at [x=]%number%"); // Would've been so cool to put Σ, wouldn't it ?
     }
 
@@ -74,7 +73,7 @@ public class EffSigma extends Effect {
         CompletableFuture<String> request = CompletableFuture.supplyAsync(() ->
                 useWolfram
                     ? Algorithms.sendWolframApiRequest(String.format("sum %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end))
-                    : MathUtils.sigma(expr, s.longValue(), end.longValue()).toString(),
+                    : MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString(),
                 threadPool
         );
         request.whenComplete((res, err) -> {
