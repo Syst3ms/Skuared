@@ -55,15 +55,10 @@ public class Skuared extends JavaPlugin {
     }
 
     private void setupConfig() {
-        if (!getDataFolder().exists()) {
-            config.addDefault("wolfram-id", "");
-            saveDefaultConfig();
-        }
-        if (config.contains("wolfram-id")) {
-            String s = config.getString("wolfram-id");
-            if (s.matches("[A-Z0-9]+-[A-Z0-9]+"))
-                wolframId = s;
-        }
+        saveDefaultConfig();
+        String s = config.getString("wolfram-id");
+        if (s.matches("[A-Z0-9]+-[A-Z0-9]+"))
+            wolframId = s;
     }
 
     private void setupSyntax() {
@@ -133,16 +128,16 @@ public class Skuared extends JavaPlugin {
                 return new Number[]{~(a.longValue() ^ b.longValue())};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("gamma", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)},
-                Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("gamma", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
+                .getExactClassInfo(Number.class), true) {
             @Override
             public Number[] execute(FunctionEvent e, Object[][] objects) {
                 Number x = (Number) objects[0][0];
                 return new Number[]{MathUtils.gamma(x.doubleValue())};
             }
         });
-        Functions.registerFunction(new JavaFunction<Number>("factorial", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)},
-                Classes.getExactClassInfo(Number.class), true) {
+        Functions.registerFunction(new JavaFunction<Number>("factorial", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
+                .getExactClassInfo(Number.class), true) {
             @Override
             public Number[] execute(FunctionEvent e, Object[][] objects) {
                 Number x = (Number) objects[0][0];
