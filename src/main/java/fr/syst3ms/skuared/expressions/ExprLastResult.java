@@ -1,6 +1,8 @@
 package fr.syst3ms.skuared.expressions;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -8,8 +10,17 @@ import fr.syst3ms.skuared.util.Algorithms;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-public class ExprLastResult extends SimpleExpression {
+public class ExprLastResult extends SimpleExpression<Object> {
     public static String lastResult;
+
+    static {
+        Skript.registerExpression(
+                ExprLastResult.class,
+                Object.class,
+                ExpressionType.SIMPLE,
+                "[the] last skuared result"
+        );
+    }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {

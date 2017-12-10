@@ -18,7 +18,7 @@ public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
 
     static {
         Skript.registerExpression(
-                ExprEvaluate.class,
+                ExprEvaluateWithConstant.class,
                 Number.class,
                 ExpressionType.COMBINED,
                 "eval[uate] [[math[ematic]] expr[ession]] %string% with x=%number%"
