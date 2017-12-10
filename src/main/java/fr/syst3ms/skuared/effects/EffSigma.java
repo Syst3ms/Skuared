@@ -73,10 +73,11 @@ public class EffSigma extends Effect {
         CompletableFuture<String> request = CompletableFuture.supplyAsync(() ->
                 useWolfram
                     ? Algorithms.sendWolframApiRequest(String.format("sum %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end))
-                    : MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString(),
+                    : MathUtils.sigma(expr, s.longValue(), end.longValue()).toString(),
                 threadPool
         );
         request.whenComplete((res, err) -> {
+            Skuared.getInstance().getLogger().log(Level.INFO, "Sigma request complete");
             if (err != null) {
                 err.printStackTrace();
             }

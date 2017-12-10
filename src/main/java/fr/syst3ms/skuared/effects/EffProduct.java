@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
+import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprLastResult;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.MathUtils;
@@ -18,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
 
 /**
  * Async effect concept, with courtesy of Lubbock/w00tmaster
@@ -41,7 +43,7 @@ public class EffProduct extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffSigma.class, "(product|pi) %string% to %number% starting at [x=]%number%", "(product|pi) %string% to infinity starting at [x=]%number%"); // Would've been so cool to put Π, wouldn't it ?
+        Skript.registerEffect(EffProduct.class, "(product|pi) %string% to %number% starting at [x=]%number%", "(product|pi) %string% to infinity starting at [x=]%number%"); // Would've been so cool to put Π, wouldn't it ?
     }
 
     private Expression<String> mathExpression;
@@ -69,12 +71,17 @@ public class EffProduct extends Effect {
         if (expr == null || end == null || s == null)
             return;
         boolean useWolfram = isInfinite || end.intValue() > Short.MAX_VALUE;
-        CompletableFuture<String> request = CompletableFuture.supplyAsync(() ->
-                useWolfram
-                        ? Algorithms.sendWolframApiRequest(String.format("product %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end))
-                        : MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString(), threadPool
+        CompletableFuture<String> request = CompletableFuture.supplyAsync(() -> {
+                    if (useWolfram) {
+                        return Algorithms.sendWolframApiRequest(String.format("product %s,x=%s to %s", expr, start, isInfinite ? "infinity" : end));
+                    } else {
+                        Skuared.getInstance().getLogger().log(Level.INFO, "Calling chainProduct()");
+                        return MathUtils.chainedProduct(expr, s.longValue(), end.longValue()).toString();
+                    }
+                }, threadPool
         );
         request.whenComplete((res, err) -> {
+            Skuared.getInstance().getLogger().log(Level.INFO, "Product request complete");
             if (err != null) {
                 err.printStackTrace();
             }
