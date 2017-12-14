@@ -26,7 +26,7 @@ public class ExprRpn extends SimplePropertyExpression<String, String> {
 
 	@Override
 	public String convert(@NotNull String s) {
-		List<String> tokens = Algorithms.shuntingYard(s);
+		List<String> tokens = Algorithms.shuntingYard(s, false);
 		return tokens == null ? null : Algorithms.tokensToString(tokens);
 	}
 

@@ -220,8 +220,7 @@ public class MathUtils {
     public static Number sigma(String expression, long start, long end) {
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
-            Algorithms.registerConstant("x", i);
-            Number n = Algorithms.evaluate(expression);
+            Number n = Algorithms.evaluate(expression, i);
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
@@ -236,7 +235,7 @@ public class MathUtils {
         BigDecimal result = BigDecimal.ONE;
         for (long i = start; i <= end; i++) {
             Algorithms.registerConstant("x", i);
-            Number n = Algorithms.evaluate(expression);
+            Number n = Algorithms.evaluate(expression, i);
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid product expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;

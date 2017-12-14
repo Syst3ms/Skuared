@@ -37,7 +37,7 @@ public class ExprEvaluate extends SimpleExpression<Number> {
         String e = expr.getSingle(event);
         if (e == null)
             return null;
-        Number res = Algorithms.evaluate(e);
+        Number res = Algorithms.evaluate(e, null);
         if (res == null)
             return null;
         return new Number[]{res};

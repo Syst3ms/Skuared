@@ -2,8 +2,8 @@ package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.math.BigIntegerMath;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import fr.syst3ms.skuared.Skuared;
@@ -16,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -121,20 +120,18 @@ public class Algorithms {
         return output.substring(0, 4);
     }
 
-    private static List<String> processImplicit(@NotNull String orig) {
+    private static List<String> processImplicit(@NotNull String orig, boolean hasX) {
         List<String> tokens = StringUtils.getAllMatches(orig.replace(" ", ""), TOKEN_PATTERN);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tokens.size(); i++) {
-            String token = tokens.get(i), nextToken = i + 1 < tokens.size() ? tokens.get(i + 1) : null;
-            if (StringUtils.isNumeric(token) &&
-                (nextToken != null && NAME_PATTERN.matcher(nextToken).matches() || "(".equals(nextToken)) ||
-                ")".equals(token) && "(".equals(nextToken)) {
+            String token = tokens.get(i), nextToken = Strings.nullToEmpty(i + 1 < tokens.size() ? tokens.get(i + 1) : null);
+            boolean a = StringUtils.isNumeric(token) && ("(".equals(nextToken) || constants.containsKey(nextToken) || (hasX && "x"
+                    .equalsIgnoreCase(nextToken)));
+            boolean b = (constants.containsKey(token) || (hasX && "x".equalsIgnoreCase(nextToken))) && "(".equals(nextToken);
+            boolean c = ")".equals(token) && "(".equals(nextToken);
+            boolean hasImplicit = a || b || c;
+            if (hasImplicit) {
                 sb.append(token).append("*");
-            } else if (StringUtils.isNumeric(token) && nextToken != null && "!".equals(nextToken)) {
-                Number n = StringUtils.parseNumber(token);
-                BigInteger factorial = BigIntegerMath.factorial(n.intValue());
-                sb.append(factorial.toString());
-                i++;
             } else {
                 sb.append(token);
             }
@@ -143,12 +140,12 @@ public class Algorithms {
     }
 
     @Nullable
-    public static List<String> shuntingYard(@NotNull String orig) {
-        return shuntingYard(processImplicit(orig));
+    public static List<String> shuntingYard(@NotNull String orig, boolean hasX) {
+        return shuntingYard(processImplicit(orig, hasX), hasX);
     }
 
     @Nullable
-    private static List<String> shuntingYard(@NotNull List<String> tokens) throws ArithmeticException {
+    private static List<String> shuntingYard(@NotNull List<String> tokens, boolean hasX) throws ArithmeticException {
         List<String> output = new ArrayList<>();
         Stack<String> stack = new Stack<>();
         for (int i = 0; i < tokens.size(); i++) {
@@ -179,12 +176,16 @@ public class Algorithms {
                 }
                 stack.add(token);
             } else if (NAME_PATTERN.matcher(token).matches() && !"(".equals(nextToken)) {
-                Number c = constants.get(token.toLowerCase());
-                if (c == null) {
+                String name = token.toLowerCase();
+                if (name.equals("x") && hasX) {
+                    output.add("x");
+                } else if (constants.containsKey(name)) {
+                    Number c = constants.get(name);
+                    output.add(StringUtils.toString(c));
+                } else {
                     parseError("Unknown constant : " + token);
                     return null;
                 }
-                output.add(StringUtils.toString(c));
             } else if (NAME_PATTERN.matcher(token).matches()) {
                 Function<?> func = Functions.getFunction(token);
                 if (MathUtils.checkFunction(func)) {
@@ -259,19 +260,21 @@ public class Algorithms {
         ExprSkuaredError.lastError = error != null ? "[Skuared evaluation] " + error : null;
     }
 
-    @Nullable
-    public static Number evaluate(@NotNull String expr) {
-        return evaluateRpn(shuntingYard(expr));
+    public static Number evaluate(@NotNull String expr, Number xValue) {
+        return evaluateRpn(shuntingYard(expr, xValue != null), xValue);
     }
 
     @Nullable
-    @Contract("null -> null")
-    static Number evaluateRpn(@Nullable List<String> rpn) {
+    @Contract("null, _ -> null")
+    private static Number evaluateRpn(@Nullable List<String> rpn, Number xValue) {
         if (rpn == null) return null;
         Stack<Number> stack = new Stack<>();
         for (String s : rpn) {
             if (StringUtils.isNumeric(s)) {
                 stack.push(StringUtils.parseNumber(s).doubleValue());
+            } else if (s.equals("x")) {
+                assert xValue != null;
+                stack.push(xValue);
             } else if (arithmeticOperators.containsKey(s)) {
                 Number a = stack.pop(), b = stack.pop();
                 Operator<Number, Number, Number> op = arithmeticOperators.get(s);
@@ -279,9 +282,8 @@ public class Algorithms {
             } else if (NAME_PATTERN.matcher(s).matches()) {
                 Function<Number> func = (Function<Number>) Functions.getFunction(s);
                 assert func != null;
-                if (func.getMaxParameters() > 1 &&
-                    !ReflectionUtils.isSingle(func.getParameter(0)) &&
-                    func.getMaxParameters() != stack.size()) {
+                if (func.getMaxParameters() > 1 && !ReflectionUtils.isSingle(func.getParameter(0)) && func.getMaxParameters() != stack
+                        .size()) {
                     evalError("Wrong number of parameters for the '" + func.getName() + "' function");
                     return Double.NaN;
                 }
@@ -295,7 +297,7 @@ public class Algorithms {
                         params[i][0] = stack.pop();
                     }
                 }
-                if (func.getName().equals("tan") && params.length == 1 && params[0][0].intValue() == 90) {
+                if (func.getName().equals("tan") && params.length == 1 && (params[0][0].intValue() - 90) % 180 == 0) {
                     stack.push(Double.POSITIVE_INFINITY);
                     continue;
                 }

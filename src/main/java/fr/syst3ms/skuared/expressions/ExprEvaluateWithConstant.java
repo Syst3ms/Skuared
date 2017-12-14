@@ -16,7 +16,6 @@ public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
     private Expression<String> expr;
     private Expression<Number> constant;
 
-    /*
     static {
         Skript.registerExpression(
                 ExprEvaluateWithConstant.class,
@@ -25,7 +24,6 @@ public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
                 "eval[uate] [[math[ematic]] expr[ession]] %string% with %number%"
         );
     }
-    */
 
     @SuppressWarnings("unchecked")
     @Override
@@ -42,9 +40,7 @@ public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
         Number x = constant.getSingle(event);
         if (e == null || x == null)
             return null;
-        Algorithms.registerConstant("x", x);
-        Number res = Algorithms.evaluate(e);
-        Algorithms.getConstants().remove("x");
+        Number res = Algorithms.evaluate(e, x);
         if (res == null)
             return null;
         return new Number[]{res};

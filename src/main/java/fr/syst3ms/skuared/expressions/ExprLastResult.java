@@ -32,7 +32,7 @@ public class ExprLastResult extends SimpleExpression<Object> {
         if (lastResult.contains("x")) {
             return new String[]{lastResult};
         } else {
-            Number result = Algorithms.evaluate(lastResult);
+            Number result = Algorithms.evaluate(lastResult, null);
             return result == null ? null : new Number[]{result};
         }
     }

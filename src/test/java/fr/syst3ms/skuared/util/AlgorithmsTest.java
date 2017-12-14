@@ -30,18 +30,20 @@ public class AlgorithmsTest {
 
     @Test
     public void shuntingYardTest() throws Exception {
-        assertEquals(Collections.singletonList(StringUtils.toString(Math.E)), shuntingYard("e"));
-        assertEquals(Arrays.asList("5", "2", "3", "+", "*"), shuntingYard("5(2 + 3)"));
-        assertEquals(Arrays.asList("5", "2", "+", "3", "4", "+", "*"), shuntingYard("(5 + 2)(3 + 4)"));
+        assertEquals(Collections.singletonList(StringUtils.toString(Math.E)), shuntingYard("e", false));
+        assertEquals(Arrays.asList("5", "2", "3", "+", "*"), shuntingYard("5(2 + 3)", false));
+        assertEquals(Arrays.asList("5", "2", "+", "3", "4", "+", "*"), shuntingYard("(5 + 2)(3 + 4)", false));
     }
 
     @Test
     public void evaluateTest() throws Exception {
-        assertEquals(21.0, evaluate("5 + 2 * 8").doubleValue(), 0.0);
-        assertEquals(56.0, evaluate("8(5 + 2)").doubleValue(), 0.0);
-        assertEquals(56.0, evaluate("(5 + 2) * 8").doubleValue(), 0.0);
-        assertEquals(19.7392088021, evaluate("2pi^2").doubleValue(), Skript.EPSILON);
-        assertEquals(MathUtils.PHI, evaluate("phi").doubleValue(), Skript.EPSILON);
+        assertEquals(21.0, evaluate("5 + 2 * 8", null).doubleValue(), 0.0);
+        assertEquals(56.0, evaluate("8(5 + 2)", null).doubleValue(), 0.0);
+        assertEquals(56.0, evaluate("(5 + 2) * 8", null).doubleValue(), 0.0);
+        assertEquals(19.7392088021, evaluate("2pi^2", null).doubleValue(), Skript.EPSILON);
+        assertEquals(MathUtils.PHI, evaluate("phi", null).doubleValue(), Skript.EPSILON);
+        assertEquals(8.0, evaluate("2(x+2)", 2.0).doubleValue(), Skript.EPSILON);
+        assertEquals(77.8802336483881, evaluate("2^(x*pi)", 2.0).doubleValue(), Skript.EPSILON);
     }
 
 }

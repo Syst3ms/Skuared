@@ -39,7 +39,11 @@ public class EffDerivate extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffDerivate.class, "((calculate|compute) derivative of|derivate) %string% [(1¦at x=%number%)]", "d/dx\\(%string%\\) [(1¦where x=%number%)]");
+        Skript.registerEffect(
+                EffDerivate.class,
+                "((calculate|compute) derivative of|derivate) %string% [at x=%number%]",
+                "d/dx\\(%string%\\) [where x=%number%]"
+        );
     }
 
     private Expression<String> expression;
@@ -50,7 +54,7 @@ public class EffDerivate extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         expression = (Expression<String>) exprs[0];
-        hasPoint = parseResult.mark == 1;
+        hasPoint = exprs[1] != null;
         if (hasPoint)
             point = (Expression<Number>) exprs[1];
         return true;

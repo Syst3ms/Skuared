@@ -37,7 +37,7 @@ public class EffIntegrate extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffIntegrate.class, "((calculate|compute) integral of|integrate) %string% [(1¦from %number% to %number%)]");
+        Skript.registerEffect(EffIntegrate.class, "((calculate|compute) integral of|integrate) %string% [from %number% to %number%]");
     }
 
     private Expression<String> expression;
@@ -48,7 +48,7 @@ public class EffIntegrate extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         expression = (Expression<String>) exprs[0];
-        isDefinite = parseResult.mark == 1;
+        isDefinite = exprs[1] != null && exprs[2] != null;
         if (isDefinite) {
             lowerBound = (Expression<Number>) exprs[1];
             upperBound = (Expression<Number>) exprs[2];
