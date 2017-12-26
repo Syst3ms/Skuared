@@ -1,8 +1,9 @@
 package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
-import fr.syst3ms.skuared.Skuared;
+import ch.njol.skript.lang.function.Functions;
 import fr.syst3ms.skuared.expressions.ExprSkuaredError;
+import fr.syst3ms.skuared.util.evaluation.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.HashMap;
-import java.util.logging.Level;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class MathUtils {
@@ -29,11 +30,8 @@ public class MathUtils {
         } else if (a instanceof BigInteger || b instanceof BigInteger) {
             return new BigInteger(a.toString()).add(new BigInteger(b.toString()));
         } else if (a instanceof BigDecimal || b instanceof BigDecimal) {
-            return new BigDecimal(
-                    a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).add(new BigDecimal(
-                    b instanceof BigDecimal ? ((BigDecimal) b)
-                            .toPlainString() : b.toString())
-            );
+            return new BigDecimal(a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).add(new BigDecimal(b instanceof BigDecimal ? ((BigDecimal) b)
+                .toPlainString() : b.toString()));
         } else {
             try {
                 return Math.addExact(a.longValue(), b.longValue());
@@ -55,11 +53,8 @@ public class MathUtils {
         } else if (a instanceof BigInteger || b instanceof BigInteger) {
             return new BigInteger(a.toString()).subtract(new BigInteger(b.toString()));
         } else if (a instanceof BigDecimal || b instanceof BigDecimal) {
-            return new BigDecimal(
-                    a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).subtract(new BigDecimal(
-                    b instanceof BigDecimal ? ((BigDecimal) b)
-                            .toPlainString() : b.toString())
-            );
+            return new BigDecimal(a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).subtract(new BigDecimal(b instanceof BigDecimal ? ((BigDecimal) b)
+                .toPlainString() : b.toString()));
         } else {
             try {
                 return Math.subtractExact(a.longValue(), b.longValue());
@@ -85,11 +80,8 @@ public class MathUtils {
         } else if (a instanceof BigInteger || b instanceof BigInteger) {
             return new BigInteger(a.toString()).multiply(new BigInteger(b.toString()));
         } else if (a instanceof BigDecimal || b instanceof BigDecimal) {
-            return new BigDecimal(
-                    a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).multiply(new BigDecimal(
-                    b instanceof BigDecimal ? ((BigDecimal) b)
-                            .toPlainString() : b.toString())
-            );
+            return new BigDecimal(a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).multiply(new BigDecimal(b instanceof BigDecimal ? ((BigDecimal) b)
+                .toPlainString() : b.toString()));
         } else {
             try {
                 return Math.multiplyExact(a.longValue(), b.longValue());
@@ -115,11 +107,8 @@ public class MathUtils {
         } else if (a instanceof BigInteger || b instanceof BigInteger) {
             return new BigInteger(a.toString()).divide(new BigInteger(b.toString()));
         } else if (a instanceof BigDecimal || b instanceof BigDecimal) {
-            return new BigDecimal(
-                    a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).divide(new BigDecimal(
-                    b instanceof BigDecimal ? ((BigDecimal) b)
-                            .toPlainString() : b.toString()), RoundingMode.HALF_UP
-            );
+            return new BigDecimal(a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).divide(new BigDecimal(b instanceof BigDecimal ? ((BigDecimal) b)
+                .toPlainString() : b.toString()), RoundingMode.HALF_UP);
         } else {
             return a.longValue() / b.longValue();
         }
@@ -137,11 +126,8 @@ public class MathUtils {
         } else if (a instanceof BigInteger || b instanceof BigInteger) {
             return new BigInteger(a.toString()).mod(new BigInteger(b.toString()));
         } else if (a instanceof BigDecimal || b instanceof BigDecimal) {
-            return new BigDecimal(
-                    a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).remainder(new BigDecimal(
-                    b instanceof BigDecimal ? ((BigDecimal) b)
-                            .toPlainString() : b.toString())
-            );
+            return new BigDecimal(a instanceof BigDecimal ? ((BigDecimal) a).toPlainString() : a.toString()).remainder(new BigDecimal(b instanceof BigDecimal ? ((BigDecimal) b)
+                .toPlainString() : b.toString()));
         } else {
             return a.longValue() % b.longValue();
         }
@@ -200,18 +186,16 @@ public class MathUtils {
     }
 
     @Contract("null -> false")
-	public static boolean checkFunction(@Nullable Function<?> func) {
-        return func != null && (func.getMaxParameters() == 1 && !ReflectionUtils.isSingle(func.getParameter(0)) ||
-                Stream.of(func.getParameters())
-                        .allMatch(p -> Number.class.isAssignableFrom(p.getType().getC()) &&
-                                ReflectionUtils.isSingle(p)));
+    public static boolean checkFunction(@Nullable Function<?> func) {
+        return func != null && (func.getMaxParameters() == 1 && !ReflectionUtils.isSingle(func.getParameter(0)) || Stream
+            .of(func.getParameters())
+            .allMatch(p -> Number.class.isAssignableFrom(p.getType().getC()) && ReflectionUtils.isSingle(p)));
     }
 
     private static BigInteger pow(BigInteger base, BigInteger exponent) {
         BigInteger result = BigInteger.ONE;
         while (exponent.signum() > 0) {
-            if (exponent.testBit(0))
-                result = result.multiply(base);
+            if (exponent.testBit(0)) result = result.multiply(base);
             base = base.multiply(base);
             exponent = exponent.shiftRight(1);
         }
@@ -222,7 +206,9 @@ public class MathUtils {
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
             long j = i;
-            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>(){{put("x", j);}});
+            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>() {{
+                put("x", j);
+            }});
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
@@ -237,7 +223,9 @@ public class MathUtils {
         BigDecimal result = BigDecimal.ONE;
         for (long i = start; i <= end; i++) {
             long j = i;
-            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>(){{put("x", j);}});
+            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>() {{
+                put("x", j);
+            }});
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid product expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
@@ -250,11 +238,21 @@ public class MathUtils {
 
     public static double gamma(double x) {
         double tmp = (x - 0.5) * Math.log(x + 4.5) - (x + 4.5);
-        double ser = 1.0 + 76.18009173    / (x + 0)   - 86.50532033    / (x + 1)
-                     + 24.01409822    / (x + 2)   -  1.231739516   / (x + 3)
-                     +  0.00120858003 / (x + 4)   -  0.00000536382 / (x + 5);
+        double ser = 1.0 + 76.18009173 / (x + 0) - 86.50532033 / (x + 1) + 24.01409822 / (x + 2) - 1.231739516 / (x + 3) + 0.00120858003 / (x + 4) - 0.00000536382 / (x + 5);
         double log = tmp + Math.log(ser * Math.sqrt(2 * Math.PI));
         return Math.exp(log);
+    }
+
+    public static double csc(double x) {
+        return 1 / Math.sin(Math.toRadians(x));
+    }
+
+    public static double sec(double x) {
+        return 1 / Math.cos(Math.toRadians(x));
+    }
+
+    public static double cot(double x) {
+        return 1 / Math.tan(Math.toRadians(x));
     }
 
     public static boolean equals(Number a, Number b) {
@@ -269,5 +267,63 @@ public class MathUtils {
         } else {
             return a.doubleValue() == b.doubleValue();
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static MathTerm indefiniteDerivative(MathTerm term) {
+        if (term instanceof Constant) {
+            return Constant.ZERO;
+        } else if (term instanceof Unknown) {
+            return Constant.ONE;
+        } else if (term instanceof Sum) {
+            Sum sum = (Sum) term;
+            return new Sum(indefiniteDerivative(sum.getFirst()), indefiniteDerivative(sum.getSecond()));
+        } else if (term instanceof Difference) {
+            Difference difference = (Difference) term;
+            return new Difference(indefiniteDerivative(difference.getFirst()), indefiniteDerivative(difference.getSecond()));
+        } else if (term instanceof Product) {
+            Product product = (Product) term;
+            MathTerm first = product.getFirst();
+            MathTerm second = product.getSecond();
+            if (first instanceof Constant || second instanceof Constant) {
+                if (first instanceof Constant) {
+                    return new Product(first, indefiniteDerivative(second));
+                } else {
+                    return new Product(second, indefiniteDerivative(first));
+                }
+            } else {
+                return new Sum(new Product(first, indefiniteDerivative(second)), new Product(indefiniteDerivative(first), second));
+            }
+        } else if (term instanceof Division) {
+            Division division = (Division) term;
+            MathTerm first = division.getFirst();
+            MathTerm second = division.getSecond();
+            if (first.equals(Constant.ONE) && second.hasUnknown()) {
+                return new Division(indefiniteDerivative(second), new Power(second, Constant.TWO)).getNegative();
+            } else {
+                return new Division(
+                    new Difference(new Product(indefiniteDerivative(first), second), new Product(indefiniteDerivative(second), first)),
+                    new Power(second, Constant.TWO)
+                );
+            }
+        } else if (term instanceof Power) {
+            Power power = (Power) term;
+            return new Product(power.getSecond(), new Power(power.getFirst(), new Difference(power.getSecond(), Constant.ONE)));
+        } else if (term instanceof MathFunction) {
+            MathFunction func = (MathFunction) term;
+            List<MathTerm> params = func.getParams();
+            String name = func.getFunction().getName();
+            switch (name) {
+                case "sin":
+                    return new MathFunction((Function<Number>) Functions.getFunction("cos"), params);
+                case "cos":
+                    return new MathFunction((Function<Number>) Functions.getFunction("sin"), params).getNegative();
+                case "tan":
+                    return new Power(new MathFunction((Function<Number>) Functions.getFunction("sec"), params), Constant.TWO);
+                
+            }
+        }
+        Algorithms.evalError("Invalid operator in derivative");
+        return null;
     }
 }

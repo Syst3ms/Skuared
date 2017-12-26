@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-@FunctionalInterface
 public interface MathTerm {
-	Number compute(Map<String, Number> unknowns);
-
 	static MathTerm parse(String s, List<String> unknownData) {
 		Pattern binaryPattern = Pattern.compile("0[Bb][01]+"),
 			hexPattern = Pattern.compile("0[Xx]\\p{XDigit}+"),
@@ -30,5 +27,13 @@ public interface MathTerm {
 		} else {
 			return null;
 		}
+	}
+
+	Number compute(Map<String, Number> unknowns);
+
+	boolean hasUnknown();
+
+	default MathTerm getNegative() {
+		return new Difference(Constant.ZERO, this);
 	}
 }

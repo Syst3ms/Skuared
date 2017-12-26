@@ -10,12 +10,20 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class MathFunction implements MathTerm {
-	private Function<Number> func;
+	private Function<Number> function;
 	private List<MathTerm> params;
 
 	public MathFunction(Function<Number> function, List<MathTerm> params) {
-		this.func = function;
+		this.function = function;
 		this.params = params;
+	}
+
+	public Function<Number> getFunction() {
+		return function;
+	}
+
+	public List<MathTerm> getParams() {
+		return params;
 	}
 
 	@Override
@@ -23,22 +31,27 @@ public class MathFunction implements MathTerm {
 		Stack<Number> parameters = params.stream()
 									.map(t -> t.compute(unknowns))
 									.collect(Collectors.toCollection(Stack::new));
-		if (func.getMaxParameters() > 1 &&
-				!ReflectionUtils.isSingle(func.getParameter(0)) &&
-				func.getMaxParameters() != parameters.size()) {
-			Algorithms.evalError("Wrong number of parameters for the '" + func.getName() + "' function");
+		if (function.getMaxParameters() > 1 &&
+				!ReflectionUtils.isSingle(function.getParameter(0)) &&
+				function.getMaxParameters() != parameters.size()) {
+			Algorithms.evalError("Wrong number of parameters for the '" + function.getName() + "' function");
 			return Double.NaN;
 		}
-		Number[][] params = new Number[func.getMaxParameters()][func.getMaxParameters()];
-		if (func.getMaxParameters() == 1 && ReflectionUtils.isSingle(func.getParameter(0))) {
-			for (int i = 0; i < func.getMaxParameters(); i++) {
+		Number[][] params = new Number[function.getMaxParameters()][function.getMaxParameters()];
+		if (function.getMaxParameters() == 1 && ReflectionUtils.isSingle(function.getParameter(0))) {
+			for (int i = 0; i < function.getMaxParameters(); i++) {
 				params[0][i] = parameters.pop();
 			}
 		} else {
-			for (int i = 0; i < func.getMaxParameters(); i++) {
+			for (int i = 0; i < function.getMaxParameters(); i++) {
 				params[i][0] = parameters.pop();
 			}
 		}
-		return func.execute(params)[0];
+		return function.execute(params)[0];
+	}
+
+	@Override
+	public boolean hasUnknown() {
+		return params.stream().anyMatch(MathTerm::hasUnknown);
 	}
 }

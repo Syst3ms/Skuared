@@ -15,6 +15,11 @@ public class Unknown implements MathTerm {
 	}
 
 	@Override
+	public boolean hasUnknown() {
+		return true;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof Unknown)) {
 			return false;

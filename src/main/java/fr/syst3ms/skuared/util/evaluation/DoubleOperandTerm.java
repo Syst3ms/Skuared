@@ -35,6 +35,11 @@ public abstract class DoubleOperandTerm implements MathTerm {
 	}
 
 	@Override
+	public boolean hasUnknown() {
+		return first.hasUnknown() || second.hasUnknown();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof DoubleOperandTerm)) {
 			return false;

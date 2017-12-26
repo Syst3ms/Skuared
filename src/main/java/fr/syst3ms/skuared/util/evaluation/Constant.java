@@ -5,6 +5,10 @@ import fr.syst3ms.skuared.util.MathUtils;
 import java.util.Map;
 
 public class Constant implements MathTerm {
+	public static final Constant ZERO = new Constant(0);
+	public static final Constant ONE = new Constant(1);
+	public static final Constant TWO = new Constant(2);
+
 	private Number value;
 
 	public Constant(Number value) {
@@ -14,6 +18,11 @@ public class Constant implements MathTerm {
 	@Override
 	public Number compute(Map<String, Number> unknowns) {
 		return value;
+	}
+
+	@Override
+	public boolean hasUnknown() {
+		return false;
 	}
 
 	@Override
