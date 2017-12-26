@@ -256,4 +256,18 @@ public class MathUtils {
         double log = tmp + Math.log(ser * Math.sqrt(2 * Math.PI));
         return Math.exp(log);
     }
+
+    public static boolean equals(Number a, Number b) {
+        if (a instanceof BigDecimal || b instanceof BigDecimal) {
+            return new BigDecimal(a.toString()).equals(new BigDecimal(b.toString()));
+        } else if (a instanceof BigInteger || b instanceof BigInteger) {
+            return new BigInteger(a.toString()).equals(new BigInteger(b.toString()));
+        } else if (a instanceof Double || b instanceof Double) {
+            return a.doubleValue() == b.doubleValue();
+        } else if (a instanceof Long || b instanceof Long) {
+            return a.longValue() == b.longValue();
+        } else {
+            return a.doubleValue() == b.doubleValue();
+        }
+    }
 }

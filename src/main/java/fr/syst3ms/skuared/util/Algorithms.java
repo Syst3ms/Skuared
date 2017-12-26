@@ -265,7 +265,7 @@ public class Algorithms {
 			output.add(s);
 		}
 		parseError(null);
-		return convertToMathTerm(tokens, unknownNames);
+		return convertToMathTerm(output, unknownNames);
 	}
 
 	@Contract("null, _ -> null")
@@ -281,7 +281,7 @@ public class Algorithms {
 			} else {
 				String s = (String) part;
 				if (arithmeticOperators.containsKey(s)) {
-					MathTerm b = (MathTerm) parts.pop(), a = (MathTerm) parts.pop();
+					MathTerm b = (MathTerm) stack.pop(), a = (MathTerm) stack.pop();
 					Operator<?, ? ,?> op = arithmeticOperators.get(s);
 					try {
 						Constructor<? extends DoubleOperandTerm> constructor = (Constructor<? extends DoubleOperandTerm>) op.getOperation().getConstructors()[0];

@@ -5,7 +5,6 @@ import fr.syst3ms.skuared.util.MathUtils;
 import java.util.function.BinaryOperator;
 
 public class Product extends DoubleOperandTerm {
-	private MathTerm first, second;
 
 	public Product(MathTerm first, MathTerm second) {
 		super(first, second);
@@ -14,5 +13,10 @@ public class Product extends DoubleOperandTerm {
 	@Override
 	BinaryOperator<Number> getFunction() {
 		return MathUtils::times;
+	}
+
+	@Override
+	public String toString() {
+		return "(" + getFirst().toString() + " * " + getSecond().toString() + ")";
 	}
 }

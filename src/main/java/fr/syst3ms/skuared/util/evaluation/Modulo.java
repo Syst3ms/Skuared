@@ -15,4 +15,9 @@ public class Modulo extends DoubleOperandTerm {
 	BinaryOperator<Number> getFunction() {
 		return MathUtils::mod;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + getFirst().toString() + " % " + getSecond().toString() + ")";
+	}
 }

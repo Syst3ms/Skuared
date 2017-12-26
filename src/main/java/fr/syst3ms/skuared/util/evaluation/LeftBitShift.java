@@ -15,4 +15,9 @@ public class LeftBitShift extends DoubleOperandTerm {
 	BinaryOperator<Number> getFunction() {
 		return MathUtils::shl;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + getFirst().toString() + " << " + getSecond().toString() + ")";
+	}
 }

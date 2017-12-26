@@ -3,8 +3,6 @@ package fr.syst3ms.skuared.util;
 import fr.syst3ms.skuared.util.evaluation.*;
 import org.junit.Test;
 
-import static fr.syst3ms.skuared.util.Algorithms.registerConstant;
-import static fr.syst3ms.skuared.util.Algorithms.registerOperator;
 import static org.junit.Assert.assertEquals;
 
 public class MathTest {
@@ -13,12 +11,12 @@ public class MathTest {
         Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
         Algorithms.registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
         Algorithms.registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator("+", Addition.class, Associativity.LEFT, 3);
-        Algorithms.registerOperator("-", Substraction.class, Associativity.LEFT, 3);
+        Algorithms.registerOperator("+", Sum.class, Associativity.LEFT, 3);
+        Algorithms.registerOperator("-", Difference.class, Associativity.LEFT, 3);
         Algorithms.registerOperator("*", Product.class, Associativity.LEFT, 2);
         Algorithms.registerOperator("/", Division.class, Associativity.LEFT, 2);
         Algorithms.registerOperator("%", Modulo.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("^", Exponentiation.class, Associativity.RIGHT, 1);
+        Algorithms.registerOperator("^", Power.class, Associativity.RIGHT, 1);
         Algorithms.registerConstant("pi", Math.PI);
         Algorithms.registerConstant("e", Math.E);
         Algorithms.registerConstant("nan", Double.NaN);

@@ -15,4 +15,9 @@ public class Division extends DoubleOperandTerm {
 	BinaryOperator<Number> getFunction() {
 		return MathUtils::divide;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + getFirst().toString() + " / " + getSecond().toString() + ")";
+	}
 }

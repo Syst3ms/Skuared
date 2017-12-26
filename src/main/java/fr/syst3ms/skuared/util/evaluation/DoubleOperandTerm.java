@@ -33,4 +33,16 @@ public abstract class DoubleOperandTerm implements MathTerm {
 	public void setFirst(MathTerm first) {
 		this.first = first;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof DoubleOperandTerm)) {
+			return false;
+		} else if (this == obj) {
+			return true;
+		} else {
+			DoubleOperandTerm o = (DoubleOperandTerm) obj;
+			return first.equals(o.first) && second.equals(o.second);
+		}
+	}
 }

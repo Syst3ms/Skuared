@@ -13,4 +13,18 @@ public class Unknown implements MathTerm {
 	public Number compute(Map<String, Number> unknowns) {
 		return unknowns.get(name);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Unknown)) {
+			return false;
+		} else {
+			return this == obj || name.equals(((Unknown) obj).name);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

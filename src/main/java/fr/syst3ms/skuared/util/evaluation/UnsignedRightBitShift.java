@@ -15,4 +15,9 @@ public class UnsignedRightBitShift extends DoubleOperandTerm {
 	BinaryOperator<Number> getFunction() {
 		return MathUtils::ushr;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + getFirst().toString() + " >> " + getSecond().toString() + ")";
+	}
 }
