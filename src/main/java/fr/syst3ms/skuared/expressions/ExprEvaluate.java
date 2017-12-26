@@ -12,6 +12,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
+
 public class ExprEvaluate extends SimpleExpression<Number> {
     private Expression<String> expr;
 
@@ -37,7 +39,7 @@ public class ExprEvaluate extends SimpleExpression<Number> {
         String e = expr.getSingle(event);
         if (e == null)
             return null;
-        Number res = Algorithms.evaluate(e, null);
+        Number res = Algorithms.evaluate(e, Collections.emptyMap());
         if (res == null)
             return null;
         return new Number[]{res};

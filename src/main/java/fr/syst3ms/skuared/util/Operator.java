@@ -1,20 +1,16 @@
 package fr.syst3ms.skuared.util;
 
+import fr.syst3ms.skuared.util.evaluation.DoubleOperandTerm;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.function.BiFunction;
 
 @SuppressWarnings("unused")
 public class Operator<T, U, R> {
-    @NotNull
     private final String symbol;
     private final int precedence;
-    @NotNull
     private final Associativity associativity;
-    @NotNull
-    private final BiFunction<T, U, R> operation;
+    private final Class<? extends DoubleOperandTerm> operation;
 
-    Operator(@NotNull String symbol, int precedence, @NotNull Associativity associativity, @NotNull BiFunction<T, U, R> operation) {
+    Operator(@NotNull String symbol, int precedence, @NotNull Associativity associativity, Class<? extends DoubleOperandTerm> operation) {
         this.symbol = symbol;
         this.precedence = precedence;
         this.associativity = associativity;
@@ -30,8 +26,7 @@ public class Operator<T, U, R> {
         return associativity;
     }
 
-    @NotNull
-    BiFunction<T, U, R> getOperation() {
+    Class<? extends DoubleOperandTerm> getOperation() {
         return operation;
     }
 

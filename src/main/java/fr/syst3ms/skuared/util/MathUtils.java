@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
@@ -199,7 +200,7 @@ public class MathUtils {
     }
 
     @Contract("null -> false")
-    static boolean checkFunction(@Nullable Function<?> func) {
+	public static boolean checkFunction(@Nullable Function<?> func) {
         return func != null && (func.getMaxParameters() == 1 && !ReflectionUtils.isSingle(func.getParameter(0)) ||
                 Stream.of(func.getParameters())
                         .allMatch(p -> Number.class.isAssignableFrom(p.getType().getC()) &&
@@ -220,7 +221,8 @@ public class MathUtils {
     public static Number sigma(String expression, long start, long end) {
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
-            Number n = Algorithms.evaluate(expression, i);
+            long j = i;
+            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>(){{put("x", j);}});
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
@@ -234,8 +236,8 @@ public class MathUtils {
     public static Number chainedProduct(String expression, long start, long end) {
         BigDecimal result = BigDecimal.ONE;
         for (long i = start; i <= end; i++) {
-            Algorithms.registerConstant("x", i);
-            Number n = Algorithms.evaluate(expression, i);
+            long j = i;
+            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>(){{put("x", j);}});
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid product expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;

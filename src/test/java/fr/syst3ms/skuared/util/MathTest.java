@@ -1,5 +1,6 @@
 package fr.syst3ms.skuared.util;
 
+import fr.syst3ms.skuared.util.evaluation.*;
 import org.junit.Test;
 
 import static fr.syst3ms.skuared.util.Algorithms.registerConstant;
@@ -9,20 +10,20 @@ import static org.junit.Assert.assertEquals;
 public class MathTest {
 
     static {
-        registerOperator(">>", MathUtils::shr, Associativity.LEFT, 4);
-        registerOperator("<<", MathUtils::shl, Associativity.LEFT, 4);
-        registerOperator(">>>", MathUtils::ushr, Associativity.LEFT, 4);
-        registerOperator("+", MathUtils::plus, Associativity.LEFT, 3);
-        registerOperator("-", MathUtils::minus, Associativity.LEFT, 3);
-        registerOperator("*", MathUtils::times, Associativity.LEFT, 2);
-        registerOperator("/", MathUtils::divide, Associativity.LEFT, 2);
-        registerOperator("%", MathUtils::mod, Associativity.LEFT, 2);
-        registerOperator("^", MathUtils::pow, Associativity.RIGHT, 1);
-        registerConstant("pi", Math.PI);
-        registerConstant("e", Math.E);
-        registerConstant("nan", Double.NaN);
-        registerConstant("Infinity", Double.POSITIVE_INFINITY);
-        registerConstant("phi", MathUtils.PHI);
+        Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
+        Algorithms.registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
+        Algorithms.registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
+        Algorithms.registerOperator("+", Addition.class, Associativity.LEFT, 3);
+        Algorithms.registerOperator("-", Substraction.class, Associativity.LEFT, 3);
+        Algorithms.registerOperator("*", Product.class, Associativity.LEFT, 2);
+        Algorithms.registerOperator("/", Division.class, Associativity.LEFT, 2);
+        Algorithms.registerOperator("%", Modulo.class, Associativity.LEFT, 2);
+        Algorithms.registerOperator("^", Exponentiation.class, Associativity.RIGHT, 1);
+        Algorithms.registerConstant("pi", Math.PI);
+        Algorithms.registerConstant("e", Math.E);
+        Algorithms.registerConstant("nan", Double.NaN);
+        Algorithms.registerConstant("Infinity", Double.POSITIVE_INFINITY);
+        Algorithms.registerConstant("phi", MathUtils.PHI);
     }
 
     @Test

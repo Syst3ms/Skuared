@@ -52,6 +52,16 @@ public class StringUtils {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static boolean isInteger(@NotNull String s) {
+        try {
+            Long.parseLong(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public static Number parseNumber(@NotNull String n) {
         assert isNumeric(n);
         try {

@@ -1,3 +1,36 @@
 package fr.syst3ms.skuared.util.evaluation;
 
-public interface DoubleOperandTerm {}
+import java.util.Map;
+import java.util.function.BinaryOperator;
+
+public abstract class DoubleOperandTerm implements MathTerm {
+	private MathTerm first, second;
+
+	protected DoubleOperandTerm(MathTerm first, MathTerm second) {
+		this.first = first;
+		this.second = second;
+	}
+
+	abstract BinaryOperator<Number> getFunction();
+
+	@Override
+	public Number compute(Map<String, Number> unknowns) {
+		return getFunction().apply(first.compute(unknowns), second.compute(unknowns));
+	}
+
+	public MathTerm getSecond() {
+		return second;
+	}
+
+	public void setSecond(MathTerm second) {
+		this.second = second;
+	}
+
+	public MathTerm getFirst() {
+		return first;
+	}
+
+	public void setFirst(MathTerm first) {
+		this.first = first;
+	}
+}
