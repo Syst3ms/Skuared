@@ -1,5 +1,0 @@
-<root>
-    <item name='ch.njol.skript.lang.Expression T getSingle(org.bukkit.event.Event)'>
-        <annotation name='org.jetbrains.annotations.Nullable'/>
-    </item>
-</root>
