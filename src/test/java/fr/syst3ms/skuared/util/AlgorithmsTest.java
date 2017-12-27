@@ -31,12 +31,12 @@ public class AlgorithmsTest {
 
     @Test
     public void shuntingYardTest() throws Exception {
-        assertEquals(new Constant(Math.E), shuntingYard("e", Collections.emptyList()));
-        Product expected = new Product(new Constant(5), new Sum(new Constant(2), new Constant(3)));
+        assertEquals(Constant.getConstant(Math.E), shuntingYard("e", Collections.emptyList()));
+        Product expected = new Product(Constant.getConstant(5), new Sum(Constant.getConstant(2), Constant.getConstant(3)));
         assertEquals(expected, shuntingYard("5(2 + 3)", Collections.emptyList()));
-        Product expected2 = new Product(new Sum(new Constant(5), new Constant(2)), new Sum(new Constant(3), new Constant(4)));
+        Product expected2 = new Product(new Sum(Constant.getConstant(5), Constant.getConstant(2)), new Sum(Constant.getConstant(3), Constant.getConstant(4)));
         assertEquals(expected2, shuntingYard("(5 + 2)(3 + 4)", Collections.emptyList()));
-        Sum expected3 = new Sum(new Power(new Unknown("x"), new Constant(2)), new Power(new Unknown("x"), new Constant(-2)));
+        Sum expected3 = new Sum(new Power(new Unknown("x"), Constant.getConstant(2)), new Power(new Unknown("x"), Constant.getConstant(-2)));
         assertEquals(expected3, shuntingYard("(x^2)(x^-2)", Collections.singletonList("x")));
     }
 

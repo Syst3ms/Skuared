@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
@@ -271,6 +272,7 @@ public class MathUtils {
 
     @SuppressWarnings("unchecked")
     public static MathTerm indefiniteDerivative(MathTerm term) {
+        term = term.simplify();
         if (term instanceof Constant) {
             return Constant.ZERO;
         } else if (term instanceof Unknown) {
@@ -298,17 +300,37 @@ public class MathUtils {
             Division division = (Division) term;
             MathTerm first = division.getFirst();
             MathTerm second = division.getSecond();
-            if (first.equals(Constant.ONE) && second.hasUnknown()) {
-                return new Division(indefiniteDerivative(second), new Power(second, Constant.TWO)).getNegative();
+            if (first instanceof Constant && second.hasUnknown()) {
+                return new Division(first, second.getSquared()).getNegative();
             } else {
                 return new Division(
                     new Difference(new Product(indefiniteDerivative(first), second), new Product(indefiniteDerivative(second), first)),
-                    new Power(second, Constant.TWO)
+                    second.getSquared()
                 );
             }
         } else if (term instanceof Power) {
             Power power = (Power) term;
-            return new Product(power.getSecond(), new Power(power.getFirst(), new Difference(power.getSecond(), Constant.ONE)));
+            MathTerm first = power.getFirst();
+            MathTerm second = power.getSecond();
+            if (first.hasUnknown() && !second.hasUnknown()) {
+                new Product(second, new Power(first, new Difference(second, Constant.ONE)));
+            } else if (second.equals(Constant.getConstant(-1))) {
+                return new Division(Constant.ONE, first.getSquared()).getNegative();
+            } else if (first == Constant.E) {
+                if (second instanceof Unknown) {
+                    return term;
+                } else if (!second.hasUnknown()) {
+                    return Constant.ZERO;
+                } else {
+                    return new Product(term, indefiniteDerivative(second));
+                }
+            } else if (first instanceof Constant) {
+                if (second instanceof Unknown) {
+                    return new Product(term, new MathFunction((Function<Number>) Functions.getFunction("ln"), Collections.singletonList(first)));
+                } else if (second.hasUnknown()) {
+                    new Product(new Product(new MathFunction((Function<Number>) Functions.getFunction("ln"), Collections.singletonList(first)), term), indefiniteDerivative(second));
+                }
+            }
         } else if (term instanceof MathFunction) {
             MathFunction func = (MathFunction) term;
             List<MathTerm> params = func.getParams();
@@ -319,8 +341,8 @@ public class MathUtils {
                 case "cos":
                     return new MathFunction((Function<Number>) Functions.getFunction("sin"), params).getNegative();
                 case "tan":
-                    return new Power(new MathFunction((Function<Number>) Functions.getFunction("sec"), params), Constant.TWO);
-                
+                    return new MathFunction((Function<Number>) Functions.getFunction("sec"), params).getSquared();
+
             }
         }
         Algorithms.evalError("Invalid operator in derivative");

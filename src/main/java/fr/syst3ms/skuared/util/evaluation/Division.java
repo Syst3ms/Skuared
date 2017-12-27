@@ -17,6 +17,21 @@ public class Division extends DoubleOperandTerm {
 	}
 
 	@Override
+	public MathTerm simplify() {
+		MathTerm sup = super.simplify();
+		if (sup != this) {
+			return sup;
+		} else if (first.equals(second)) {
+			return Constant.ONE;
+		} else if (second == Constant.ZERO) {
+			return Constant.NAN;
+		} else if (first == Constant.ZERO) {
+			return Constant.ZERO;
+		}
+		return this;
+	}
+
+	@Override
 	public String toString() {
 		return "(" + getFirst().toString() + " / " + getSecond().toString() + ")";
 	}

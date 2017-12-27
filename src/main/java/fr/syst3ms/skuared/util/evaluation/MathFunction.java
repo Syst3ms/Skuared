@@ -54,4 +54,9 @@ public class MathFunction implements MathTerm {
 	public boolean hasUnknown() {
 		return params.stream().anyMatch(MathTerm::hasUnknown);
 	}
+
+	@Override
+	public MathTerm simplify() {
+		return this;
+	}
 }

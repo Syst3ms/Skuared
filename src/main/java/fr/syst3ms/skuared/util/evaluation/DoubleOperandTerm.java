@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.function.BinaryOperator;
 
 public abstract class DoubleOperandTerm implements MathTerm {
-	private MathTerm first, second;
+	protected MathTerm first, second;
 
 	protected DoubleOperandTerm(MathTerm first, MathTerm second) {
 		this.first = first;
@@ -37,6 +37,16 @@ public abstract class DoubleOperandTerm implements MathTerm {
 	@Override
 	public boolean hasUnknown() {
 		return first.hasUnknown() || second.hasUnknown();
+	}
+
+	@Override
+	public MathTerm simplify() {
+		first = first.simplify();
+		second = second.simplify();
+		if (!first.hasUnknown() && !second.hasUnknown()) {
+			return Constant.getConstant(compute(null));
+		}
+		return this;
 	}
 
 	@Override
