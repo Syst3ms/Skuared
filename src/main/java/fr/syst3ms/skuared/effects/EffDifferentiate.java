@@ -7,11 +7,17 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
+import ch.njol.util.Pair;
 import fr.syst3ms.skuared.expressions.ExprLastResult;
 import fr.syst3ms.skuared.util.Algorithms;
+import fr.syst3ms.skuared.util.MathUtils;
+import fr.syst3ms.skuared.util.evaluation.MathTerm;
 import org.bukkit.event.Event;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -21,7 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Async effect concept, with courtesy of Lubbock/w00tmaster
  */
-public class EffDerivate extends Effect {
+public class EffDifferentiate extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);
     private static final Field DELAYED;
     private static final ExecutorService threadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -40,14 +46,15 @@ public class EffDerivate extends Effect {
 
     static {
         Skript.registerEffect(
-                EffDerivate.class,
-                "((calculate|compute) derivative of|derivate) %string% [at x=%number%]",
-                "d/dx\\(%string%\\) [where x=%number%]"
+                EffDifferentiate.class,
+                "((calculate|compute) derivative of|differentiate) %string% [at %number%] (1¦online)",
+                "d/dx\\(%string%\\) [at %number%] (1¦online)"
         );
     }
 
     private Expression<String> expression;
     private boolean hasPoint;
+    private boolean useWolfram;
     private Expression<Number> point;
 
     @SuppressWarnings("unchecked")
@@ -55,6 +62,7 @@ public class EffDerivate extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         expression = (Expression<String>) exprs[0];
         hasPoint = exprs[1] != null;
+        useWolfram = parseResult.mark == 1;
         if (hasPoint)
             point = (Expression<Number>) exprs[1];
         return true;
@@ -66,7 +74,35 @@ public class EffDerivate extends Effect {
         Number p = point == null ? null : point.getSingle(e);
         if (expr == null || hasPoint && p == null)
             return;
-        CompletableFuture<String> request = CompletableFuture.supplyAsync(() -> Algorithms.sendWolframApiRequest(hasPoint ? String.format("derivate %s at x=%s", expr, p) : String.format("derivate %s", expr)), threadPool);
+        CompletableFuture<Object> request;
+        if (useWolfram) {
+            String wolframRequest = hasPoint ? String.format("differentiate %s at x=%s", expr, p) : String.format("differentiate %s", expr);
+            request = CompletableFuture.supplyAsync(() -> Algorithms.sendWolframApiRequest(wolframRequest), threadPool);
+        } else {
+            Pair<@Nullable MathTerm, List<String>> pair = Algorithms.parseMathExpression(expr, Collections.singletonList("x"), true);
+            if (pair == null) {
+                return;
+            }
+            MathTerm term = pair.getFirst();
+            if (term == null) {
+                return;
+            }
+            if (hasPoint) {
+                request = CompletableFuture.supplyAsync(() -> {
+                    MathTerm indefinite = MathUtils.indefiniteDerivative(term);
+                    if (indefinite == null)
+                        return null;
+                    return indefinite.compute(Algorithms.getXMap(p));
+                }, threadPool);
+            } else {
+                request = CompletableFuture.supplyAsync(() -> {
+                    MathTerm indefinite = MathUtils.indefiniteDerivative(term);
+                    if (indefinite == null)
+                        return null;
+                    return Algorithms.sendWolframApiRequest("simplify " + indefinite.asString());
+                });
+            }
+        }
         request.whenComplete((res, err) -> {
             if (err != null) {
                 err.printStackTrace();
@@ -75,7 +111,7 @@ public class EffDerivate extends Effect {
             SKRIPT_EXECUTION.lock();
             try {
                 if (res != null) {
-                    ExprLastResult.lastResult = res;
+                    ExprLastResult.lastResult = res.toString();
                 }
                 if (getNext() != null) {
                     TriggerItem.walk(getNext(), e);

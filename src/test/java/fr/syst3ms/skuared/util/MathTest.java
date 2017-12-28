@@ -1,12 +1,21 @@
 package fr.syst3ms.skuared.util;
 
-import fr.syst3ms.skuared.util.evaluation.*;
+import fr.syst3ms.skuared.util.evaluation.Constant;
+import fr.syst3ms.skuared.util.evaluation.Difference;
+import fr.syst3ms.skuared.util.evaluation.Division;
+import fr.syst3ms.skuared.util.evaluation.LeftBitShift;
+import fr.syst3ms.skuared.util.evaluation.Modulo;
+import fr.syst3ms.skuared.util.evaluation.Power;
+import fr.syst3ms.skuared.util.evaluation.Product;
+import fr.syst3ms.skuared.util.evaluation.RightBitShift;
+import fr.syst3ms.skuared.util.evaluation.Sum;
+import fr.syst3ms.skuared.util.evaluation.Unknown;
+import fr.syst3ms.skuared.util.evaluation.UnsignedRightBitShift;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class MathTest {
-
     static {
         Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
         Algorithms.registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
@@ -45,4 +54,11 @@ public class MathTest {
         assertEquals(1.56746d, MathUtils.gamma(Math.E), 0.0001);
     }
 
+
+    @Test
+    public void indefiniteDerivative() throws Exception {
+        assertEquals(Constant.ZERO, MathUtils.indefiniteDerivative(Constant.getConstant(Math.random())));
+        assertEquals(Constant.ONE, MathUtils.indefiniteDerivative(new Unknown("x")));
+        assertEquals(Constant.TWO, MathUtils.indefiniteDerivative(new Product(Constant.TWO, new Unknown("x"))));
+    }
 }

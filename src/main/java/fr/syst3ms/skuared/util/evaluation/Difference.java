@@ -17,17 +17,11 @@ public class Difference extends DoubleOperandTerm {
 
 	@Override
 	public String toString() {
-		return "(" + first.toString() + " - " + second.toString() + ")";
+		return asString();
 	}
 
 	@Override
-	public MathTerm simplify() {
-		MathTerm sup = super.simplify();
-		if (sup != this) {
-			return sup;
-		} else if (first.equals(second)) {
-			return Constant.ZERO;
-		}
-		return this;
+	public String asString() {
+		return "(" + first + " - " + second + ")";
 	}
 }

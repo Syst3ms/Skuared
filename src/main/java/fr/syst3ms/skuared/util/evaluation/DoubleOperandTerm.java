@@ -3,7 +3,7 @@ package fr.syst3ms.skuared.util.evaluation;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 
-public abstract class DoubleOperandTerm implements MathTerm {
+public abstract class DoubleOperandTerm extends MathTerm {
 	protected MathTerm first, second;
 
 	protected DoubleOperandTerm(MathTerm first, MathTerm second) {
@@ -14,8 +14,14 @@ public abstract class DoubleOperandTerm implements MathTerm {
 	abstract BinaryOperator<Number> getFunction();
 
 	@Override
-	public Number compute(Map<String, Number> unknowns) {
-		return getFunction().apply(first.compute(unknowns), second.compute(unknowns));
+	public Number compute(Map<String, ? extends Number> unknowns) {
+		if (first == null || second == null)
+			return null;
+		Number f = first.compute(unknowns);
+		Number s = second.compute(unknowns);
+		if (f == null || s == null)
+			return null;
+		return getFunction().apply(f, s);
 	}
 
 	public MathTerm getSecond() {

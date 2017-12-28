@@ -2,6 +2,7 @@ package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
+import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprSkuaredError;
 import fr.syst3ms.skuared.util.evaluation.*;
 import org.jetbrains.annotations.Contract;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.HashMap;
@@ -244,6 +246,19 @@ public class MathUtils {
         return Math.exp(log);
     }
 
+    public static double digamma(double x) {
+        double result = 0.0;
+        assert(x > 0.0);
+        for (; x < 7.0; ++x)
+            result -= 1.0/x;
+        x -= 1.0/2.0;
+        double xx = 1.0/x;
+        double xx2 = xx*xx;
+        double xx4 = xx2*xx2;
+        result += Math.log(x)+(1.0/24.0)*xx2-(7.0/960.0)*xx4+(31.0/8064.0)*xx4*xx2-(127.0/30720.0)*xx4*xx4;
+        return result;
+    }
+
     public static double csc(double x) {
         return 1 / Math.sin(Math.toRadians(x));
     }
@@ -254,6 +269,18 @@ public class MathUtils {
 
     public static double cot(double x) {
         return 1 / Math.tan(Math.toRadians(x));
+    }
+
+    public static double acsc(double x) {
+        return Math.asin(Math.toRadians(1.0d / x));
+    }
+
+    public static double asec(double x) {
+        return Math.acos(Math.toRadians(1.0d / x));
+    }
+
+    public static double acot(double x) {
+        return Math.atan(Math.toRadians(1.0d / x));
     }
 
     public static boolean equals(Number a, Number b) {
@@ -315,7 +342,7 @@ public class MathUtils {
             if (first.hasUnknown() && !second.hasUnknown()) {
                 new Product(second, new Power(first, new Difference(second, Constant.ONE)));
             } else if (second.equals(Constant.getConstant(-1))) {
-                return new Division(Constant.ONE, first.getSquared()).getNegative();
+                return first.getSquared().getReciprocal().getNegative();
             } else if (first == Constant.E) {
                 if (second instanceof Unknown) {
                     return term;
@@ -335,14 +362,70 @@ public class MathUtils {
             MathFunction func = (MathFunction) term;
             List<MathTerm> params = func.getParams();
             String name = func.getFunction().getName();
-            switch (name) {
-                case "sin":
-                    return new MathFunction((Function<Number>) Functions.getFunction("cos"), params);
-                case "cos":
-                    return new MathFunction((Function<Number>) Functions.getFunction("sin"), params).getNegative();
-                case "tan":
-                    return new MathFunction((Function<Number>) Functions.getFunction("sec"), params).getSquared();
-
+            MathTerm firstParam = params.get(0);
+            MathTerm secondParam = params.size() == 2 ? params.get(1) : null;
+            if (firstParam.hasUnknown()) {
+                switch (name) {
+                    case "sin":
+                        return MathFunction.getFunctionByName("cos", params);
+                    case "cos":
+                        return MathFunction.getFunctionByName("sin", params).getNegative();
+                    case "tan":
+                        return MathFunction.getFunctionByName("sec", params).getSquared();
+                    case "csc":
+                        return new Product(MathFunction.getFunctionByName("csc", params).getNegative(), MathFunction.getFunctionByName("cot", params));
+                    case "sec":
+                        return new Product(MathFunction.getFunctionByName("sec", params), MathFunction.getFunctionByName("tan", params));
+                    case "cot":
+                        return MathFunction.getFunctionByName("csc", params).getSquared().getNegative();
+                    case "asin":
+                        return new Difference(Constant.ONE, firstParam.getSquared()).getSquareRoot().getReciprocal();
+                    case "acos":
+                        return new Difference(Constant.ONE, firstParam.getSquared()).getSquareRoot().getReciprocal().getNegative();
+                    case "atan":
+                        return new Sum(Constant.ONE, firstParam.getSquared()).getReciprocal();
+                    case "acsc":
+                        return new Product(firstParam, new Difference(firstParam.getSquared(), Constant.ONE).getSquareRoot()).getReciprocal().getNegative();
+                    case "asec":
+                        return new Product(firstParam, new Difference(firstParam.getSquared(), Constant.ONE).getSquareRoot()).getReciprocal();
+                    case "acot":
+                        return new Sum(Constant.ONE, firstParam.getSquared()).getReciprocal().getNegative();
+                    case "ln":
+                        if (firstParam instanceof Unknown)
+                            return firstParam.getReciprocal();
+                        else
+                            return new Division(indefiniteDerivative(firstParam), firstParam);
+                    case "log":
+                        if (secondParam == null) {
+                            if (firstParam instanceof Unknown)
+                                return new Product(firstParam, MathFunction.getFunctionByName("ln", Collections.singletonList(Constant.getConstant(10)))).getReciprocal();
+                            else
+                                return new Division(indefiniteDerivative(firstParam), new Product(firstParam, MathFunction.getFunctionByName("ln", Collections.singletonList(Constant.getConstant(10)))));
+                        } else {
+                            if (firstParam instanceof Unknown)
+                                return new Product(secondParam, MathFunction.getFunctionByName("ln", Collections.singletonList(firstParam))).getReciprocal();
+                            else
+                                return new Division(indefiniteDerivative(secondParam), new Product(secondParam, MathFunction.getFunctionByName("ln", Collections.singletonList(firstParam))));
+                        }
+                    case "abs":
+                        return new Division(firstParam, term);
+                    case "atan2":
+                        assert secondParam != null;
+                        return new Division(secondParam, new Sum(firstParam.getSquared(), secondParam.getSquared()));
+                    case "gamma":
+                        return new Product(term, MathFunction.getFunctionByName("digamma", params));
+                    case "factorial":
+                        return new Product(
+                            MathFunction.getFunctionByName("gamma", Collections.singletonList(new Sum(firstParam, Constant.ONE))),
+                            MathFunction.getFunctionByName("digamma", Collections.singletonList(new Sum(firstParam, Constant.ONE)))
+                        );
+                    case "digamma":
+                        ExprSkuaredError.lastError = "Skuared cannot compute the derivative of the digamma function !";
+                        return null;
+                    default:
+                        ExprSkuaredError.lastError = "Unknown function in derivative";
+                        return null;
+                }
             }
         }
         Algorithms.evalError("Invalid operator in derivative");

@@ -5,7 +5,6 @@ import fr.syst3ms.skuared.util.MathUtils;
 import java.util.function.BinaryOperator;
 
 public class UnsignedRightBitShift extends DoubleOperandTerm {
-	private MathTerm first, second;
 
 	public UnsignedRightBitShift(MathTerm first, MathTerm second) {
 		super(first, second);
@@ -17,7 +16,7 @@ public class UnsignedRightBitShift extends DoubleOperandTerm {
 	}
 
 	@Override
-	public String toString() {
-		return "(" + getFirst().toString() + " >> " + getSecond().toString() + ")";
+	public String asString() {
+		return "(" + first + " >> " + second + ")";
 	}
 }

@@ -4,7 +4,7 @@ import fr.syst3ms.skuared.util.evaluation.DoubleOperandTerm;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public class Operator<T, U, R> {
+public class Operator {
     private final String symbol;
     private final int precedence;
     private final Associativity associativity;

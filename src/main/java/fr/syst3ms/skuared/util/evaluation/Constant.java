@@ -4,7 +4,7 @@ import fr.syst3ms.skuared.util.MathUtils;
 
 import java.util.Map;
 
-public class Constant implements MathTerm {
+public class Constant extends MathTerm {
 	public static final Constant NAN = new Constant(Double.NaN);
 	public static final Constant ZERO = new Constant(0);
 	public static final Constant ONE = new Constant(1);
@@ -13,7 +13,7 @@ public class Constant implements MathTerm {
 	public static final Constant PI = new Constant(Math.PI);
 	private Number value;
 
-	public Constant(Number value) {
+	private Constant(Number value) {
 		this.value = value;
 	}
 
@@ -40,7 +40,7 @@ public class Constant implements MathTerm {
 	}
 
 	@Override
-	public Number compute(Map<String, Number> unknowns) {
+	public Number compute(Map<String, ? extends Number> unknowns) {
 		return value;
 	}
 
@@ -60,7 +60,7 @@ public class Constant implements MathTerm {
 	}
 
 	@Override
-	public String toString() {
+	public String asString() {
 		return value.toString();
 	}
 }

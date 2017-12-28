@@ -1,8 +1,10 @@
 package fr.syst3ms.skuared.util.evaluation;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.util.Map;
 
-public class Unknown implements MathTerm {
+public class Unknown extends MathTerm {
 	private String name;
 
 	public Unknown(String name) {
@@ -10,7 +12,10 @@ public class Unknown implements MathTerm {
 	}
 
 	@Override
-	public Number compute(Map<String, Number> unknowns) {
+	@Nullable
+	public Number compute(Map<String, ? extends Number> unknowns) {
+		if (name == null)
+			return null;
 		return unknowns.get(name);
 	}
 
@@ -34,7 +39,7 @@ public class Unknown implements MathTerm {
 	}
 
 	@Override
-	public String toString() {
+	public String asString() {
 		return name;
 	}
 }

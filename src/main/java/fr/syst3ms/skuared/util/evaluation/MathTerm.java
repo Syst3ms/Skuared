@@ -1,15 +1,16 @@
 package fr.syst3ms.skuared.util.evaluation;
 
-import ch.njol.util.Kleenean;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public interface MathTerm {
-	static MathTerm parse(String s, List<String> unknownData) {
+public abstract class MathTerm {
+
+	public static MathTerm parse(String s, List<String> unknownData) {
 		Pattern binaryPattern = Pattern.compile("0[Bb][01]+"),
 			hexPattern = Pattern.compile("0[Xx]\\p{XDigit}+"),
 			octPattern = Pattern.compile("0[0-8]+");
@@ -30,17 +31,32 @@ public interface MathTerm {
 		}
 	}
 
-	Number compute(Map<String, Number> unknowns);
+	public abstract Number compute(Map<String, ? extends Number> unknowns);
 
-	boolean hasUnknown();
+	public abstract boolean hasUnknown();
 
-	MathTerm simplify();
+	public abstract MathTerm simplify();
 
-	default MathTerm getNegative() {
-		return new Difference(Constant.ZERO, this);
+	public abstract String asString();
+
+	@Override
+	public String toString() {
+		return asString();
 	}
 
-	default MathTerm getSquared() {
-		return new Power(this, Constant.TWO);
+	public MathTerm getNegative() {
+		return new Difference(Constant.ZERO, this).simplify();
+	}
+
+	public MathTerm getSquared() {
+		return new Power(this, Constant.TWO).simplify();
+	}
+
+	public MathTerm getReciprocal() {
+		return new Division(Constant.ONE, this).simplify();
+	}
+
+	public MathTerm getSquareRoot() {
+		return MathFunction.getFunctionByName("sqrt", Collections.singletonList(this)).simplify();
 	}
 }

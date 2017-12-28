@@ -150,6 +150,14 @@ public class Skuared extends JavaPlugin {
 				return new Number[]{MathUtils.gamma(x.doubleValue())};
 			}
 		});
+		Functions.registerFunction(new JavaFunction<Number>("digamma", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
+			.getExactClassInfo(Number.class), true) {
+			@Override
+			public Number[] execute(FunctionEvent e, Object[][] objects) {
+				Number x = (Number) objects[0][0];
+				return new Number[]{MathUtils.digamma(x.doubleValue())};
+			}
+		});
 		Functions.registerFunction(new JavaFunction<Number>("factorial", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
 			.getExactClassInfo(Number.class), true) {
 			@Override
@@ -180,6 +188,30 @@ public class Skuared extends JavaPlugin {
 			public Number[] execute(FunctionEvent e, Object[][] objects) {
 				Number x = (Number) objects[0][0];
 				return new Number[]{MathUtils.cot(x.doubleValue())};
+			}
+		});
+		Functions.registerFunction(new JavaFunction<Number>("acsc", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
+			.getExactClassInfo(Number.class), true) {
+			@Override
+			public Number[] execute(FunctionEvent e, Object[][] objects) {
+				Number x = (Number) objects[0][0];
+				return new Number[]{MathUtils.acsc(x.doubleValue())};
+			}
+		});
+		Functions.registerFunction(new JavaFunction<Number>("asec", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
+			.getExactClassInfo(Number.class), true) {
+			@Override
+			public Number[] execute(FunctionEvent e, Object[][] objects) {
+				Number x = (Number) objects[0][0];
+				return new Number[]{MathUtils.asec(x.doubleValue())};
+			}
+		});
+		Functions.registerFunction(new JavaFunction<Number>("acot", new Parameter[]{new Parameter<>("x", Classes.getExactClassInfo(Number.class), true, null)}, Classes
+			.getExactClassInfo(Number.class), true) {
+			@Override
+			public Number[] execute(FunctionEvent e, Object[][] objects) {
+				Number x = (Number) objects[0][0];
+				return new Number[]{MathUtils.acot(x.doubleValue())};
 			}
 		});
 		Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);

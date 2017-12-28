@@ -2,6 +2,7 @@ package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
+import ch.njol.util.Pair;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
@@ -33,23 +34,32 @@ public class Algorithms {
 	@NotNull
 	public static String TOKEN_PATTERN = "(?i)(?:(?<=[^\\w]|^)[+-])?(?:0[0-7]+|0x[0-9a-f]+|0b[01]+|\\d+(?:\\.\\d+)?)|[()]|([^\\w ()])\\1*|[a-z_][a-z\\d]*";
 	@NotNull
-	private static Map<String, Operator<Number, Number, Number>> arithmeticOperators = new HashMap<>();
+	private static Map<String, Operator> arithmeticOperators = new HashMap<>();
 	@NotNull
 	private static Map<String, Number> constants = new HashMap<>();
 	@NotNull
 	private static Pattern binaryPattern = Pattern.compile("0[Bb][01]+"), hexPattern = Pattern.compile("0[Xx]\\p{XDigit}+"), octPattern = Pattern
 		.compile("0[0-8]+");
 
+	@NotNull
 	public static Map<String, Number> getConstants() {
 		return constants;
 	}
 
+	public static Map<String, Operator> getOperators() {
+		return arithmeticOperators;
+	}
+
 	public static void registerOperator(@NotNull String symbol, @NotNull Class<? extends DoubleOperandTerm> operation, @NotNull Associativity associativity, int precedence) {
-		arithmeticOperators.put(symbol, new Operator<>(symbol, precedence, associativity, operation));
+		arithmeticOperators.put(symbol, new Operator(symbol, precedence, associativity, operation));
 	}
 
 	public static void registerConstant(@NotNull String id, Number value) {
 		constants.put(id.toLowerCase(), value);
+	}
+
+	public static Map<String, Number> getXMap(Number value) {
+		return MapBuilder.builder("x", value).build();
 	}
 
 	public static int levenshtein(@NotNull String s, @NotNull String t, boolean ignoreCase) {
@@ -154,23 +164,23 @@ public class Algorithms {
 	}
 
 	@Nullable
-	public static MathTerm shuntingYard(@NotNull String orig, List<String> unknownNames) {
-		return shuntingYard(processImplicit(orig, unknownNames), unknownNames);
+	public static Pair<@Nullable MathTerm, List<String>> parseMathExpression(@NotNull String orig, List<String> unknownNames, boolean simplify) {
+		return parseMathExpression(processImplicit(orig, unknownNames), unknownNames, simplify);
 	}
 
 	@Nullable
-	private static MathTerm shuntingYard(@NotNull List<String> tokens, List<String> unknownNames) throws ArithmeticException {
+	private static Pair<@Nullable MathTerm, List<String>> parseMathExpression(@NotNull List<String> tokens, List<String> unknownNames, boolean simplify) throws ArithmeticException {
 		List<String> output = new ArrayList<>();
 		Stack<String> stack = new Stack<>();
 		for (int i = 0; i < tokens.size(); i++) {
 			String token = tokens.get(i), nextToken = i + 1 < tokens.size() ? tokens.get(i + 1) : null;
 			if (arithmeticOperators.containsKey(token)) {
-				Operator<?, ?, ?> currentOp = arithmeticOperators.get(token);
+				Operator currentOp = arithmeticOperators.get(token);
 				if (!stack.isEmpty()) {
 					String top = stack.peek();
 					if (arithmeticOperators.containsKey(top)) {
 						while (!stack.isEmpty()) {
-							Operator<?, ?, ?> op = arithmeticOperators.get(top);
+							Operator op = arithmeticOperators.get(top);
 							if (currentOp == null || op == null) {
 								break;
 							}
@@ -265,7 +275,8 @@ public class Algorithms {
 			output.add(s);
 		}
 		parseError(null);
-		return convertToMathTerm(output, unknownNames);
+		MathTerm term = convertToMathTerm(output, unknownNames);
+		return new Pair<>(simplify ? term.simplify() : term, output);
 	}
 
 	@Contract("null, _ -> null")
@@ -282,7 +293,7 @@ public class Algorithms {
 				String s = (String) part;
 				if (arithmeticOperators.containsKey(s)) {
 					MathTerm b = (MathTerm) stack.pop(), a = (MathTerm) stack.pop();
-					Operator<?, ? ,?> op = arithmeticOperators.get(s);
+					Operator op = arithmeticOperators.get(s);
 					try {
 						Constructor<? extends DoubleOperandTerm> constructor = (Constructor<? extends DoubleOperandTerm>) op.getOperation().getConstructors()[0];
 						DoubleOperandTerm operator = constructor.newInstance(a, b);
@@ -327,13 +338,14 @@ public class Algorithms {
 		ExprSkuaredError.lastError = error != null ? "[Skuared evaluation] " + error : null;
 	}
 
-	public static Number evaluate(@NotNull String expr, Map<String, Number> unknownData) {
-		return evaluateRpn(shuntingYard(expr, new ArrayList<>(unknownData.keySet())), unknownData);
+	public static Number evaluate(@NotNull String expr, Map<String, ? extends Number> unknownData) {
+		return evaluatePostfix(parseMathExpression(expr, new ArrayList<>(unknownData.keySet()), true), unknownData);
 	}
 
 	@Nullable
 	@Contract("null, _ -> null")
-	private static Number evaluateRpn(@Nullable MathTerm term, Map<String, Number> unknownData) {
+	private static Number evaluatePostfix(Pair<@Nullable MathTerm, List<String>> pair, Map<String, ? extends Number> unknownData) {
+		MathTerm term = pair.getFirst();
 		if (term == null) {
 			return null;
 		}

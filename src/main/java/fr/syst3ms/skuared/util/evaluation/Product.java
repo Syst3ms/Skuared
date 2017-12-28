@@ -16,22 +16,7 @@ public class Product extends DoubleOperandTerm {
 	}
 
 	@Override
-	public MathTerm simplify() {
-		MathTerm sup = super.simplify();
-		if (sup != this) {
-			return sup;
-		} else if (first.equals(second)) {
-			return new Power(first, Constant.TWO);
-		} else if (first == Constant.ZERO || second == Constant.ZERO) {
-			return Constant.ZERO;
-		} else if (first == Constant.ONE || second == Constant.ONE) {
-			return first == Constant.ONE ? second : first;
-		}
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "(" + getFirst().toString() + " * " + getSecond().toString() + ")";
+	public String asString() {
+		return "(" + first + " * " + second + ")";
 	}
 }

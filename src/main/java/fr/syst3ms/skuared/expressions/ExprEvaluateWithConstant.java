@@ -51,7 +51,8 @@ public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
 		Map<String, Object> data = (Map<String, Object>) Variables.getVariable(SkriptUtil.getVariableName(unknownData)
 																						 .toString(event),
 																			   event,
-																			   unknownData.isLocal());
+																			   unknownData.isLocal()
+		);
 
 		if (e == null || data == null) {
 			return null;

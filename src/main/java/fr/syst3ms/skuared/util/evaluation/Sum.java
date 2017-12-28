@@ -16,7 +16,7 @@ public class Sum extends DoubleOperandTerm {
 	}
 
 	@Override
-	public String toString() {
-		return "(" + getFirst().toString() + " + " + getSecond().toString() + ")";
+	public String asString() {
+		return "(" + first + " + " + second + ")";
 	}
 }

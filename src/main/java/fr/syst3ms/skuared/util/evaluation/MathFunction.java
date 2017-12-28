@@ -1,6 +1,7 @@
 package fr.syst3ms.skuared.util.evaluation;
 
 import ch.njol.skript.lang.function.Function;
+import ch.njol.skript.lang.function.Functions;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.ReflectionUtils;
 
@@ -9,13 +10,18 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class MathFunction implements MathTerm {
+public class MathFunction extends MathTerm {
 	private Function<Number> function;
 	private List<MathTerm> params;
 
 	public MathFunction(Function<Number> function, List<MathTerm> params) {
 		this.function = function;
 		this.params = params;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static MathFunction getFunctionByName(String name, List<MathTerm> params) {
+		return new MathFunction((Function<Number>) Functions.getFunction(name), params);
 	}
 
 	public Function<Number> getFunction() {
@@ -27,7 +33,7 @@ public class MathFunction implements MathTerm {
 	}
 
 	@Override
-	public Number compute(Map<String, Number> unknowns) {
+	public Number compute(Map<String, ? extends Number> unknowns) {
 		Stack<Number> parameters = params.stream()
 									.map(t -> t.compute(unknowns))
 									.collect(Collectors.toCollection(Stack::new));
@@ -57,6 +63,15 @@ public class MathFunction implements MathTerm {
 
 	@Override
 	public MathTerm simplify() {
+		if (params.stream().noneMatch(MathTerm::hasUnknown)) {
+			return Constant.getConstant(compute(null));
+		}
 		return this;
+	}
+
+	@Override
+	public String asString() {
+		String paramString = params.stream().map(MathTerm::asString).collect(Collectors.joining(", "));
+		return "(" + function.getName() + "(" + paramString + "))";
 	}
 }
