@@ -2,7 +2,6 @@ package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
-import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprSkuaredError;
 import fr.syst3ms.skuared.util.evaluation.*;
 import org.jetbrains.annotations.Contract;
@@ -11,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.HashMap;

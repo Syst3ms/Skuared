@@ -16,8 +16,22 @@ public class Difference extends DoubleOperandTerm {
 	}
 
 	@Override
-	public String toString() {
-		return asString();
+	String getAsString(Class<? extends DoubleOperandTerm> calling) {
+		return null;
+	}
+
+	@Override
+	public MathTerm simplify() {
+		if (!first.hasUnknown() && !second.hasUnknown()) {
+			return Constant.getConstant(compute(null));
+		} else if (first == Constant.ZERO) {
+			return second.getNegative();
+		} else if (second == Constant.ZERO) {
+			return first;
+		} else if (second instanceof Constant && ((Constant) second).isNegative()) {
+			return new Sum(first, second.getNegative());
+		}
+		return this;
 	}
 
 	@Override

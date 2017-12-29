@@ -54,6 +54,10 @@ public class Constant extends MathTerm {
 		return this;
 	}
 
+	public boolean isNegative() {
+		return Math.signum(value.doubleValue()) == -1;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		return obj != null && obj instanceof Constant && (this == obj || MathUtils.equals(value, ((Constant) obj).value));
@@ -63,4 +67,5 @@ public class Constant extends MathTerm {
 	public String asString() {
 		return value.toString();
 	}
+
 }

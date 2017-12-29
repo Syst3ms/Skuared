@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 
 import static fr.syst3ms.skuared.util.Algorithms.*;
 import static org.junit.Assert.assertEquals;
