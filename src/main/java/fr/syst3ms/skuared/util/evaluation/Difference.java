@@ -16,8 +16,14 @@ public class Difference extends DoubleOperandTerm {
 	}
 
 	@Override
-	String getAsString(Class<? extends DoubleOperandTerm> calling) {
-		return null;
+	protected String getAsString(Class<? extends DoubleOperandTerm> calling, boolean isSecond) {
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Difference.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Difference.class, true) : second.asString();
+		if (calling != getClass() && calling != Sum.class || isSecond) {
+			return String.format("(%s - %s)", f, s);
+		} else {
+			return String.format("%s - %s", f, s);
+		}
 	}
 
 	@Override
@@ -34,12 +40,16 @@ public class Difference extends DoubleOperandTerm {
 		} else if (second instanceof Difference) {
 			Difference s = (Difference) second;
 			return new Difference(first, new Sum(s.getFirst(), s.getSecond())).simplify();
+		} else if (first.equals(second)) {
+			return Constant.ZERO;
 		}
 		return this;
 	}
 
 	@Override
 	public String asString() {
-		return "(" + first + " - " + second + ")";
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Difference.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Difference.class, true) : second.asString();
+		return String.format("%s - %s", f, s);
 	}
 }

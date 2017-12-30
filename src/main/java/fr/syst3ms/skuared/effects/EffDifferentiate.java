@@ -7,17 +7,15 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import ch.njol.util.Pair;
 import fr.syst3ms.skuared.expressions.ExprLastResult;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.MathUtils;
+import fr.syst3ms.skuared.util.evaluation.MathExpression;
 import fr.syst3ms.skuared.util.evaluation.MathTerm;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -79,11 +77,11 @@ public class EffDifferentiate extends Effect {
             String wolframRequest = hasPoint ? String.format("differentiate %s at x=%s", expr, p) : String.format("differentiate %s", expr);
             request = CompletableFuture.supplyAsync(() -> Algorithms.sendWolframApiRequest(wolframRequest), threadPool);
         } else {
-            Pair<@Nullable MathTerm, List<String>> pair = Algorithms.parseMathExpression(expr, Collections.singletonList("x"), true);
+            MathExpression pair = Algorithms.parseMathExpression(expr, Collections.singletonList("x"), true);
             if (pair == null) {
                 return;
             }
-            MathTerm term = pair.getFirst();
+            MathTerm term = pair.getTerm();
             if (term == null) {
                 return;
             }

@@ -12,7 +12,6 @@ import fr.syst3ms.skuared.util.Algorithms;
 import org.bukkit.event.Event;
 
 import java.lang.reflect.Field;
-import java.net.URLEncoder;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;

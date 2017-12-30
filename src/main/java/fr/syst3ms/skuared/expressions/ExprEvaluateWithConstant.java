@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
 	private static final String[] letters = "abcdefghijklmnopqrstuvwxyz".split("");

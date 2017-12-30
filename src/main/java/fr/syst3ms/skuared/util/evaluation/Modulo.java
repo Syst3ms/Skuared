@@ -16,8 +16,14 @@ public class Modulo extends DoubleOperandTerm {
 	}
 
 	@Override
-	String getAsString(Class<? extends DoubleOperandTerm> calling) {
-		return null;
+	protected String getAsString(Class<? extends DoubleOperandTerm> calling, boolean isSecond) {
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Modulo.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Modulo.class, true) : second.asString();
+		if (calling == Power.class || (calling == Division.class || calling == getClass()) && isSecond) {
+			return String.format("(%s %% %s)", f, s);
+		} else {
+			return String.format("%s %% %s", f, s);
+		}
 	}
 
 	@Override
@@ -27,6 +33,8 @@ public class Modulo extends DoubleOperandTerm {
 
 	@Override
 	public String asString() {
-		return "(" + first + " % " + second + ")";
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Modulo.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Modulo.class, true) : second.asString();
+		return String.format("%s %% %s", f, s);
 	}
 }

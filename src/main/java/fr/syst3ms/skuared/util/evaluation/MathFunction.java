@@ -11,7 +11,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MathFunction extends MathTerm {
+public class MathFunction implements MathTerm {
 	private Function<Number> function;
 	private List<MathTerm> params;
 
@@ -75,6 +75,16 @@ public class MathFunction extends MathTerm {
 	@Override
 	public String asString() {
 		String paramString = params.stream().map(MathTerm::asString).collect(Collectors.joining(", "));
-		return "(" + function.getName() + "(" + paramString + "))";
+		return function.getName() + "(" + paramString + ")";
+	}
+
+	@Override
+	public int termCount() {
+		return 1;
+	}
+
+	@Override
+	public String toString() {
+		return asString();
 	}
 }

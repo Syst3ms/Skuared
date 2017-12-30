@@ -1,10 +1,10 @@
 package fr.syst3ms.skuared.util;
 
-import java.lang.reflect.Field;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Variable;
 import ch.njol.skript.lang.VariableString;
+
+import java.lang.reflect.Field;
 
 /**
  * With courtesy of Lubbock

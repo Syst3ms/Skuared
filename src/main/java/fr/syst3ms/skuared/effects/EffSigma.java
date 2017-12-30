@@ -7,7 +7,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprLastResult;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.MathUtils;
@@ -19,7 +18,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
 
 /**
  * Async effect concept, with courtesy of Lubbock/w00tmaster

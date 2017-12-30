@@ -4,7 +4,7 @@ import fr.syst3ms.skuared.util.MathUtils;
 
 import java.util.Map;
 
-public class Constant extends MathTerm {
+public class Constant implements MathTerm {
 	public static final Constant NAN = new Constant(Double.NaN);
 	public static final Constant ZERO = new Constant(0);
 	public static final Constant ONE = new Constant(1);
@@ -68,4 +68,13 @@ public class Constant extends MathTerm {
 		return value.toString();
 	}
 
+	@Override
+	public int termCount() {
+		return 1;
+	}
+
+	@Override
+	public String toString() {
+		return asString();
+	}
 }

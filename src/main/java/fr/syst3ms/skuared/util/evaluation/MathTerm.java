@@ -1,5 +1,7 @@
 package fr.syst3ms.skuared.util.evaluation;
 
+import ch.njol.util.Math2;
+import com.google.common.math.IntMath;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.StringUtils;
 
@@ -39,6 +41,8 @@ public interface MathTerm {
 
 	String asString();
 
+	int termCount();
+
 	default MathTerm getNegative() {
 		return new Difference(Constant.ZERO, this).simplify();
 	}
@@ -54,4 +58,9 @@ public interface MathTerm {
 	default MathTerm getSquareRoot() {
 		return MathFunction.getFunctionByName("sqrt", Collections.singletonList(this)).simplify();
 	}
+
+	default boolean isSimple() {
+		return this instanceof Constant || this instanceof Unknown;
+	}
+
 }

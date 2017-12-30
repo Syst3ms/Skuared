@@ -7,7 +7,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static fr.syst3ms.skuared.util.Algorithms.*;
+import static fr.syst3ms.skuared.util.Algorithms.evaluate;
+import static fr.syst3ms.skuared.util.Algorithms.parseMathExpression;
 import static org.junit.Assert.assertEquals;
 
 public class AlgorithmsTest {
@@ -31,15 +32,15 @@ public class AlgorithmsTest {
 
     @Test
     public void shuntingYardTest() throws Exception {
-        assertEquals(Constant.getConstant(Math.E), parseMathExpression("e", Collections.emptyList(), false).getFirst());
+        assertEquals(Constant.getConstant(Math.E), parseMathExpression("e", Collections.emptyList(), false).getTerm());
         MathTerm expected = new Product(Constant.getConstant(5), new Sum(Constant.TWO, Constant.getConstant(3)));
-        assertEquals(expected, parseMathExpression("5(2 + 3)", Collections.emptyList(), false).getFirst());
+        assertEquals(expected, parseMathExpression("5(2 + 3)", Collections.emptyList(), false).getTerm());
         MathTerm expected2 = new Product(new Sum(Constant.getConstant(5), Constant.TWO), new Sum(Constant.getConstant(3), Constant.getConstant(4)));
-        assertEquals(expected2, parseMathExpression("(5 + 2)(3 + 4)", Collections.emptyList(), false).getFirst());
+        assertEquals(expected2, parseMathExpression("(5 + 2)(3 + 4)", Collections.emptyList(), false).getTerm());
         MathTerm expected3 = new Product(new Power(new Unknown("x"), Constant.TWO), new Power(new Unknown("x"), Constant.TWO.getNegative()));
-        assertEquals(expected3, parseMathExpression("(x^2)(x^-2)", Collections.singletonList("x"), false).getFirst());
+        assertEquals(expected3, parseMathExpression("(x^2)(x^-2)", Collections.singletonList("x"), false).getTerm());
         MathTerm expected4 = new Difference(new Product(Constant.TWO, new Unknown("x").getSquared()), new Power(new Unknown("y"), Constant.getConstant(3)));
-        assertEquals(expected4, parseMathExpression("2x^2-y^3", Arrays.asList("x", "y"), false).getFirst());
+        assertEquals(expected4, parseMathExpression("2x^2-y^3", Arrays.asList("x", "y"), false).getTerm());
         MathTerm expected5 = new Sum(
             new Sum(
                 new Sum(
@@ -50,7 +51,7 @@ public class AlgorithmsTest {
             ),
             new Unknown("d")
         );
-        assertEquals(expected5, parseMathExpression("a*x^3+b*x^2+c*x+d", Arrays.asList("x", "a", "b", "c", "d"), false).getFirst());
+        assertEquals(expected5, parseMathExpression("a*x^3+b*x^2+c*x+d", Arrays.asList("x", "a", "b", "c", "d"), false).getTerm());
     }
 
     @Test

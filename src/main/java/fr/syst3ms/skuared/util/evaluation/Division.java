@@ -16,8 +16,14 @@ public class Division extends DoubleOperandTerm {
 	}
 
 	@Override
-	String getAsString(Class<? extends DoubleOperandTerm> calling) {
-		return null;
+	protected String getAsString(Class<? extends DoubleOperandTerm> calling, boolean isSecond) {
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Division.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Division.class, true) : second.asString();
+		if (calling == Power.class || (calling == Modulo.class || calling == getClass() || calling == Product.class) && isSecond) {
+			return String.format("(%s / %s)", f, s);
+		} else {
+			return String.format("%s / %s", f, s);
+		}
 	}
 
 	@Override
@@ -36,6 +42,8 @@ public class Division extends DoubleOperandTerm {
 
 	@Override
 	public String asString() {
-		return "(" + first + " / " + second + ")";
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Division.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Division.class, true) : second.asString();
+		return String.format("%s / %s", f, s);
 	}
 }

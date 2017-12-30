@@ -2,7 +2,6 @@ package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
-import ch.njol.util.Pair;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
@@ -163,13 +162,12 @@ public class Algorithms {
 		return StringUtils.getAllMatches(sb.toString(), TOKEN_PATTERN);
 	}
 
-	@Nullable
-	public static Pair<@Nullable MathTerm, List<String>> parseMathExpression(@NotNull String orig, List<String> unknownNames, boolean simplify) {
+	public static @Nullable MathExpression parseMathExpression(@NotNull String orig, List<String> unknownNames, boolean simplify) {
 		return parseMathExpression(processImplicit(orig, unknownNames), unknownNames, simplify);
 	}
 
 	@Nullable
-	private static Pair<@Nullable MathTerm, List<String>> parseMathExpression(@NotNull List<String> tokens, List<String> unknownNames, boolean simplify) throws ArithmeticException {
+	private static MathExpression parseMathExpression(@NotNull List<String> tokens, List<String> unknownNames, boolean simplify) throws ArithmeticException {
 		List<String> output = new ArrayList<>();
 		Stack<String> stack = new Stack<>();
 		for (int i = 0; i < tokens.size(); i++) {
@@ -197,6 +195,7 @@ public class Algorithms {
 									break;
 								}
 							}
+							top = stack.peek();
 						}
 					}
 				}
@@ -276,7 +275,7 @@ public class Algorithms {
 		}
 		parseError(null);
 		MathTerm term = convertToMathTerm(output, unknownNames);
-		return new Pair<>(simplify ? term.simplify() : term, output);
+		return new MathExpression(output, simplify ? term.simplify() : term, unknownNames);
 	}
 
 	@Contract("null, _ -> null")
@@ -287,7 +286,7 @@ public class Algorithms {
 		Stack<Object> parts = prepareForTree(tokens, unknownData);
 		Stack<Object> stack = new Stack<>();
 		for (Object part : parts) {
-			if (part instanceof Constant || part instanceof Unknown) {
+			if (part.isSimple()) {
 				stack.push(part);
 			} else {
 				String s = (String) part;
@@ -344,8 +343,8 @@ public class Algorithms {
 
 	@Nullable
 	@Contract("null, _ -> null")
-	private static Number evaluatePostfix(Pair<@Nullable MathTerm, List<String>> pair, Map<String, ? extends Number> unknownData) {
-		MathTerm term = pair.getFirst();
+	private static Number evaluatePostfix(MathExpression expr, Map<String, ? extends Number> unknownData) {
+		MathTerm term = expr.getTerm();
 		if (term == null) {
 			return null;
 		}

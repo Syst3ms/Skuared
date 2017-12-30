@@ -1,17 +1,9 @@
 package fr.syst3ms.skuared.util;
 
-import fr.syst3ms.skuared.util.evaluation.Constant;
-import fr.syst3ms.skuared.util.evaluation.Difference;
-import fr.syst3ms.skuared.util.evaluation.Division;
-import fr.syst3ms.skuared.util.evaluation.LeftBitShift;
-import fr.syst3ms.skuared.util.evaluation.Modulo;
-import fr.syst3ms.skuared.util.evaluation.Power;
-import fr.syst3ms.skuared.util.evaluation.Product;
-import fr.syst3ms.skuared.util.evaluation.RightBitShift;
-import fr.syst3ms.skuared.util.evaluation.Sum;
-import fr.syst3ms.skuared.util.evaluation.Unknown;
-import fr.syst3ms.skuared.util.evaluation.UnsignedRightBitShift;
+import fr.syst3ms.skuared.util.evaluation.*;
 import org.junit.Test;
+
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -60,5 +52,20 @@ public class MathTest {
         assertEquals(Constant.ZERO, MathUtils.indefiniteDerivative(Constant.getConstant(Math.random())));
         assertEquals(Constant.ONE, MathUtils.indefiniteDerivative(new Unknown("x")));
         assertEquals(Constant.TWO, MathUtils.indefiniteDerivative(new Product(Constant.TWO, new Unknown("x"))));
+    }
+
+    @Test
+    public void asString() throws Exception {
+        assertEquals("5 + 8 * 5", Algorithms.parseMathExpression("5 + 8 * 5", Collections.emptyList(), false).getTerm().asString());
+        assertEquals("5 / x / x ^ 2", Algorithms.parseMathExpression("5 / x / x^2", Collections.singletonList("x"), false).getTerm().asString());
+        assertEquals("8(5 + 2)", Algorithms.parseMathExpression("8 * (5 +2)", Collections.emptyList(), false).getTerm().asString());
+    }
+
+    @Test
+    public void simplify() throws Exception {
+ //       assertEquals(Constant.ONE, Algorithms.parseMathExpression("(x + x) / (x * 2)", Collections.singletonList("x"), true).getTerm());
+   //     assertEquals(Constant.ZERO, Algorithms.parseMathExpression("x((x-x) / 2x^2)", Collections.singletonList("x"), true).getTerm());
+        MathTerm expected = new Difference(new Product(Constant.TWO, new Unknown("x").getSquared()), new Unknown("x"));
+        assertEquals(expected, Algorithms.parseMathExpression("x(2x-1)", Collections.singletonList("x"), true).getTerm());
     }
 }

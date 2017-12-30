@@ -4,7 +4,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Map;
 
-public class Unknown extends MathTerm {
+public class Unknown implements MathTerm {
 	private String name;
 
 	public Unknown(String name) {
@@ -41,5 +41,15 @@ public class Unknown extends MathTerm {
 	@Override
 	public String asString() {
 		return name;
+	}
+
+	@Override
+	public int termCount() {
+		return 1;
+	}
+
+	@Override
+	public String toString() {
+		return asString();
 	}
 }

@@ -16,8 +16,14 @@ public class Power extends DoubleOperandTerm {
 	}
 
 	@Override
-	String getAsString(Class<? extends DoubleOperandTerm> calling) {
-		return null;
+	protected String getAsString(Class<? extends DoubleOperandTerm> calling, boolean isSecond) {
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Power.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Power.class, true) : second.asString();
+		if (calling == Power.class && isSecond) {
+			return String.format("(%s ^ %s)", f, s);
+		} else {
+			return String.format("%s ^ %s", f, s);
+		}
 	}
 
 	@Override
@@ -51,6 +57,8 @@ public class Power extends DoubleOperandTerm {
 
 	@Override
 	public String asString() {
-		return null;
+		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Power.class, false) : first.asString();
+		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Power.class, true) : second.asString();
+		return String.format("%s ^ %s", f, s);
 	}
 }
