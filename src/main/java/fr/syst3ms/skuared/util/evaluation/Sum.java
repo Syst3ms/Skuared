@@ -16,6 +16,21 @@ public class Sum extends DoubleOperandTerm {
 	}
 
 	@Override
+	String getAsString(Class<? extends DoubleOperandTerm> calling) {
+		return null;
+	}
+
+	@Override
+	protected MathTerm simplifyOperation() {
+		if (first == Constant.ZERO) {
+			return second;
+		} else if (second == Constant.ZERO) {
+			return first;
+		}
+		return this;
+	}
+
+	@Override
 	public String asString() {
 		return "(" + first + " + " + second + ")";
 	}

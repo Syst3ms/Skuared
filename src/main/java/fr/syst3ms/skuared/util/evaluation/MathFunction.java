@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MathFunction extends MathTerm {
 	private Function<Number> function;
@@ -63,7 +64,9 @@ public class MathFunction extends MathTerm {
 
 	@Override
 	public MathTerm simplify() {
-		if (params.stream().noneMatch(MathTerm::hasUnknown)) {
+		Stream<MathTerm> paramStream = params.stream();
+		params = paramStream.map(MathTerm::simplify).collect(Collectors.toList());
+		if (paramStream.noneMatch(MathTerm::hasUnknown)) {
 			return Constant.getConstant(compute(null));
 		}
 		return this;

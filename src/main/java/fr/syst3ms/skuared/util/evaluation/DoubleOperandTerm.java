@@ -13,7 +13,7 @@ public abstract class DoubleOperandTerm extends MathTerm {
 
 	abstract BinaryOperator<Number> getFunction();
 
-	abstract String getAsString(Class<? extends DoubleOperandTerm> calling);
+	protected abstract MathTerm simplifyOperation();
 
 	@Override
 	public Number compute(Map<String, ? extends Number> unknowns) {
@@ -45,6 +45,16 @@ public abstract class DoubleOperandTerm extends MathTerm {
 	@Override
 	public boolean hasUnknown() {
 		return first.hasUnknown() || second.hasUnknown();
+	}
+
+	@Override
+	public MathTerm simplify() {
+		first = first.simplify();
+		second = second.simplify();
+		if (!first.hasUnknown() && !second.hasUnknown()) {
+			return Constant.getConstant(compute(null));
+		}
+		return simplifyOperation();
 	}
 
 	@Override

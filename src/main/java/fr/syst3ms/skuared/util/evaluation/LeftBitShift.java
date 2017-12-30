@@ -16,6 +16,16 @@ public class LeftBitShift extends DoubleOperandTerm {
 	}
 
 	@Override
+	String getAsString(Class<? extends DoubleOperandTerm> calling) {
+		return null;
+	}
+
+	@Override
+	public MathTerm simplifyOperation() {
+		return new Product(first, new Power(Constant.TWO, second)).simplify();
+	}
+
+	@Override
 	public String asString() {
 		return "(" + first + " << " + second + ")";
 	}

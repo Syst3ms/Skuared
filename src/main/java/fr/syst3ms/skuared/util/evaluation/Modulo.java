@@ -16,6 +16,16 @@ public class Modulo extends DoubleOperandTerm {
 	}
 
 	@Override
+	String getAsString(Class<? extends DoubleOperandTerm> calling) {
+		return null;
+	}
+
+	@Override
+	public MathTerm simplifyOperation() {
+		return this;
+	}
+
+	@Override
 	public String asString() {
 		return "(" + first + " % " + second + ")";
 	}

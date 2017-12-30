@@ -16,7 +16,12 @@ public class UnsignedRightBitShift extends DoubleOperandTerm {
 	}
 
 	@Override
-	public String asString() {
-		return "(" + first + " >> " + second + ")";
+	String getAsString(Class<? extends DoubleOperandTerm> calling) {
+		return null;
+	}
+
+	@Override
+	protected MathTerm simplifyOperation() {
+		return new Division(first, new Power(Constant.TWO, second)).simplify();
 	}
 }

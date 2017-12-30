@@ -16,6 +16,16 @@ public class RightBitShift extends DoubleOperandTerm {
 	}
 
 	@Override
+	String getAsString(Class<? extends DoubleOperandTerm> calling) {
+		return null;
+	}
+
+	@Override
+	protected MathTerm simplifyOperation() {
+		return this;
+	}
+
+	@Override
 	public String asString() {
 		return "(" + first + " >> " + second + ")";
 	}

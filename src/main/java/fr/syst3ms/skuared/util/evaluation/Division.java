@@ -21,10 +21,8 @@ public class Division extends DoubleOperandTerm {
 	}
 
 	@Override
-	public MathTerm simplify() {
-		if (!first.hasUnknown() && !second.hasUnknown()) {
-			return Constant.getConstant(compute(null));
-		} else if (second == Constant.ONE) {
+	public MathTerm simplifyOperation() {
+		if (second == Constant.ONE) {
 			return first;
 		} else if (second == Constant.ZERO) {
 			return Constant.NAN;

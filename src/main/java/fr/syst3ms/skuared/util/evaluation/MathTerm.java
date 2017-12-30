@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public abstract class MathTerm {
+public interface MathTerm {
 
-	public static MathTerm parse(String s, List<String> unknownData) {
+	static MathTerm parse(String s, List<String> unknownData) {
 		Pattern binaryPattern = Pattern.compile("0[Bb][01]+"),
 			hexPattern = Pattern.compile("0[Xx]\\p{XDigit}+"),
 			octPattern = Pattern.compile("0[0-8]+");
@@ -31,32 +31,27 @@ public abstract class MathTerm {
 		}
 	}
 
-	public abstract Number compute(Map<String, ? extends Number> unknowns);
+	Number compute(Map<String, ? extends Number> unknowns);
 
-	public abstract boolean hasUnknown();
+	boolean hasUnknown();
 
-	public abstract MathTerm simplify();
+	MathTerm simplify();
 
-	public abstract String asString();
+	String asString();
 
-	@Override
-	public String toString() {
-		return asString();
-	}
-
-	public MathTerm getNegative() {
+	default MathTerm getNegative() {
 		return new Difference(Constant.ZERO, this).simplify();
 	}
 
-	public MathTerm getSquared() {
+	default MathTerm getSquared() {
 		return new Power(this, Constant.TWO).simplify();
 	}
 
-	public MathTerm getReciprocal() {
+	default MathTerm getReciprocal() {
 		return new Division(Constant.ONE, this).simplify();
 	}
 
-	public MathTerm getSquareRoot() {
+	default MathTerm getSquareRoot() {
 		return MathFunction.getFunctionByName("sqrt", Collections.singletonList(this)).simplify();
 	}
 }
