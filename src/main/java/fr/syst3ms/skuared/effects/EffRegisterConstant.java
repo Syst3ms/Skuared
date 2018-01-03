@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Literal;
@@ -10,6 +14,12 @@ import fr.syst3ms.skuared.util.Algorithms;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Register Constant")
+@Description({"Registers a constant (duh), which can be used in the evaluate expression (described in [Evaluating Expressions](https://github.com/Syst3ms/Skuared/wiki/Evaluating-Expressions)).",
+		" A constant name must consist of one letter optionally followed by one or more letters or digits",
+		" If that's any clearer to you, the regex Skuared uses is '[A-Za-z][A-Za-z\\\\d]*.'"})
+@Examples("register constant \"G\" with value (eval expr \"6.67408* 10^−11\")")
+@Since("1.0")
 @SuppressWarnings("unchecked")
 public class EffRegisterConstant extends Effect {
 	private Expression<String> symbol;

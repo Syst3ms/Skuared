@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -18,6 +22,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Async effect concept, with courtesy of Lubbock/w00tmaster
+ */
+@Name("Limit")
+@Description({"Computes the limit of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
+@Examples({"limit \"1/x\" as x approaches 0",
+        "set {_limit} to last skuared result # Infinity"})
+@Since("1.1")
 public class EffLimit extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);
     private static final Field DELAYED;

@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
@@ -12,6 +16,15 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Evaluate Expression With Constant")
+@Description({"Evaluates a mathematical expression with a provided number. The number can be referred to in the expression using 'x'",
+        "Check out [the advanced description](TUTORIAL_URL#evaluate-expression) for WAYYY more information !"})
+@Examples({"set {_res} to evaluate expr \"2(3 + x)\" with 5 # 16",
+        "if last skuared error is not set:",
+        "   # proceed as usual",
+        "else:",
+        "   # something messed up, access the error through 'last skuared error'"})
+@Since("1.1")
 public class ExprEvaluateWithConstant extends SimpleExpression<Number> {
     private Expression<String> expr;
     private Expression<Number> constant;

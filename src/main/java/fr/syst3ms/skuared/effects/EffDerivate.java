@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -21,6 +25,11 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Async effect concept, with courtesy of Lubbock/w00tmaster
  */
+@Name("Derivative")
+@Description({"Computes the derivative of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
+@Examples({"compute derivative of \"x^2\"",
+        "set {_derivative} to last skuared result # \"2x\""})
+@Since("1.1")
 public class EffDerivate extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);
     private static final Field DELAYED;

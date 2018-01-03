@@ -1,6 +1,9 @@
 package fr.syst3ms.skuared.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +14,10 @@ import fr.syst3ms.skuared.util.Algorithms;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
+@Name("Levenshtein/String distance")
+@Description({"Represents the number of edits from one string to another. An edit can be adding, removing or replacing a letter.",
+        "Adding 'ignor(e|ing) case' makes it so uppercase and lowercase letters don't count as an edit."})
+@Examples("set {_dist} to levenshtein distance between \"Skript\" and \"Spigot\" # 4")
 public class ExprLevenshteinDistance extends SimpleExpression<Number> {
     private Expression<String> first, second;
     private boolean ignoreCase;

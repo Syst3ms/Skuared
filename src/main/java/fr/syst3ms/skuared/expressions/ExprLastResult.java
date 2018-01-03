@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
@@ -10,6 +14,11 @@ import fr.syst3ms.skuared.util.Algorithms;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Last Result")
+@Description({"Gets the result computed by a [computational effect](TUTORIAL_URL#computational_effects)"})
+@Examples({"sum \"x\" from 1 to 10",
+        "set {_result} to last skuared result # 55"})
+@Since("1.1")
 public class ExprLastResult extends SimpleExpression<Object> {
     public static String lastResult;
 

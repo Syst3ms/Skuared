@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -24,6 +28,11 @@ import java.util.logging.Level;
 /**
  * Async effect concept, with courtesy of Lubbock/w00tmaster
  */
+@Name("Product")
+@Description({"Computes the pi-notation product of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
+@Examples({"product \"2x\" from 1 to 10",
+        "set {_product} to last skuared result # 3715891200"})
+@Since("1.1")
 public class EffProduct extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);
     private static final Field DELAYED;

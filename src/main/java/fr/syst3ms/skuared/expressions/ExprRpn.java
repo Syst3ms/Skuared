@@ -1,5 +1,6 @@
 package fr.syst3ms.skuared.expressions;
 
+import ch.njol.skript.doc.Name;
 import ch.njol.skript.expressions.base.PropertyExpression;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import fr.syst3ms.skuared.util.Algorithms;
@@ -7,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@Name("DO NOT INCLUDE")
 public class ExprRpn extends SimplePropertyExpression<String, String> {
 
 	static {
