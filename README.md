@@ -1,4 +1,4 @@
-# Skuared
+# skript-math
 
 A Skript addon with multiple algorithms and math-related syntaxes !
 

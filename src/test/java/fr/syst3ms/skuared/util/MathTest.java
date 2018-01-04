@@ -1,35 +1,39 @@
 package fr.syst3ms.skuared.util;
 
+import ch.njol.skript.Skript;
+import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.Associativity;
+import fr.syst3ms.skriptmath.util.MathUtils;
+import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.junit.Test;
 
-import static fr.syst3ms.skuared.util.Algorithms.registerConstant;
-import static fr.syst3ms.skuared.util.Algorithms.registerOperator;
+import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
 
 public class MathTest {
-
     static {
-        registerOperator(">>", MathUtils::shr, Associativity.LEFT, 4);
-        registerOperator("<<", MathUtils::shl, Associativity.LEFT, 4);
-        registerOperator(">>>", MathUtils::ushr, Associativity.LEFT, 4);
-        registerOperator("+", MathUtils::plus, Associativity.LEFT, 3);
-        registerOperator("-", MathUtils::minus, Associativity.LEFT, 3);
-        registerOperator("*", MathUtils::times, Associativity.LEFT, 2);
-        registerOperator("/", MathUtils::divide, Associativity.LEFT, 2);
-        registerOperator("%", MathUtils::mod, Associativity.LEFT, 2);
-        registerOperator("^", MathUtils::pow, Associativity.RIGHT, 1);
-        registerConstant("pi", Math.PI);
-        registerConstant("e", Math.E);
-        registerConstant("nan", Double.NaN);
-        registerConstant("Infinity", Double.POSITIVE_INFINITY);
-        registerConstant("phi", MathUtils.PHI);
+        Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
+        Algorithms.registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
+        Algorithms.registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
+        Algorithms.registerOperator("+", Sum.class, Associativity.LEFT, 3);
+        Algorithms.registerOperator("-", Difference.class, Associativity.LEFT, 3);
+        Algorithms.registerOperator("*", Product.class, Associativity.LEFT, 2);
+        Algorithms.registerOperator("/", Division.class, Associativity.LEFT, 2);
+        Algorithms.registerOperator("%", Modulo.class, Associativity.LEFT, 2);
+        Algorithms.registerOperator("^", Power.class, Associativity.RIGHT, 1);
+        Algorithms.registerConstant("pi", Math.PI);
+        Algorithms.registerConstant("e", Math.E);
+        Algorithms.registerConstant("nan", Double.NaN);
+        Algorithms.registerConstant("Infinity", Double.POSITIVE_INFINITY);
+        Algorithms.registerConstant("phi", MathUtils.PHI);
     }
 
     @Test
     public void sigma() throws Exception {
         assertEquals(55, MathUtils.sigma("x", 1L, 10L).intValue());
         assertEquals(1023.0d, MathUtils.sigma("2^x/2", 1L, 10L).doubleValue(), 0.001);
-        assertEquals(24, MathUtils.sigma("(1+1/x)^x", 1L, 10L).intValue());
+        assertEquals(24.358924454916741049d, MathUtils.sigma("(1+1/x)^x", 1L, 10L).doubleValue(), Skript.EPSILON);
     }
 
     @Test
@@ -46,4 +50,31 @@ public class MathTest {
         assertEquals(1.56746d, MathUtils.gamma(Math.E), 0.0001);
     }
 
+
+    @Test
+    public void indefiniteDerivative() throws Exception {
+        assertEquals(Constant.ZERO, MathUtils.indefiniteDerivative(Constant.getConstant(Math.random())));
+        assertEquals(Constant.ONE, MathUtils.indefiniteDerivative(new Unknown("x", false)));
+        assertEquals(Constant.TWO, MathUtils.indefiniteDerivative(new Product(Constant.TWO, new Unknown("x", false))).simplify());
+        MathTerm expected = new Product(Constant.getConstant(3), new Unknown("x", false).getSquared()); // x^3 -> 3x^2
+        assertEquals(expected, MathUtils.indefiniteDerivative(new Power(new Unknown("x", false), Constant.getConstant(3))).simplify());
+        MathTerm param = new Power(Constant.E, new Difference(Constant.getConstant(5), new Unknown("x", false)));
+        assertEquals(param.getNegative(), MathUtils.indefiniteDerivative(param).simplify());
+    }
+
+    @Test
+    public void asString() throws Exception {
+        assertEquals("5 + 8 * 5", Algorithms.parseMathExpression("5 + 8 * 5", Collections.emptyList(), false).getTerm().asString());
+        assertEquals("5 / x / x ^ 2", Algorithms.parseMathExpression("5 / x / x^2", Collections.singletonList("x"), false).getTerm().asString());
+        assertEquals("8(5 + 2)", Algorithms.parseMathExpression("8 * (5 +2)", Collections.emptyList(), false).getTerm().asString());
+    }
+
+    @Test
+    public void simplify() throws Exception {
+        assertEquals(Constant.ONE, Algorithms.parseMathExpression("(x + x) / (x * 2)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(Constant.ZERO, Algorithms.parseMathExpression("x((x-x) / 2x^2)", Collections.singletonList("x"), true).getTerm());
+        MathTerm expected = new Difference(new Product(Constant.TWO, new Unknown("x", false).getSquared()), new Unknown("x", false));
+        assertEquals(expected, Algorithms.parseMathExpression("x(2x-1)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(new Division(new Unknown("x", false).getSquared(), Constant.TWO), Algorithms.parseMathExpression("x(x/2)", Collections.singletonList("x"), true).getTerm());
+    }
 }
