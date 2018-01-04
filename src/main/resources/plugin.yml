@@ -2,5 +2,5 @@ name: skript-math
 version: 2.0
 description: An addon for Skript that adds diverse mathematic and algorithmic features
 author: Syst3ms
-main: fr.syst3ms.skuared.SkriptMath
+main: fr.syst3ms.skriptmath.SkriptMath
 depend: [Skript]

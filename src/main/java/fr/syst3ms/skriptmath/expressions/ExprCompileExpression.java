@@ -24,7 +24,7 @@ public class ExprCompileExpression extends SimpleExpression<MathExpression> {
                 ExprCompileExpression.class,
                 MathExpression.class,
                 ExpressionType.COMBINED,
-                "compile[d] [math] expression[ession] %string% [with unknown[ name][s] %-strings%]"
+                "compile[d] [math] expr[ession] %string% [with unknown[ name][s] %-strings%]"
         );
     }
 

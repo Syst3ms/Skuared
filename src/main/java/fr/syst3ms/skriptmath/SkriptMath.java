@@ -71,7 +71,7 @@ public class SkriptMath extends JavaPlugin {
 		addon = Skript.registerAddon(this);
 		getLogger().log(Level.INFO, "Registering skript-math's syntax !");
 		try {
-			getAddon().loadClasses("fr.syst3ms.skuared", "expressions", "effects", "fr.syst3ms.skuared.util");
+			getAddon().loadClasses("fr.syst3ms.skriptmath", "expressions", "effects", "util");
 			mathRegister();
 			getLogger().log(Level.INFO, "Successfully registered skript-math's syntaxes !");
 		} catch (Exception e) {
