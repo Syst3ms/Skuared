@@ -1,6 +1,10 @@
 package fr.syst3ms.skuared.util;
 
-import fr.syst3ms.skuared.util.evaluation.*;
+import ch.njol.skript.Skript;
+import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.Associativity;
+import fr.syst3ms.skriptmath.util.MathUtils;
+import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -29,7 +33,7 @@ public class MathTest {
     public void sigma() throws Exception {
         assertEquals(55, MathUtils.sigma("x", 1L, 10L).intValue());
         assertEquals(1023.0d, MathUtils.sigma("2^x/2", 1L, 10L).doubleValue(), 0.001);
-        assertEquals(24, MathUtils.sigma("(1+1/x)^x", 1L, 10L).intValue());
+        assertEquals(24.358924454916741049d, MathUtils.sigma("(1+1/x)^x", 1L, 10L).doubleValue(), Skript.EPSILON);
     }
 
     @Test
@@ -49,7 +53,6 @@ public class MathTest {
 
     @Test
     public void indefiniteDerivative() throws Exception {
-        /*
         assertEquals(Constant.ZERO, MathUtils.indefiniteDerivative(Constant.getConstant(Math.random())));
         assertEquals(Constant.ONE, MathUtils.indefiniteDerivative(new Unknown("x", false)));
         assertEquals(Constant.TWO, MathUtils.indefiniteDerivative(new Product(Constant.TWO, new Unknown("x", false))).simplify());
@@ -57,11 +60,6 @@ public class MathTest {
         assertEquals(expected, MathUtils.indefiniteDerivative(new Power(new Unknown("x", false), Constant.getConstant(3))).simplify());
         MathTerm param = new Power(Constant.E, new Difference(Constant.getConstant(5), new Unknown("x", false)));
         assertEquals(param.getNegative(), MathUtils.indefiniteDerivative(param).simplify());
-        */
-        assertEquals(
-                new Division(Constant.getConstant(4), new Product(Constant.getConstant(3), new Unknown("x", false).getSquared())),
-                MathUtils.indefiniteDerivative(new Division(new Product(Constant.TWO, new Difference(new Unknown("x", false), Constant.TWO)), new Product(Constant.getConstant(3), new Unknown("x", false)))).simplify()
-        );
     }
 
     @Test

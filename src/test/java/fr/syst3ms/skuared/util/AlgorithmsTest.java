@@ -1,14 +1,18 @@
 package fr.syst3ms.skuared.util;
 
 import ch.njol.skript.Skript;
-import fr.syst3ms.skuared.util.evaluation.*;
+import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.Associativity;
+import fr.syst3ms.skriptmath.util.MapBuilder;
+import fr.syst3ms.skriptmath.util.MathUtils;
+import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import static fr.syst3ms.skuared.util.Algorithms.evaluate;
-import static fr.syst3ms.skuared.util.Algorithms.parseMathExpression;
+import static fr.syst3ms.skriptmath.util.Algorithms.evaluate;
+import static fr.syst3ms.skriptmath.util.Algorithms.parseMathExpression;
 import static org.junit.Assert.assertEquals;
 
 public class AlgorithmsTest {
@@ -41,6 +45,7 @@ public class AlgorithmsTest {
         assertEquals(expected3, parseMathExpression("(x^2)(x^-2)", Collections.singletonList("x"), false).getTerm());
         MathTerm expected4 = new Difference(new Product(Constant.TWO, new Unknown("x", false).getSquared()), new Power(new Unknown("y", false), Constant.getConstant(3)));
         assertEquals(expected4, parseMathExpression("2x^2-y^3", Arrays.asList("x", "y"), false).getTerm());
+
         MathTerm expected5 = new Sum(
             new Sum(
                 new Sum(
@@ -52,6 +57,17 @@ public class AlgorithmsTest {
             new Unknown("d", false)
         );
         assertEquals(expected5, parseMathExpression("ax^3+bx^2+cx+d", Arrays.asList("x", "a", "b", "c", "d"), false).getTerm());
+        MathTerm expected6 = new Difference(
+                new Product(
+                        new Sum(new Unknown("x", false), Constant.ONE),
+                        new Difference(new Product(Constant.TWO, new Unknown("x", false)), Constant.getConstant(4))
+                ),
+                new Product(
+                        Constant.getConstant(5),
+                        new Sum(new Unknown("x", false), Constant.ONE)
+                )
+        );
+        assertEquals(expected6, parseMathExpression("(x+1)(2x-4)- 5(x+1)", Collections.singletonList("x"), false).getTerm());
     }
 
     @Test
