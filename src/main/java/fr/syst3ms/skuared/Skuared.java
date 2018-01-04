@@ -2,6 +2,9 @@ package fr.syst3ms.skuared;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
+import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.classes.Parser;
+import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.lang.function.FunctionEvent;
 import ch.njol.skript.lang.function.Functions;
 import ch.njol.skript.lang.function.JavaFunction;
@@ -15,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
 
@@ -76,6 +80,47 @@ public class Skuared extends JavaPlugin {
 	}
 
 	private void mathRegister() {
+		Classes.registerClass(new ClassInfo<>(MathExpression.class, "mathexpression")
+				.user("math(ematical)? expressions?")
+				.name("Math Expression")
+				.description("A compiled math expression.")
+				.since("2.2-dev16")
+				.parser(new Parser<MathExpression>() {
+
+					@Override
+					@Nullable
+					public MathExpression parse(String s, ParseContext context) {
+						return null;
+					}
+
+					@Override
+					public boolean canParse(ParseContext context) {
+						return false;
+					}
+
+					@Override
+					public String toString(MathExpression o, int flags) {
+						MathTerm t = o.getTerm();
+						if (t == null)
+							return null;
+						return t.asString();
+					}
+
+					@SuppressWarnings("null")
+					@Override
+					public String toVariableNameString(MathExpression o) {
+						MathTerm t = o.getTerm();
+						if (t == null)
+							return null;
+						return t.asString().replace(" ", "");
+					}
+
+					@Override
+					public String getVariableNamePattern() {
+						return ".+";
+					}
+
+				}));
 		Functions.registerFunction(new JavaFunction<Number>("or", new Parameter[]{
 			new Parameter<>("a", Classes.getExactClassInfo(Number.class), true, null),
 			new Parameter<>("b", Classes.getExactClassInfo(Number.class), true, null)

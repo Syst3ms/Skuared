@@ -338,7 +338,7 @@ public class MathUtils {
             MathTerm first = power.getFirst();
             MathTerm second = power.getSecond();
             if (first.hasUnknown() && !second.hasUnknown()) {
-                new Product(second, new Power(first, new Difference(second, Constant.ONE)));
+                return new Product(second, new Power(first, new Difference(second, Constant.ONE)));
             } else if (second.equals(Constant.getConstant(-1))) {
                 return first.getSquared().getReciprocal().getNegative();
             } else if (first == Constant.E) {

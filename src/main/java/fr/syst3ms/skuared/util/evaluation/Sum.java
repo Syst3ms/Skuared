@@ -47,4 +47,16 @@ public class Sum extends DoubleOperandTerm {
 		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Sum.class, true) : second.asString();
 		return String.format("%s + %s", f, s);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof DoubleOperandTerm)) {
+			return false;
+		} else if (this == obj) {
+			return true;
+		} else {
+			DoubleOperandTerm o = (DoubleOperandTerm) obj;
+			return first.equals(o.first) && second.equals(o.second) || first.equals(o.second) && second.equals(o.first);
+		}
+	}
 }

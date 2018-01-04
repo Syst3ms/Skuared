@@ -31,7 +31,7 @@ public class Algorithms {
 	@NotNull
 	public static Pattern NAME_PATTERN = Pattern.compile("[A-Za-z][A-Za-z\\d]*");
 	@NotNull
-	public static String TOKEN_PATTERN = "(?i)(?:(?<=[^\\w]|^)[+-])?(?:0[0-7]+|0x[0-9a-f]+|0b[01]+|\\d+(?:\\.\\d+)?)|[()]|([^\\w ()])\\1*|[a-z_][a-z\\d]*";
+	private static String TOKEN_PATTERN = "(?i)((?<=[^\\w]|^)[+-])?(0[0-7]+|0x[0-9a-f]+|0b[01]+|\\d+(\\.\\d+)?)|[()]|([^\\w ()])\\1*|CONSTANTS|[a-z_][a-z\\d]*(?=\\()|[a-z]";
 	@NotNull
 	private static Map<String, Operator> arithmeticOperators = new HashMap<>();
 	@NotNull
@@ -39,6 +39,7 @@ public class Algorithms {
 	@NotNull
 	private static Pattern binaryPattern = Pattern.compile("0[Bb][01]+"), hexPattern = Pattern.compile("0[Xx]\\p{XDigit}+"), octPattern = Pattern
 		.compile("0[0-8]+");
+	private static final StringJoiner joiner = new StringJoiner("|");
 
 	@NotNull
 	public static Map<String, Number> getConstants() {
@@ -144,6 +145,7 @@ public class Algorithms {
 	}
 
 	private static List<String> processImplicit(@NotNull String orig, List<String> unknownNames) {
+		TOKEN_PATTERN = TOKEN_PATTERN.replace("CONSTANTS", StringUtils.join("|", constants.keySet()));
 		List<String> tokens = StringUtils.getAllMatches(orig.replace(" ", ""), TOKEN_PATTERN);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < tokens.size(); i++) {
@@ -152,7 +154,8 @@ public class Algorithms {
 				(unknownNames.contains(nextToken)));
 			boolean b = (constants.containsKey(token) || (unknownNames.contains(token))) && "(".equals(nextToken);
 			boolean c = ")".equals(token) && "(".equals(nextToken);
-			boolean hasImplicit = a || b || c;
+			boolean d = unknownNames.contains(token) && unknownNames.contains(nextToken);
+			boolean hasImplicit = a || b || c || d;
 			if (hasImplicit) {
 				sb.append(token).append("*");
 			} else {
@@ -178,6 +181,7 @@ public class Algorithms {
 					String top = stack.peek();
 					if (arithmeticOperators.containsKey(top)) {
 						while (!stack.isEmpty()) {
+							top = stack.peek();
 							Operator op = arithmeticOperators.get(top);
 							if (currentOp == null || op == null) {
 								break;
@@ -195,7 +199,6 @@ public class Algorithms {
 									break;
 								}
 							}
-							top = stack.peek();
 						}
 					}
 				}
@@ -286,7 +289,7 @@ public class Algorithms {
 		Stack<Object> parts = prepareForTree(tokens, unknownData);
 		Stack<Object> stack = new Stack<>();
 		for (Object part : parts) {
-			if (part.isSimple()) {
+			if (part instanceof MathTerm && ((MathTerm) part).isSimple()) {
 				stack.push(part);
 			} else {
 				String s = (String) part;
@@ -335,20 +338,6 @@ public class Algorithms {
 
 	public static void evalError(@Nullable String error) {
 		ExprSkuaredError.lastError = error != null ? "[Skuared evaluation] " + error : null;
-	}
-
-	public static Number evaluate(@NotNull String expr, Map<String, ? extends Number> unknownData) {
-		return evaluatePostfix(parseMathExpression(expr, new ArrayList<>(unknownData.keySet()), true), unknownData);
-	}
-
-	@Nullable
-	@Contract("null, _ -> null")
-	private static Number evaluatePostfix(MathExpression expr, Map<String, ? extends Number> unknownData) {
-		MathTerm term = expr.getTerm();
-		if (term == null) {
-			return null;
-		}
-		return term.compute(unknownData);
 	}
 
 	public static String tokensToString(@NotNull List<String> list) {

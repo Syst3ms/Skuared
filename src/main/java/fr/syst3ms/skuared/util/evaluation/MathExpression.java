@@ -2,8 +2,8 @@ package fr.syst3ms.skuared.util.evaluation;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MathExpression {
 	private List<String> tokens;
@@ -11,7 +11,7 @@ public class MathExpression {
 	private MathTerm term;
 	private List<String> unknowns;
 
-	private HashMap<String, Number> unknownData;
+	private Map<String, Number> unknownData;
 
 	public MathExpression(List<String> tokens, @Nullable MathTerm term, List<String> unknowns) {
 		this.tokens = tokens;
@@ -32,4 +32,17 @@ public class MathExpression {
 		return unknowns;
 	}
 
+	public void map(String unknown, Number value) {
+		if (unknowns.contains(unknown)) {
+			unknownData.put(unknown, value);
+		}
+	}
+
+	public Number evaluate() {
+		if (term == null) {
+			return null;
+		} else {
+			return term.compute(unknownData);
+		}
+	}
 }

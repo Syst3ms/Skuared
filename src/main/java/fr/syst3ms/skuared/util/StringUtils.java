@@ -4,8 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -131,4 +130,11 @@ public class StringUtils {
         }
     }
 
+    public static String join(String delimiter, Iterable<String> strings) {
+        StringJoiner joiner = new StringJoiner(delimiter);
+        for (String s : strings) {
+            joiner.add(s);
+        }
+        return joiner.toString();
+    }
 }

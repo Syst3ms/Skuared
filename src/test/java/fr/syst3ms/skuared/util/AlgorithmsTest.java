@@ -51,7 +51,7 @@ public class AlgorithmsTest {
             ),
             new Unknown("d")
         );
-        assertEquals(expected5, parseMathExpression("a*x^3+b*x^2+c*x+d", Arrays.asList("x", "a", "b", "c", "d"), false).getTerm());
+        assertEquals(expected5, parseMathExpression("ax^3+bx^2+cx+d", Arrays.asList("x", "a", "b", "c", "d"), false).getTerm());
     }
 
     @Test

@@ -2,6 +2,7 @@ package fr.syst3ms.skuared.util.evaluation;
 
 import fr.syst3ms.skuared.util.MathUtils;
 
+import java.lang.reflect.Field;
 import java.util.function.BinaryOperator;
 
 public class Product extends DoubleOperandTerm {
@@ -80,6 +81,18 @@ public class Product extends DoubleOperandTerm {
 			Division f = (Division) first;
 			Division s = (Division) second;
 			return new Division(new Product(f.getFirst(), s.getFirst()), new Product(f.getSecond(), s.getSecond())).simplify();
+		} else if (first instanceof Division || second instanceof Division) {
+			if (first instanceof Division) {
+				Division f = (Division) first;
+				MathTerm a = f.getFirst();
+				MathTerm b = f.getSecond();
+				return new Division(new Product(a, second), b).simplify();
+			} else {
+				Division s = (Division) second;
+				MathTerm b = s.getFirst();
+				MathTerm c = s.getSecond();
+				return new Division(new Product(first, b), c).simplify();
+			}
 		} else if ((first instanceof Product || second instanceof Product) && (first.isSimple() || second.isSimple())) {
 			MathTerm a, b, c;
 			if (first instanceof Product) {
@@ -93,13 +106,17 @@ public class Product extends DoubleOperandTerm {
 				b = s.getFirst();
 				c = s.getSecond();
 			}
-			MathTerm firstTry = new Product(a, new Product(b, c)).simplify();
-			if (firstTry.termCount() < termCount()) {
-				return firstTry;
+			MathTerm firstTry = new Product(a, b).simplify();
+			if (!firstTry.equals(new Product(a, b))) {
+				return new Product(c, firstTry);
 			}
-			MathTerm secondTry = new Product(new Product(a, b), c).simplify();
-			if (secondTry.termCount() < termCount()) {
-				return secondTry;
+			MathTerm secondTry = new Product(a, c).simplify();
+			if (!secondTry.equals(new Product(a, c))) {
+				return new Product(b, secondTry);
+			}
+			MathTerm thirdTry = new Product(b, c).simplify();
+			if (!thirdTry.equals(new Product(b, c))) {
+				return new Product(a, thirdTry);
 			}
 		}
 		return this;
@@ -110,9 +127,23 @@ public class Product extends DoubleOperandTerm {
 		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Product.class, false) : first.asString();
 		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Product.class, true) : second.asString();
 		if (first instanceof Constant)
-			return String.format("%s%s", f, s);
+			if (second instanceof Unknown || !second.isSimple())
+				return String.format("%s%s", f, s);
 		else if (second instanceof Constant)
-			return String.format("%s%s", s, f);
+			if (first instanceof Unknown || !first.isSimple())
+				return String.format("%s%s", s, f);
 		return String.format("%s * %s", f, s);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof DoubleOperandTerm)) {
+			return false;
+		} else if (this == obj) {
+			return true;
+		} else {
+			DoubleOperandTerm o = (DoubleOperandTerm) obj;
+			return first.equals(o.first) && second.equals(o.second) || first.equals(o.second) && second.equals(o.first);
+		}
 	}
 }

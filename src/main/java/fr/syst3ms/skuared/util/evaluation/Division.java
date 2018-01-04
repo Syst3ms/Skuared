@@ -36,6 +36,16 @@ public class Division extends DoubleOperandTerm {
 			return Constant.ONE;
 		} else if (first == Constant.ZERO) {
 			return Constant.ZERO;
+		} else if (first instanceof Power || second instanceof Power) {
+			if (first instanceof Power && second instanceof Power) {
+				Power f = (Power) first;
+				Power s = (Power) second;
+				if (f.getSecond().equals(s.getSecond())) {
+					return new Power(f.getFirst(), new Difference(f.getSecond(), s.getSecond()));
+				}
+			} else if (first instanceof Power) {
+
+			}
 		}
 		return this;
 	}
