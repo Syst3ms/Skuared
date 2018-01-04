@@ -41,13 +41,26 @@ public class Division extends DoubleOperandTerm {
 				Power f = (Power) first;
 				Power s = (Power) second;
 				if (f.getSecond().equals(s.getSecond())) {
-					return new Power(f.getFirst(), new Difference(f.getSecond(), s.getSecond()));
+					return new Power(f.getFirst(), new Difference(f.getSecond(), s.getSecond())).simplify();
 				}
 			} else if (first instanceof Power) {
-
+				Power f = (Power) first;
+				if (f.getFirst().equals(second)) {
+					return new Power(f.getFirst(), new Difference(f.getSecond(), Constant.ONE)).simplify();
+				}
+			} else if (second instanceof Power) {
+				Power s = (Power) second;
+				if (s.getFirst().equals(first)) {
+					return new Power(s.getFirst(), new Difference(Constant.ONE, s.getSecond())).simplify();
+				}
 			}
 		}
 		return this;
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Division(first.getNegative(), second);
 	}
 
 	@Override

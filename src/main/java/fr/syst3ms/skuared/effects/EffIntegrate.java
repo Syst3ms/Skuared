@@ -36,7 +36,7 @@ public class EffIntegrate extends Effect {
     }
 
     static {
-        Skript.registerEffect(EffIntegrate.class, "((calculate|compute) integral of|integrate) %string% [from %number% to %number%]");
+        Skript.registerEffect(EffIntegrate.class, "((calculate|compute) integral of|integrate) %string% [from %-number% to %-number%]");
     }
 
     private Expression<String> expression;

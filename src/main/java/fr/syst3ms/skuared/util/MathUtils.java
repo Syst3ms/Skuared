@@ -206,10 +206,7 @@ public class MathUtils {
     public static Number sigma(String expression, long start, long end) {
         BigDecimal result = BigDecimal.ZERO;
         for (long i = start; i <= end; i++) {
-            long j = i;
-            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>() {{
-                put("x", j);
-            }});
+            Number n = Algorithms.evaluate(expression, Algorithms.getXMap(i));
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
@@ -223,10 +220,7 @@ public class MathUtils {
     public static Number chainedProduct(String expression, long start, long end) {
         BigDecimal result = BigDecimal.ONE;
         for (long i = start; i <= end; i++) {
-            long j = i;
-            Number n = Algorithms.evaluate(expression, new HashMap<String, Number>() {{
-                put("x", j);
-            }});
+            Number n = Algorithms.evaluate(expression, Algorithms.getXMap(i));
             if (n == null) {
                 ExprSkuaredError.lastError = "Invalid product expression (Error : " + ExprSkuaredError.lastError + ")";
                 return Double.NaN;
@@ -314,9 +308,9 @@ public class MathUtils {
             MathTerm second = product.getSecond();
             if (first instanceof Constant || second instanceof Constant) {
                 if (first instanceof Constant) {
-                    return new Product(first, indefiniteDerivative(second));
+                    return new Product(first, indefiniteDerivative(second)).simplify();
                 } else {
-                    return new Product(second, indefiniteDerivative(first));
+                    return new Product(second, indefiniteDerivative(first)).simplify();
                 }
             } else {
                 return new Sum(new Product(first, indefiniteDerivative(second)), new Product(indefiniteDerivative(first), second));
@@ -331,14 +325,14 @@ public class MathUtils {
                 return new Division(
                     new Difference(new Product(indefiniteDerivative(first), second), new Product(indefiniteDerivative(second), first)),
                     second.getSquared()
-                );
+                ).simplify();
             }
         } else if (term instanceof Power) {
             Power power = (Power) term;
             MathTerm first = power.getFirst();
             MathTerm second = power.getSecond();
             if (first.hasUnknown() && !second.hasUnknown()) {
-                return new Product(second, new Power(first, new Difference(second, Constant.ONE)));
+                return new Product(second, new Power(first, new Difference(second, Constant.ONE))).simplify();
             } else if (second.equals(Constant.getConstant(-1))) {
                 return first.getSquared().getReciprocal().getNegative();
             } else if (first == Constant.E) {
@@ -347,7 +341,7 @@ public class MathUtils {
                 } else if (!second.hasUnknown()) {
                     return Constant.ZERO;
                 } else {
-                    return new Product(term, indefiniteDerivative(second));
+                    return new Product(term, indefiniteDerivative(second)).simplify();
                 }
             } else if (first instanceof Constant) {
                 if (second instanceof Unknown) {

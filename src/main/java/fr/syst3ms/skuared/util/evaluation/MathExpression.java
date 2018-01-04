@@ -41,8 +41,23 @@ public class MathExpression {
 	public Number evaluate() {
 		if (term == null) {
 			return null;
+		} else if (term instanceof Constant) {
+			return ((Constant) term).getValue();
 		} else {
 			return term.compute(unknownData);
 		}
+	}
+
+	public MathExpression simplified() {
+		if (term != null) {
+			term = term.simplify();
+		}
+		return this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public MathExpression with(Map<String, ? extends Number> data) {
+		unknownData = (Map<String, Number>) data;
+		return this;
 	}
 }

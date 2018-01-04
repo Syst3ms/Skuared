@@ -51,8 +51,16 @@ public class Power extends DoubleOperandTerm {
 						b.getSquared()
 				).simplify();
 			}
+		} else if (first instanceof Product) {
+			Product f = (Product) first;
+			return new Product(new Power(f.getFirst(), second), new Power(f.getSecond(), second)).simplify();
 		}
 		return this;
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Product(Constant.getConstant(-1), this).simplify();
 	}
 
 	@Override

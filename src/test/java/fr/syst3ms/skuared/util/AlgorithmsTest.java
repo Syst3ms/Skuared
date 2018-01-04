@@ -37,19 +37,19 @@ public class AlgorithmsTest {
         assertEquals(expected, parseMathExpression("5(2 + 3)", Collections.emptyList(), false).getTerm());
         MathTerm expected2 = new Product(new Sum(Constant.getConstant(5), Constant.TWO), new Sum(Constant.getConstant(3), Constant.getConstant(4)));
         assertEquals(expected2, parseMathExpression("(5 + 2)(3 + 4)", Collections.emptyList(), false).getTerm());
-        MathTerm expected3 = new Product(new Power(new Unknown("x"), Constant.TWO), new Power(new Unknown("x"), Constant.TWO.getNegative()));
+        MathTerm expected3 = new Product(new Power(new Unknown("x", false), Constant.TWO), new Power(new Unknown("x", false), Constant.TWO.getNegative()));
         assertEquals(expected3, parseMathExpression("(x^2)(x^-2)", Collections.singletonList("x"), false).getTerm());
-        MathTerm expected4 = new Difference(new Product(Constant.TWO, new Unknown("x").getSquared()), new Power(new Unknown("y"), Constant.getConstant(3)));
+        MathTerm expected4 = new Difference(new Product(Constant.TWO, new Unknown("x", false).getSquared()), new Power(new Unknown("y", false), Constant.getConstant(3)));
         assertEquals(expected4, parseMathExpression("2x^2-y^3", Arrays.asList("x", "y"), false).getTerm());
         MathTerm expected5 = new Sum(
             new Sum(
                 new Sum(
-                    new Product(new Unknown("a"), new Power(new Unknown("x"), Constant.getConstant(3))),
-                    new Product(new Unknown("b"), new Unknown("x").getSquared())
+                    new Product(new Unknown("a", false), new Power(new Unknown("x", false), Constant.getConstant(3))),
+                    new Product(new Unknown("b", false), new Unknown("x", false).getSquared())
                 ),
-                new Product(new Unknown("c"), new Unknown("x"))
+                new Product(new Unknown("c", false), new Unknown("x", false))
             ),
-            new Unknown("d")
+            new Unknown("d", false)
         );
         assertEquals(expected5, parseMathExpression("ax^3+bx^2+cx+d", Arrays.asList("x", "a", "b", "c", "d"), false).getTerm());
     }

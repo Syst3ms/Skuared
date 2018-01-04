@@ -45,8 +45,8 @@ public class EffDifferentiate extends Effect {
     static {
         Skript.registerEffect(
                 EffDifferentiate.class,
-                "((calculate|compute) derivative of|differentiate) %string% [at %number%] (1¦online)",
-                "d/dx\\(%string%\\) [at %number%] (1¦online)"
+                "((calculate|compute) derivative of|differentiate) %string% [at %-number%] (1¦online)",
+                "d/dx\\(%string%\\) [at %-number%] (1¦online)"
         );
     }
 

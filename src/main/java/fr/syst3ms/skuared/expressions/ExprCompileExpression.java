@@ -17,9 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
-/**
- * Created by ARTHUR on 04/01/2018.
- */
 public class ExprCompileExpression extends SimpleExpression<MathExpression> {
     private Expression<String> expression;
     private Expression<String> unknowns;

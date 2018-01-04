@@ -49,11 +49,19 @@ public class MathTest {
 
     @Test
     public void indefiniteDerivative() throws Exception {
+        /*
         assertEquals(Constant.ZERO, MathUtils.indefiniteDerivative(Constant.getConstant(Math.random())));
-        assertEquals(Constant.ONE, MathUtils.indefiniteDerivative(new Unknown("x")));
-        assertEquals(Constant.TWO, MathUtils.indefiniteDerivative(new Product(Constant.TWO, new Unknown("x"))).simplify());
-        MathTerm expected = new Product(Constant.getConstant(3), new Unknown("x").getSquared()); // x^3 -> 3x^2
-        assertEquals(expected, MathUtils.indefiniteDerivative(new Power(new Unknown("x"), Constant.getConstant(3))).simplify());
+        assertEquals(Constant.ONE, MathUtils.indefiniteDerivative(new Unknown("x", false)));
+        assertEquals(Constant.TWO, MathUtils.indefiniteDerivative(new Product(Constant.TWO, new Unknown("x", false))).simplify());
+        MathTerm expected = new Product(Constant.getConstant(3), new Unknown("x", false).getSquared()); // x^3 -> 3x^2
+        assertEquals(expected, MathUtils.indefiniteDerivative(new Power(new Unknown("x", false), Constant.getConstant(3))).simplify());
+        MathTerm param = new Power(Constant.E, new Difference(Constant.getConstant(5), new Unknown("x", false)));
+        assertEquals(param.getNegative(), MathUtils.indefiniteDerivative(param).simplify());
+        */
+        assertEquals(
+                new Division(Constant.getConstant(4), new Product(Constant.getConstant(3), new Unknown("x", false).getSquared())),
+                MathUtils.indefiniteDerivative(new Division(new Product(Constant.TWO, new Difference(new Unknown("x", false), Constant.TWO)), new Product(Constant.getConstant(3), new Unknown("x", false)))).simplify()
+        );
     }
 
     @Test
@@ -67,8 +75,8 @@ public class MathTest {
     public void simplify() throws Exception {
         assertEquals(Constant.ONE, Algorithms.parseMathExpression("(x + x) / (x * 2)", Collections.singletonList("x"), true).getTerm());
         assertEquals(Constant.ZERO, Algorithms.parseMathExpression("x((x-x) / 2x^2)", Collections.singletonList("x"), true).getTerm());
-        MathTerm expected = new Difference(new Product(Constant.TWO, new Unknown("x").getSquared()), new Unknown("x"));
+        MathTerm expected = new Difference(new Product(Constant.TWO, new Unknown("x", false).getSquared()), new Unknown("x", false));
         assertEquals(expected, Algorithms.parseMathExpression("x(2x-1)", Collections.singletonList("x"), true).getTerm());
-        assertEquals(new Division(new Unknown("x").getSquared(), Constant.TWO), Algorithms.parseMathExpression("x(x/2)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(new Division(new Unknown("x", false).getSquared(), Constant.TWO), Algorithms.parseMathExpression("x(x/2)", Collections.singletonList("x"), true).getTerm());
     }
 }

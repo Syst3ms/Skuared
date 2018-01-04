@@ -36,7 +36,14 @@ public class Difference extends DoubleOperandTerm {
 			return new Sum(first, second.getNegative());
 		} else if (second instanceof Sum) {
 			Sum s = (Sum) second;
-			return new Difference(first, new Difference(s.getFirst(), s.getSecond())).simplify();
+			MathTerm firstTry = new Difference(first, s.getFirst()).simplify();
+			if (!firstTry.equals(new Difference(firstTry, s.getFirst()))) {
+				return new Sum(firstTry, s.getSecond()).simplify();
+			}
+			MathTerm secondTry = new Difference(first, s.getSecond()).simplify();
+			if (!secondTry.equals(new Difference(first, s.getSecond()))) {
+				return new Sum(secondTry, s.getFirst()).simplify();
+			}
 		} else if (second instanceof Difference) {
 			Difference s = (Difference) second;
 			return new Difference(first, new Sum(s.getFirst(), s.getSecond())).simplify();
@@ -44,6 +51,11 @@ public class Difference extends DoubleOperandTerm {
 			return Constant.ZERO;
 		}
 		return this;
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Difference(second, first);
 	}
 
 	@Override

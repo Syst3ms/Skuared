@@ -1,7 +1,5 @@
 package fr.syst3ms.skuared.util.evaluation;
 
-import ch.njol.util.Math2;
-import com.google.common.math.IntMath;
 import fr.syst3ms.skuared.util.Algorithms;
 import fr.syst3ms.skuared.util.StringUtils;
 
@@ -26,8 +24,8 @@ public interface MathTerm {
 			return Constant.getConstant(StringUtils.parseHex(s));
 		} else if (Algorithms.getConstants().containsKey(s)) {
 			return Constant.getConstant(Algorithms.getConstants().get(s));
-		} else if (s.length() == 1 && unknownData.contains(s)) {
-			return new Unknown(s);
+		} else if (unknownData.contains(s)) {
+			return new Unknown(s, s.length() == 2);
 		} else {
 			return null;
 		}
@@ -43,9 +41,7 @@ public interface MathTerm {
 
 	int termCount();
 
-	default MathTerm getNegative() {
-		return new Difference(Constant.ZERO, this).simplify();
-	}
+	MathTerm getNegative();
 
 	default MathTerm getSquared() {
 		return new Power(this, Constant.TWO).simplify();

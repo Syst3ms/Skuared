@@ -80,9 +80,13 @@ public class MathFunction implements MathTerm {
 
 	@Override
 	public int termCount() {
-		return 1;
+		return 1 + params.size();
 	}
 
+	@Override
+	public MathTerm getNegative() {
+		return new Product(Constant.getConstant(-1), this).simplify();
+	}
 	@Override
 	public String toString() {
 		return asString();

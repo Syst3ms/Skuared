@@ -32,9 +32,16 @@ public class RightBitShift extends DoubleOperandTerm {
 	}
 
 	@Override
+	public MathTerm getNegative() {
+		return new Product(Constant.getConstant(-1), this).simplify();
+	}
+
+	@Override
 	public String asString() {
 		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(RightBitShift.class, false) : first.asString();
 		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(RightBitShift.class, true) : second.asString();
 		return String.format("%s >> %s", f, s);
 	}
+
+
 }

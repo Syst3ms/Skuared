@@ -6,37 +6,35 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import fr.syst3ms.skuared.util.Algorithms;
+import fr.syst3ms.skuared.util.evaluation.MathExpression;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.Collections;
-
-public class ExprLastResult extends SimpleExpression<Object> {
-    public static String lastResult;
+public class ExprSimplifiedExpression extends SimpleExpression<MathExpression> {
+    private Expression<MathExpression> mathExpr;
 
     static {
         Skript.registerExpression(
-                ExprLastResult.class,
-                Object.class,
+                ExprSimplifiedExpression.class,
+                MathExpression.class,
                 ExpressionType.SIMPLE,
-                "[the] last skuared result"
+                "simplified [form of] %mathexpression%"
         );
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        mathExpr = (Expression<MathExpression>) exprs[0];
         return true;
     }
 
     @Override
-    protected Object[] get(Event e) {
-        if (lastResult.contains("x")) {
-            return new String[]{lastResult};
-        } else {
-            Number result = Algorithms.parseMathExpression(lastResult, Collections.emptyList(), true).evaluate();
-            return result == null ? null : new Number[]{result};
-        }
+    protected MathExpression[] get(Event e) {
+        MathExpression expr = mathExpr.getSingle(e);
+        if (expr == null)
+            return null;
+        return new MathExpression[]{expr.simplified()};
     }
 
     @Override
@@ -45,12 +43,12 @@ public class ExprLastResult extends SimpleExpression<Object> {
     }
 
     @Override
-    public Class<?> getReturnType() {
-        return Object.class;
+    public Class<? extends MathExpression> getReturnType() {
+        return MathExpression.class;
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "last skuared result";
+        return "simplified " + mathExpr.toString(e, debug);
     }
 }

@@ -15,9 +15,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Created by ARTHUR on 04/01/2018.
- */
 @SuppressWarnings("unchecked")
 public class ExprEvaluateExpression extends SimpleExpression<Number> {
     private Expression<MathExpression> mathExpression;

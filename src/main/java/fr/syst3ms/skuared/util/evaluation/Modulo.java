@@ -37,4 +37,9 @@ public class Modulo extends DoubleOperandTerm {
 		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Modulo.class, true) : second.asString();
 		return String.format("%s %% %s", f, s);
 	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Product(Constant.getConstant(-1), this).simplify();
+	}
 }

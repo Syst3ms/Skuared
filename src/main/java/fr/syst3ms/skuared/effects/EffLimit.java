@@ -38,10 +38,8 @@ public class EffLimit extends Effect {
     static {
         Skript.registerEffect(
                 EffLimit.class,
-                "limit %string% as x approaches %number%",
-                "limit %string% as x approaches %number% from above",
-                "limit %string% as x approaches infinity",
-                "limit %string% as x approaches -infinity"
+                "limit %string% as x approaches %number% [(1¦from above)]",
+                "limit %string% as x approaches [(1¦-)]infinity"
         );
     }
 

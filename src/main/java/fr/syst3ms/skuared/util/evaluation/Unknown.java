@@ -6,8 +6,9 @@ import java.util.Map;
 
 public class Unknown implements MathTerm {
 	private String name;
+	private boolean isNegative;
 
-	public Unknown(String name) {
+	public Unknown(String name, boolean isNegative) {
 		this.name = name;
 	}
 
@@ -46,6 +47,11 @@ public class Unknown implements MathTerm {
 	@Override
 	public int termCount() {
 		return 1;
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Unknown(name, !isNegative);
 	}
 
 	@Override

@@ -37,9 +37,9 @@ public class Product extends DoubleOperandTerm {
 			return Constant.ZERO;
 		} else if (first.equals(second)) {
 			return first.getSquared();
-		} else if (second.equals(first.getReciprocal())) {
+		} /*else if (second.equals(first.getReciprocal())) {
 			return Constant.ONE;
-		} else if (first.isSimple() && (second instanceof Sum || second instanceof Difference)) {
+		} */else if (first.isSimple() && (second instanceof Sum || second instanceof Difference)) {
 			DoubleOperandTerm s = (DoubleOperandTerm) second;
 			if (second instanceof Sum) {
 				return new Sum(new Product(first, s.getFirst()), new Product(first, s.getSecond())).simplify();
@@ -127,12 +127,21 @@ public class Product extends DoubleOperandTerm {
 		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Product.class, false) : first.asString();
 		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Product.class, true) : second.asString();
 		if (first instanceof Constant)
-			if (second instanceof Unknown || !second.isSimple())
+			if (second instanceof Unknown)
 				return String.format("%s%s", f, s);
+			else if (!second.isSimple())
+				return String.format("%s(%s)", f, s);
 		else if (second instanceof Constant)
-			if (first instanceof Unknown || !first.isSimple())
+			if (first instanceof Unknown)
 				return String.format("%s%s", s, f);
+			else if (!first.isSimple())
+				return String.format("%s(%s)", s, f);
 		return String.format("%s * %s", f, s);
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Product(first.getNegative(), second);
 	}
 
 	@Override

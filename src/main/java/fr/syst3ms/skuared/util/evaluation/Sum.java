@@ -33,8 +33,6 @@ public class Sum extends DoubleOperandTerm {
 			return second;
 		} else if (second == Constant.ZERO) {
 			return first;
-		} else if (second instanceof Constant && ((Constant) second).isNegative()) {
-			return new Difference(first, second.getNegative()).simplify();
 		} else if (first.equals(second)) {
 			return new Product(first, Constant.TWO);
 		}
@@ -46,6 +44,11 @@ public class Sum extends DoubleOperandTerm {
 		String f = first instanceof DoubleOperandTerm ? ((DoubleOperandTerm) first).getAsString(Sum.class, false) : first.asString();
 		String s = second instanceof DoubleOperandTerm ? ((DoubleOperandTerm) second).getAsString(Sum.class, true) : second.asString();
 		return String.format("%s + %s", f, s);
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return new Difference(first.getNegative(), second);
 	}
 
 	@Override

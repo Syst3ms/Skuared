@@ -2,6 +2,7 @@ package fr.syst3ms.skuared.util.evaluation;
 
 import fr.syst3ms.skuared.util.MathUtils;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class Constant implements MathTerm {
@@ -56,6 +57,11 @@ public class Constant implements MathTerm {
 
 	public boolean isNegative() {
 		return Math.signum(value.doubleValue()) == -1;
+	}
+
+	@Override
+	public MathTerm getNegative() {
+		return Constant.getConstant(BigDecimal.ZERO.subtract(new BigDecimal(value.toString())));
 	}
 
 	@Override

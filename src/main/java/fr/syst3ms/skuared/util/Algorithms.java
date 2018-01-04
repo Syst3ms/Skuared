@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import fr.syst3ms.skuared.Skuared;
 import fr.syst3ms.skuared.expressions.ExprSkuaredError;
 import fr.syst3ms.skuared.util.evaluation.*;
+import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,8 +31,9 @@ import java.util.stream.Collectors;
 public class Algorithms {
 	@NotNull
 	public static Pattern NAME_PATTERN = Pattern.compile("[A-Za-z][A-Za-z\\d]*");
+	@Language("RegExp")
 	@NotNull
-	private static String TOKEN_PATTERN = "(?i)((?<=[^\\w]|^)[+-])?(0[0-7]+|0x[0-9a-f]+|0b[01]+|\\d+(\\.\\d+)?)|[()]|([^\\w ()])\\1*|CONSTANTS|[a-z_][a-z\\d]*(?=\\()|[a-z]";
+	private static String TOKEN_PATTERN = "(?i)((?<=[^\\w]|^)[+-])?(0[0-7]+|0x[0-9a-f]+|0b[01]+|\\d+(\\.\\d+)?)|[()]|([^\\w ()])\\1*|CONSTANTS|[a-z_][a-z\\d]*(?=\\()|[+-]?[a-z]";
 	@NotNull
 	private static Map<String, Operator> arithmeticOperators = new HashMap<>();
 	@NotNull
@@ -165,11 +167,10 @@ public class Algorithms {
 		return StringUtils.getAllMatches(sb.toString(), TOKEN_PATTERN);
 	}
 
-	public static @Nullable MathExpression parseMathExpression(@NotNull String orig, List<String> unknownNames, boolean simplify) {
+	public static MathExpression parseMathExpression(@NotNull String orig, List<String> unknownNames, boolean simplify) {
 		return parseMathExpression(processImplicit(orig, unknownNames), unknownNames, simplify);
 	}
 
-	@Nullable
 	private static MathExpression parseMathExpression(@NotNull List<String> tokens, List<String> unknownNames, boolean simplify) throws ArithmeticException {
 		List<String> output = new ArrayList<>();
 		Stack<String> stack = new Stack<>();
@@ -212,7 +213,7 @@ public class Algorithms {
 					output.add(StringUtils.toString(c));
 				} else {
 					parseError("Unknown constant : " + token);
-					return null;
+					return new MathExpression(tokens, null, unknownNames);
 				}
 			} else if (NAME_PATTERN.matcher(token).matches()) {
 				Function<?> func = Functions.getFunction(token);
@@ -221,7 +222,7 @@ public class Algorithms {
 					continue;
 				}
 				parseError("Unknown function : " + token);
-				return null;
+				return new MathExpression(tokens, null, unknownNames);
 			} else if (octPattern.matcher(token).matches()) {
 				output.add(StringUtils.toString(StringUtils.parseOctal(token.substring(1))));
 			} else if (StringUtils.isNumeric(token)) {
@@ -237,7 +238,7 @@ public class Algorithms {
 					while (true) {
 						if (stack.isEmpty()) {
 							parseError("Mismatched parentheses");
-							return null;
+							return new MathExpression(tokens, null, unknownNames);
 						}
 						String s = stack.peek();
 						if (s.equals("(")) {
@@ -255,7 +256,7 @@ public class Algorithms {
 				while (true) {
 					if (stack.isEmpty()) {
 						parseError("Misplaced comma");
-						return null;
+						return new MathExpression(tokens, null, unknownNames);
 					}
 					String c = stack.peek();
 					if (c.equals("(") && NAME_PATTERN.matcher(stack.elementAt(stack.size() - 2)).matches()) {
@@ -266,13 +267,13 @@ public class Algorithms {
 				}
 			} else {
 				parseError("Unknown operator : " + token);
-				return null;
+				return new MathExpression(tokens, null, unknownNames);
 			}
 		}
 		for (String s : Lists.reverse(stack)) {
 			if (s.equals("(")) {
 				parseError("Mismatched parentheses");
-				return null;
+				return new MathExpression(tokens, null, unknownNames);
 			}
 			output.add(s);
 		}
@@ -289,7 +290,7 @@ public class Algorithms {
 		Stack<Object> parts = prepareForTree(tokens, unknownData);
 		Stack<Object> stack = new Stack<>();
 		for (Object part : parts) {
-			if (part instanceof MathTerm && ((MathTerm) part).isSimple()) {
+			if (part instanceof MathTerm) {
 				stack.push(part);
 			} else {
 				String s = (String) part;
@@ -334,6 +335,11 @@ public class Algorithms {
 
 	public static void parseError(@Nullable String error) {
 		ExprSkuaredError.lastError = error != null ? "[Skuared parsing] " + error : null;
+	}
+
+	public static Number evaluate(String expr, Map<String, ? extends Number> unknownData) {
+		MathExpression e = parseMathExpression(expr, new ArrayList<>(unknownData.keySet()), true);
+		return e.with(unknownData).evaluate();
 	}
 
 	public static void evalError(@Nullable String error) {
