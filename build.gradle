@@ -49,7 +49,7 @@ dependencies {
     compile 'com.sk89q:worldguard:6.1.1-SNAPSHOT'
     compile 'net.milkbowl.vault:Vault:1.5.3'
     compile 'net.sacredlabyrinth.Phaed:PreciousStones:10.0.5'
-    compile 'com.github.bensku:Skript:dev29'
+    compile 'com.github.bensku:Skript:dev32'
     compile 'org.jetbrains:annotations:15.0'
     testCompile 'junit:junit:4.12'
 }
