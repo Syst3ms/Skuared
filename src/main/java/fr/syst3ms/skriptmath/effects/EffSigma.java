@@ -11,9 +11,9 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import fr.syst3ms.skriptmath.util.MathUtils;
 import fr.syst3ms.skriptmath.expressions.ExprLastResult;
 import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.MathUtils;
 import org.bukkit.event.Event;
 
 import java.lang.reflect.Field;
@@ -29,7 +29,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Name("Sigma/Summation")
 @Description({"Computes the summation of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
 @Examples({"sum \"2x\" from 1 to 10",
-        "set {_sum} to last skuared result # 110"})
+        "set {_sum} to last skript-math result # 110"})
 @Since("1.1")
 public class EffSigma extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);

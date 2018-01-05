@@ -19,7 +19,7 @@ import java.util.Collections;
 @Name("Last Result")
 @Description({"Gets the result computed by a [computational effect](TUTORIAL_URL#computational_effects)"})
 @Examples({"sum \"x\" from 1 to 10",
-        "set {_result} to last skuared result # 55"})
+        "set {_result} to last skript-math result # 55"})
 @Since("1.1")
 public class ExprLastResult extends SimpleExpression<Object> {
     public static String lastResult;

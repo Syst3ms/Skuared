@@ -6,8 +6,8 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import fr.syst3ms.skriptmath.util.evaluation.MathExpression;
 import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.evaluation.MathExpression;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -41,7 +41,7 @@ public class ExprCompileExpression extends SimpleExpression<MathExpression> {
         String expr = expression.getSingle(e);
         List<String> u = unknowns == null ? Collections.emptyList() : Arrays.asList(unknowns.getArray(e));
         if (expr == null) {
-            ExprSkuaredError.lastError = "Expression to compile was null";
+            ExprSkriptMathError.lastError = "Expression to compile was null";
             return null;
         }
         MathExpression mathExpr = Algorithms.parseMathExpression(expr, u, false);

@@ -29,7 +29,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Name("Product")
 @Description({"Computes the pi-notation product of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
 @Examples({"product \"2x\" from 1 to 10",
-        "set {_product} to last skuared result # 3715891200"})
+        "set {_product} to last skript-math result # 3715891200"})
 @Since("1.1")
 public class EffProduct extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);

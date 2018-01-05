@@ -6,8 +6,8 @@ import ch.njol.skript.lang.*;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
 import fr.syst3ms.skriptmath.expressions.ExprLastResult;
-import fr.syst3ms.skriptmath.util.evaluation.MathExpression;
 import fr.syst3ms.skriptmath.util.SkriptUtil;
+import fr.syst3ms.skriptmath.util.evaluation.MathExpression;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 

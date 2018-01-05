@@ -2,8 +2,8 @@ package fr.syst3ms.skriptmath.util.evaluation;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
-import fr.syst3ms.skriptmath.util.ReflectionUtils;
 import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.ReflectionUtils;
 
 import java.util.List;
 import java.util.Map;

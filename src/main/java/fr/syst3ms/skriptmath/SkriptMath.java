@@ -10,10 +10,10 @@ import ch.njol.skript.lang.function.Functions;
 import ch.njol.skript.lang.function.JavaFunction;
 import ch.njol.skript.lang.function.Parameter;
 import ch.njol.skript.registrations.Classes;
-import fr.syst3ms.skriptmath.util.MathUtils;
-import fr.syst3ms.skriptmath.util.evaluation.*;
 import fr.syst3ms.skriptmath.util.Algorithms;
 import fr.syst3ms.skriptmath.util.Associativity;
+import fr.syst3ms.skriptmath.util.MathUtils;
+import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -81,7 +81,7 @@ public class SkriptMath extends JavaPlugin {
 
 	private void mathRegister() {
 		Classes.registerClass(new ClassInfo<>(MathExpression.class, "mathexpression")
-				.user("math(ematical)? expressions?")
+				.user("math(ematical)? ?expressions?")
 				.name("Math Expression")
 				.description("A compiled math expression.")
 				.since("2.2-dev16")

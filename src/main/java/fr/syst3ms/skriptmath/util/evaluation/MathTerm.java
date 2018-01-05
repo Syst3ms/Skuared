@@ -1,7 +1,7 @@
 package fr.syst3ms.skriptmath.util.evaluation;
 
-import fr.syst3ms.skriptmath.util.StringUtils;
 import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;

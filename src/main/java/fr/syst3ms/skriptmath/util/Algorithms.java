@@ -7,11 +7,11 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import fr.syst3ms.skriptmath.SkriptMath;
+import fr.syst3ms.skriptmath.expressions.ExprSkriptMathError;
 import fr.syst3ms.skriptmath.util.evaluation.DoubleOperandTerm;
 import fr.syst3ms.skriptmath.util.evaluation.MathExpression;
 import fr.syst3ms.skriptmath.util.evaluation.MathFunction;
 import fr.syst3ms.skriptmath.util.evaluation.MathTerm;
-import fr.syst3ms.skriptmath.expressions.ExprSkuaredError;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -95,10 +95,10 @@ public class Algorithms {
 
 	public static String soundex(String s) {
 		if (s.isEmpty()) {
-			ExprSkuaredError.lastError = "[Soundex] The input cannot be empty";
+			ExprSkriptMathError.lastError = "[Soundex] The input cannot be empty";
 			return null;
 		} else if (s.contains(" ")) {
-			ExprSkuaredError.lastError = "[Soundex] The input can't contain spaces";
+			ExprSkriptMathError.lastError = "[Soundex] The input can't contain spaces";
 			return null;
 		}
 		char[] x = s.toUpperCase().toCharArray();
@@ -337,7 +337,7 @@ public class Algorithms {
 	}
 
 	public static void parseError(@Nullable String error) {
-		ExprSkuaredError.lastError = error != null ? "[skript-math parsing] " + error : null;
+		ExprSkriptMathError.lastError = error != null ? "[skript-math parsing] " + error : null;
 	}
 
 	public static Number evaluate(String expr, Map<String, ? extends Number> unknownData) {
@@ -346,7 +346,7 @@ public class Algorithms {
 	}
 
 	public static void evalError(@Nullable String error) {
-		ExprSkuaredError.lastError = error != null ? "[skript-math evaluation] " + error : null;
+		ExprSkriptMathError.lastError = error != null ? "[skript-math evaluation] " + error : null;
 	}
 
 	public static String tokensToString(@NotNull List<String> list) {
@@ -356,7 +356,7 @@ public class Algorithms {
 	public static String sendWolframApiRequest(String message) {
 		String wolframID;
 		if ((wolframID = SkriptMath.getInstance().getWolframId()) == null) {
-			ExprSkuaredError.lastError = "No valid WolframAlpha App ID was provided";
+			ExprSkriptMathError.lastError = "No valid WolframAlpha App ID was provided";
 			return null;
 		}
 		URL apiUrl;
@@ -378,7 +378,7 @@ public class Algorithms {
 	public static String sendLimitRequest(String message) {
 		String wolframID;
 		if ((wolframID = SkriptMath.getInstance().getWolframId()) == null) {
-			ExprSkuaredError.lastError = "No valid WolframAlpha App ID was provided";
+			ExprSkriptMathError.lastError = "No valid WolframAlpha App ID was provided";
 			return null;
 		}
 		URL apiUrl;

@@ -2,7 +2,7 @@ package fr.syst3ms.skriptmath.util;
 
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
-import fr.syst3ms.skriptmath.expressions.ExprSkuaredError;
+import fr.syst3ms.skriptmath.expressions.ExprSkriptMathError;
 import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -207,7 +207,7 @@ public class MathUtils {
         for (long i = start; i <= end; i++) {
             Number n = Algorithms.evaluate(expression, Algorithms.getXMap(i));
             if (n == null) {
-                ExprSkuaredError.lastError = "Invalid sigma expression (Error : " + ExprSkuaredError.lastError + ")";
+                ExprSkriptMathError.lastError = "Invalid sigma expression (Error : " + ExprSkriptMathError.lastError + ")";
                 return Double.NaN;
             }
             result = result.add(new BigDecimal(n.toString()));
@@ -221,7 +221,7 @@ public class MathUtils {
         for (long i = start; i <= end; i++) {
             Number n = Algorithms.evaluate(expression, Algorithms.getXMap(i));
             if (n == null) {
-                ExprSkuaredError.lastError = "Invalid product expression (Error : " + ExprSkuaredError.lastError + ")";
+                ExprSkriptMathError.lastError = "Invalid product expression (Error : " + ExprSkriptMathError.lastError + ")";
                 return Double.NaN;
             }
             result = result.multiply(new BigDecimal(n.toString()));
@@ -411,10 +411,10 @@ public class MathUtils {
                             MathFunction.getFunctionByName("digamma", Collections.singletonList(new Sum(firstParam, Constant.ONE)))
                         );
                     case "digamma":
-                        ExprSkuaredError.lastError = "skript-math cannot compute the derivative of the digamma function !";
+                        ExprSkriptMathError.lastError = "skript-math cannot compute the derivative of the digamma function !";
                         return null;
                     default:
-                        ExprSkuaredError.lastError = "Unknown function in derivative";
+                        ExprSkriptMathError.lastError = "Unknown function in derivative";
                         return null;
                 }
             }

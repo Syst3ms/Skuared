@@ -11,9 +11,9 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import fr.syst3ms.skriptmath.util.MathUtils;
 import fr.syst3ms.skriptmath.expressions.ExprLastResult;
 import fr.syst3ms.skriptmath.util.Algorithms;
+import fr.syst3ms.skriptmath.util.MathUtils;
 import fr.syst3ms.skriptmath.util.evaluation.MathExpression;
 import fr.syst3ms.skriptmath.util.evaluation.MathTerm;
 import org.bukkit.event.Event;
@@ -32,7 +32,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Name("Derivative")
 @Description({"Computes the derivative of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
 @Examples({"compute derivative of \"x^2\"",
-        "set {_derivative} to last skuared result # \"2x\""})
+        "set {_derivative} to last skript-math result # \"2x\""})
 @Since("1.1")
 public class EffDifferentiate extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);

@@ -1,16 +1,13 @@
-package fr.syst3ms.skuared.util;
+package fr.syst3ms.skriptmath.util;
 
 import ch.njol.skript.Skript;
-import fr.syst3ms.skriptmath.util.Algorithms;
-import fr.syst3ms.skriptmath.util.Associativity;
-import fr.syst3ms.skriptmath.util.MapBuilder;
-import fr.syst3ms.skriptmath.util.MathUtils;
 import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 
+import static fr.syst3ms.skriptmath.util.Algorithms.*;
 import static fr.syst3ms.skriptmath.util.Algorithms.evaluate;
 import static fr.syst3ms.skriptmath.util.Algorithms.parseMathExpression;
 import static org.junit.Assert.assertEquals;
@@ -18,20 +15,20 @@ import static org.junit.Assert.assertEquals;
 public class AlgorithmsTest {
 
     static {
-        Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator("+", Sum.class, Associativity.LEFT, 3);
-        Algorithms.registerOperator("-", Difference.class, Associativity.LEFT, 3);
-        Algorithms.registerOperator("*", Product.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("/", Division.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("%", Modulo.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("^", Power.class, Associativity.RIGHT, 1);
-        Algorithms.registerConstant("pi", Math.PI);
-        Algorithms.registerConstant("e", Math.E);
-        Algorithms.registerConstant("nan", Double.NaN);
-        Algorithms.registerConstant("Infinity", Double.POSITIVE_INFINITY);
-        Algorithms.registerConstant("phi", MathUtils.PHI);
+        registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
+        registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
+        registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
+        registerOperator("+", Sum.class, Associativity.LEFT, 3);
+        registerOperator("-", Difference.class, Associativity.LEFT, 3);
+        registerOperator("*", Product.class, Associativity.LEFT, 2);
+        registerOperator("/", Division.class, Associativity.LEFT, 2);
+        registerOperator("%", Modulo.class, Associativity.LEFT, 2);
+        registerOperator("^", Power.class, Associativity.RIGHT, 1);
+        registerConstant("pi", Math.PI);
+        registerConstant("e", Math.E);
+        registerConstant("nan", Double.NaN);
+        registerConstant("Infinity", Double.POSITIVE_INFINITY);
+        registerConstant("phi", MathUtils.PHI);
     }
 
     @Test
@@ -77,8 +74,8 @@ public class AlgorithmsTest {
         assertEquals(56.0, evaluate("(5 + 2) * 8", Collections.emptyMap()).doubleValue(), 0.0);
         assertEquals(19.7392088021, evaluate("2pi^2", Collections.emptyMap()).doubleValue(), Skript.EPSILON);
         assertEquals(MathUtils.PHI, evaluate("phi", Collections.emptyMap()).doubleValue(), Skript.EPSILON);
-        assertEquals(8.0, evaluate("2(x+2)", Algorithms.getXMap(2.0)).doubleValue(), Skript.EPSILON);
-        assertEquals(77.8802336483881, evaluate("2^(x*pi)", Algorithms.getXMap(2.0)).doubleValue(), Skript.EPSILON);
+        assertEquals(8.0, evaluate("2(x+2)", getXMap(2.0)).doubleValue(), Skript.EPSILON);
+        assertEquals(77.8802336483881, evaluate("2^(x*pi)", getXMap(2.0)).doubleValue(), Skript.EPSILON);
         assertEquals(
             -19.0,
             evaluate("2x^2-y^3", MapBuilder.builder("x", 2.0).add("y", 3.0).build()).doubleValue(),

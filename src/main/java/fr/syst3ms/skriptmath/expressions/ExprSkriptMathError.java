@@ -13,17 +13,17 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-@Name("Last Skuared Error")
-@Description({"If something has gone wrong in nearly any of Skuared's syntaxes, will contain a descriptive error."})
+@Name("Last Skript-math Error")
+@Description({"If something has gone wrong in nearly any of skript-math's syntaxes, will contain a descriptive error."})
 @Examples({"set {_res} to eval expr \"2(3 + 5\"",
-		"set {_err} to last skuared error # 'Mismatched parentheses'"})
+		"set {_err} to last skript-math error # 'Mismatched parentheses'"})
 @Since("1.1")
-public class ExprSkuaredError extends SimpleExpression<String> {
+public class ExprSkriptMathError extends SimpleExpression<String> {
 	public static String lastError = null;
 
 	static {
 		Skript.registerExpression(
-				ExprSkuaredError.class,
+				ExprSkriptMathError.class,
 				String.class,
 				ExpressionType.SIMPLE,
 				"[the] last skript-math error"

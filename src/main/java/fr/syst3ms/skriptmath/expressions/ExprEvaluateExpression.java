@@ -24,10 +24,10 @@ import java.util.Map;
         "Check out [the advanced description](TUTORIAL_URL#evaluate-expression) for WAYYY more information !"})
 @Examples({"set {_var} to 5",
         "set {_res} to evaluate expr \"2(3 + %{_var}%)\" # 16",
-        "if last skuared error is not set:",
+        "if last skript-math error is not set:",
         "   # proceed as usual",
         "else:",
-        "   # something messed up, access the error through 'last skuared error'"})
+        "   # something messed up, access the error through 'last skript-math error'"})
 @Since("1.0")
 public class ExprEvaluateExpression extends SimpleExpression<Number> {
     private Expression<MathExpression> mathExpression;

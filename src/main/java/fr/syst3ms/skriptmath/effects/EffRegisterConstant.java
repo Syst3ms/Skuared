@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Register Constant")
 @Description({"Registers a constant (duh), which can be used in the evaluate expression (described in [Evaluating Expressions](https://github.com/Syst3ms/Skuared/wiki/Evaluating-Expressions)).",
 		" A constant name must consist of one letter optionally followed by one or more letters or digits",
-		" If that's any clearer to you, the regex Skuared uses is '[A-Za-z][A-Za-z\\\\d]*.'"})
+		" If that's any clearer to you, the regex skript-math uses is '[A-Za-z][A-Za-z\\\\d]*.'"})
 @Examples("register constant \"G\" with value (eval expr \"6.67408* 10^−11\")")
 @Since("1.0")
 @SuppressWarnings("unchecked")
@@ -39,7 +39,7 @@ public class EffRegisterConstant extends Effect {
 			String s = ((Literal<String>) symbol).getSingle();
 			if (!Algorithms.NAME_PATTERN.matcher(s).matches()) {
 				Skript.error("'" + s +
-							 "' is not a valid constant symbol. A constant symbol must consist of either one letter or underscore optionally followed by multiple letters or digits");
+							 "' is not a valid constant symbol. A constant symbol must consist of either one letter optionally followed by multiple letters or digits");
 				return false;
 			}
 		}
@@ -55,7 +55,7 @@ public class EffRegisterConstant extends Effect {
 			return;
 		if (!Algorithms.NAME_PATTERN.matcher(s).matches()) {
 			Skript.warning("'" + s +
-						   "' is not a valid constant symbol. A constant symbol must consist of either one letter or underscore optionally followed by multiple letters or digits");
+						   "' is not a valid constant symbol. A constant symbol must consist of either one letter optionally followed by multiple letters or digits");
 			return;
 		}
 		Algorithms.registerConstant(s, v);

@@ -1,32 +1,30 @@
-package fr.syst3ms.skuared.util;
+package fr.syst3ms.skriptmath.util;
 
 import ch.njol.skript.Skript;
-import fr.syst3ms.skriptmath.util.Algorithms;
-import fr.syst3ms.skriptmath.util.Associativity;
-import fr.syst3ms.skriptmath.util.MathUtils;
 import fr.syst3ms.skriptmath.util.evaluation.*;
 import org.junit.Test;
 
 import java.util.Collections;
 
+import static fr.syst3ms.skriptmath.util.Algorithms.*;
 import static org.junit.Assert.assertEquals;
 
 public class MathTest {
     static {
-        Algorithms.registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
-        Algorithms.registerOperator("+", Sum.class, Associativity.LEFT, 3);
-        Algorithms.registerOperator("-", Difference.class, Associativity.LEFT, 3);
-        Algorithms.registerOperator("*", Product.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("/", Division.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("%", Modulo.class, Associativity.LEFT, 2);
-        Algorithms.registerOperator("^", Power.class, Associativity.RIGHT, 1);
-        Algorithms.registerConstant("pi", Math.PI);
-        Algorithms.registerConstant("e", Math.E);
-        Algorithms.registerConstant("nan", Double.NaN);
-        Algorithms.registerConstant("Infinity", Double.POSITIVE_INFINITY);
-        Algorithms.registerConstant("phi", MathUtils.PHI);
+        registerOperator(">>", RightBitShift.class, Associativity.LEFT, 4);
+        registerOperator("<<", LeftBitShift.class, Associativity.LEFT, 4);
+        registerOperator(">>>", UnsignedRightBitShift.class, Associativity.LEFT, 4);
+        registerOperator("+", Sum.class, Associativity.LEFT, 3);
+        registerOperator("-", Difference.class, Associativity.LEFT, 3);
+        registerOperator("*", Product.class, Associativity.LEFT, 2);
+        registerOperator("/", Division.class, Associativity.LEFT, 2);
+        registerOperator("%", Modulo.class, Associativity.LEFT, 2);
+        registerOperator("^", Power.class, Associativity.RIGHT, 1);
+        registerConstant("pi", Math.PI);
+        registerConstant("e", Math.E);
+        registerConstant("nan", Double.NaN);
+        registerConstant("Infinity", Double.POSITIVE_INFINITY);
+        registerConstant("phi", MathUtils.PHI);
     }
 
     @Test
@@ -64,17 +62,17 @@ public class MathTest {
 
     @Test
     public void asString() throws Exception {
-        assertEquals("5 + 8 * 5", Algorithms.parseMathExpression("5 + 8 * 5", Collections.emptyList(), false).getTerm().asString());
-        assertEquals("5 / x / x ^ 2", Algorithms.parseMathExpression("5 / x / x^2", Collections.singletonList("x"), false).getTerm().asString());
-        assertEquals("8(5 + 2)", Algorithms.parseMathExpression("8 * (5 +2)", Collections.emptyList(), false).getTerm().asString());
+        assertEquals("5 + 8 * 5", parseMathExpression("5 + 8 * 5", Collections.emptyList(), false).getTerm().asString());
+        assertEquals("5 / x / x ^ 2", parseMathExpression("5 / x / x^2", Collections.singletonList("x"), false).getTerm().asString());
+        assertEquals("8(5 + 2)", parseMathExpression("8 * (5 +2)", Collections.emptyList(), false).getTerm().asString());
     }
 
     @Test
     public void simplify() throws Exception {
-        assertEquals(Constant.ONE, Algorithms.parseMathExpression("(x + x) / (x * 2)", Collections.singletonList("x"), true).getTerm());
-        assertEquals(Constant.ZERO, Algorithms.parseMathExpression("x((x-x) / 2x^2)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(Constant.ONE, parseMathExpression("(x + x) / (x * 2)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(Constant.ZERO, parseMathExpression("x((x-x) / 2x^2)", Collections.singletonList("x"), true).getTerm());
         MathTerm expected = new Difference(new Product(Constant.TWO, new Unknown("x", false).getSquared()), new Unknown("x", false));
-        assertEquals(expected, Algorithms.parseMathExpression("x(2x-1)", Collections.singletonList("x"), true).getTerm());
-        assertEquals(new Division(new Unknown("x", false).getSquared(), Constant.TWO), Algorithms.parseMathExpression("x(x/2)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(expected, parseMathExpression("x(2x-1)", Collections.singletonList("x"), true).getTerm());
+        assertEquals(new Division(new Unknown("x", false).getSquared(), Constant.TWO), parseMathExpression("x(x/2)", Collections.singletonList("x"), true).getTerm());
     }
 }

@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Name("Integral")
 @Description({"Computes the integral of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
 @Examples({"compute integral of \"x^2\"",
-        "set {_integral} to last skuared result # \"x^3/3\""})
+        "set {_integral} to last skript-math result # \"x^3/3\""})
 @Since("1.1")
 public class EffIntegrate extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);

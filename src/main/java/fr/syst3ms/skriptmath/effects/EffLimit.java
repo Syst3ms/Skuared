@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Name("Limit")
 @Description({"Computes the limit of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
 @Examples({"limit \"1/x\" as x approaches 0",
-        "set {_limit} to last skuared result # Infinity"})
+        "set {_limit} to last skript-math result # Infinity"})
 @Since("1.1")
 public class EffLimit extends Effect {
     private static final ReentrantLock SKRIPT_EXECUTION = new ReentrantLock(true);
