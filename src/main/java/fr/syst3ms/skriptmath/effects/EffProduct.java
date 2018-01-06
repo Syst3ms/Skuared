@@ -27,7 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Async effect concept, with courtesy of Lubbock/w00tmaster
  */
 @Name("Product")
-@Description({"Computes the pi-notation product of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
+@Description({"Computes the pi-notation product of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/skript-math/wiki/Computational-Effects])"})
 @Examples({"product \"2x\" from 1 to 10",
         "set {_product} to last skript-math result # 3715891200"})
 @Since("1.1")

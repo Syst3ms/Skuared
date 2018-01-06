@@ -15,7 +15,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Register Constant")
-@Description({"Registers a constant (duh), which can be used in the evaluate expression (described in [Evaluating Expressions](https://github.com/Syst3ms/Skuared/wiki/Evaluating-Expressions)).",
+@Description({"Registers a constant (duh), which can be used in the evaluate expression (described in [Evaluating Expressions](https://github.com/Syst3ms/skript-math/wiki/Evaluating-Expressions)).",
 		" A constant name must consist of one letter optionally followed by one or more letters or digits",
 		" If that's any clearer to you, the regex skript-math uses is '[A-Za-z][A-Za-z\\\\d]*.'"})
 @Examples("register constant \"G\" with value (eval expr \"6.67408* 10^−11\")")

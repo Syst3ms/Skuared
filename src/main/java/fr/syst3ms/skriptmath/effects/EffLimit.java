@@ -26,7 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Async effect concept, with courtesy of Lubbock/w00tmaster
  */
 @Name("Limit")
-@Description({"Computes the limit of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
+@Description({"Computes the limit of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/skript-math/wiki/Computational-Effects])"})
 @Examples({"limit \"1/x\" as x approaches 0",
         "set {_limit} to last skript-math result # Infinity"})
 @Since("1.1")

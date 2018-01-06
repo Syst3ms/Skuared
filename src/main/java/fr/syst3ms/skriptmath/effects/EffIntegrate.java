@@ -26,7 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Async effect concept, with courtesy of Lubbock/w00tmaster
  */
 @Name("Integral")
-@Description({"Computes the integral of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/Skuared/wiki/Computational-Effects])"})
+@Description({"Computes the integral of a given expression. For more details, read the [extended description](https://github.com/Syst3ms/skript-math/wiki/Computational-Effects])"})
 @Examples({"compute integral of \"x^2\"",
         "set {_integral} to last skript-math result # \"x^3/3\""})
 @Since("1.1")
